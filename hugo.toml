@@ -1,13 +1,13 @@
 baseURL = "https://altyapicode.com.tr/"
 languageCode = "tr"
 defaultContentLanguage = "tr"
-title = "AltyapiCode — Civil 3D Eklentileri"
+title = "AltyapiCode — AutoCAD & Civil 3D Eklentileri"
 theme = "PaperMod"
 [pagination]
   pagerSize = 10
 
 [params]
-  description = "Türk Altyapı Mühendisliği için Civil 3D Eklentileri. İller Bankası, İSKİ ve DSİ standartlarına tam uyumlu."
+  description = "Türk Altyapı Mühendisliği için AutoCAD & Civil 3D Eklentileri. İller Bankası, İSKİ ve DSİ standartlarına tam uyumlu."
   author = "AltyapiCode"
   ShowShareButtons = false
   ShowReadingTime = false
@@ -18,7 +18,7 @@ theme = "PaperMod"
   disableThemeToggle = false
 
   [params.homeInfoParams]
-    Title = "Türk Altyapı Projelerine Özel Civil 3D Eklentileri"
+    Title = "Türk Altyapı Projelerine Özel AutoCAD & Civil 3D Eklentileri"
     Content = """
 İller Bankası, İSKİ ve DSİ standartlarına tam uyumlu otomatik metraj, \
 hendek kesitleri ve hacim hesapları. Saatler süren işleri dakikalara indirin.
