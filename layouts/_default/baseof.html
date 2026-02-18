@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ if .IsHome }}AltyapıCode — AutoCAD & Civil 3D Eklentileri else }}{{ .Title }} | AltyapıCode{{ end }}</title>
+    <title>{{ if .IsHome }}AltyapıCode — AutoCAD &amp; Civil 3D Eklentileri{{ else }}{{ .Title }} | AltyapıCode{{ end }}</title>
     <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/animations.css">
 </head>
 <body>
     <!-- NAV -->
@@ -31,7 +32,7 @@
         <div class="footer-inner">
             <div class="footer-left">
                 <a href="/" class="logo"><span class="mark">Altyapı</span><span class="dim">Code</span></a>
-                <p>Türk Altyapı Mühendisliği için AutoCAD & Civil 3D çözümleri</p>
+                <p>Türk altyapı mühendisliği için AutoCAD &amp; Civil 3D çözümleri</p>
             </div>
             <div class="footer-links">
                 <a href="/urunler/">Ürünler</a>
@@ -44,5 +45,8 @@
             <p>&copy; {{ now.Year }} AltyapıCode. Tüm hakları saklıdır.</p>
         </div>
     </footer>
+
+    <script src="/js/particles.js"></script>
+    <script src="/js/animations.js"></script>
 </body>
 </html>

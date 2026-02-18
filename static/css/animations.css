@@ -1,0 +1,268 @@
+/* ══════════════════════════════════════
+   AltyapıCode — Animation Styles
+   ══════════════════════════════════════ */
+
+/* ── SCROLL REVEAL ── */
+.reveal-element {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-element.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger for grid items */
+.product-card.reveal-element:nth-child(1) { transition-delay: 0s; }
+.product-card.reveal-element:nth-child(2) { transition-delay: 0.12s; }
+.product-card.reveal-element:nth-child(3) { transition-delay: 0.24s; }
+
+.standard-card.reveal-element:nth-child(1) { transition-delay: 0s; }
+.standard-card.reveal-element:nth-child(2) { transition-delay: 0.12s; }
+.standard-card.reveal-element:nth-child(3) { transition-delay: 0.24s; }
+
+.workflow-step.reveal-element:nth-child(2) { transition-delay: 0s; }
+.workflow-step.reveal-element:nth-child(3) { transition-delay: 0.15s; }
+.workflow-step.reveal-element:nth-child(4) { transition-delay: 0.3s; }
+.workflow-step.reveal-element:nth-child(5) { transition-delay: 0.45s; }
+
+.stat-item.reveal-element:nth-child(1) { transition-delay: 0s; }
+.stat-item.reveal-element:nth-child(2) { transition-delay: 0.1s; }
+.stat-item.reveal-element:nth-child(3) { transition-delay: 0.2s; }
+.stat-item.reveal-element:nth-child(4) { transition-delay: 0.3s; }
+
+/* ── NAVBAR ANIMATIONS ── */
+nav {
+    transition: transform 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
+}
+nav.nav-scrolled {
+    background: rgba(10, 14, 23, 0.95);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+nav.nav-hidden {
+    transform: translateY(-100%);
+}
+
+/* ── CURSOR GLOW ── */
+.cursor-glow {
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s;
+}
+@media (max-width: 768px) {
+    .cursor-glow { display: none; }
+}
+
+/* ── PRODUCT CARD GLOW ON HOVER ── */
+.product-card {
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.product-card::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), transparent 50%, rgba(34, 211, 238, 0.1));
+    opacity: 0;
+    transition: opacity 0.4s;
+    z-index: -1;
+}
+.product-card:hover::after {
+    opacity: 1;
+}
+
+/* ── TERMINAL GLOW PULSE ── */
+.terminal {
+    animation: terminalGlow 4s ease-in-out infinite alternate;
+}
+@keyframes terminalGlow {
+    0% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4); }
+    100% { box-shadow: 0 20px 60px rgba(34, 211, 238, 0.08), 0 20px 60px rgba(0, 0, 0, 0.4); }
+}
+
+/* ── HERO BADGE SHIMMER ── */
+.hero-badge {
+    position: relative;
+    overflow: hidden;
+}
+.hero-badge::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.2), transparent);
+    animation: shimmer 3s infinite;
+}
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 200%; }
+}
+
+/* ── STEP NUMBERS GRADIENT ANIMATION ── */
+.step-number {
+    background: linear-gradient(135deg, var(--border), rgba(34, 211, 238, 0.3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: all 0.3s;
+}
+.workflow-step:hover .step-number {
+    background: linear-gradient(135deg, var(--accent), rgba(34, 211, 238, 0.8));
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+/* ── WORKFLOW PROGRESS LINE ── */
+.workflow-progress {
+    position: absolute;
+    top: 42px;
+    left: 5%;
+    right: 5%;
+    height: 2px;
+    background: var(--border);
+    z-index: 0;
+}
+.workflow-progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--accent), var(--accent-dim));
+    transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.workflow-progress.animate::after {
+    width: 100%;
+}
+
+/* ── FLOATING ANIMATION ON HERO VISUAL ── */
+.hero-visual .terminal {
+    animation: terminalGlow 4s ease-in-out infinite alternate, float 6s ease-in-out infinite;
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+/* ── CTA BOX BORDER ANIMATION ── */
+.cta-box {
+    position: relative;
+}
+.cta-box::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 20%;
+    right: 20%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-dim), transparent);
+    animation: ctaPulse 3s ease-in-out infinite;
+}
+@keyframes ctaPulse {
+    0%, 100% { opacity: 0.3; left: 25%; right: 25%; }
+    50% { opacity: 0.8; left: 15%; right: 15%; }
+}
+
+/* ── LINK HOVER UNDERLINE ANIMATION ── */
+.nav-links a:not(.nav-cta) {
+    position: relative;
+}
+.nav-links a:not(.nav-cta)::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-links a:not(.nav-cta):hover::after {
+    width: 100%;
+}
+
+/* ── BLOG CARD SHIMMER ── */
+.blog-card {
+    position: relative;
+    overflow: hidden;
+}
+.blog-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.04), transparent);
+    transition: left 0.6s;
+}
+.blog-card:hover::after {
+    left: 130%;
+}
+
+/* ── STANDARD CARD ICON BOUNCE ── */
+.standard-card .icon {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.standard-card:hover .icon {
+    transform: scale(1.2) translateY(-4px);
+}
+
+/* ── PRODUCT ICON ROTATION ── */
+.product-icon {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s;
+}
+.product-card:hover .product-icon {
+    transform: rotate(-8deg) scale(1.1);
+    box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+/* ── SMOOTH PAGE TRANSITIONS ── */
+.page-content {
+    animation: pageIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes pageIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SELECTION COLOR ── */
+::selection {
+    background: rgba(34, 211, 238, 0.25);
+    color: var(--text-primary);
+}
+
+/* ── SCROLLBAR STYLING ── */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-dim);
+}
+
+/* ── REDUCE MOTION FOR ACCESSIBILITY ── */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    .cursor-glow { display: none; }
+}
