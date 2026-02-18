@@ -1,0 +1,25 @@
+{{ define "main" }}
+<section class="page-content container">
+    <div class="page-header">
+        {{ if .Params.tags }}
+        <div class="section-label">{{ index .Params.tags 0 }}</div>
+        {{ end }}
+        <h1>{{ .Title }}</h1>
+        {{ with .Description }}<p class="page-desc">{{ . }}</p>{{ end }}
+        {{ if .Date }}
+        {{ if eq .Section "blog" }}
+        <div class="page-meta">{{ .Date.Format "2 January 2006" }} · {{ .ReadingTime }} dk okuma</div>
+        {{ end }}
+        {{ end }}
+    </div>
+    <div class="page-body">
+        {{ .Content }}
+    </div>
+
+    {{ if eq .Section "blog" }}
+    <div class="page-footer">
+        <a href="/blog/" class="btn-secondary">← Tüm Yazılar</a>
+    </div>
+    {{ end }}
+</section>
+{{ end }}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ if .IsHome }}AltyapiCode — Civil 3D Eklentileri{{ else }}{{ .Title }} | AltyapiCode{{ end }}</title>
+    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- NAV -->
+    <nav>
+        <a href="/" class="logo"><span class="mark">Altyapi</span><span class="dim">Code</span></a>
+        <ul class="nav-links">
+            <li><a href="/urunler/">Ürünler</a></li>
+            <li><a href="/hizmetler/">Hizmetler</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/hakkimizda/">Hakkımızda</a></li>
+            <li><a href="/iletisim/" class="nav-cta">İletişime Geç</a></li>
+        </ul>
+        <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    </nav>
+
+    {{ block "main" . }}{{ end }}
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-left">
+                <a href="/" class="logo"><span class="mark">Altyapi</span><span class="dim">Code</span></a>
+                <p>Türk altyapı mühendisliği için Civil 3D çözümleri</p>
+            </div>
+            <div class="footer-links">
+                <a href="/urunler/">Ürünler</a>
+                <a href="/hizmetler/">Hizmetler</a>
+                <a href="/blog/">Blog</a>
+                <a href="/iletisim/">İletişim</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; {{ now.Year }} AltyapiCode. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+</body>
+</html>

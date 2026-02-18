@@ -1,0 +1,219 @@
+{{ define "main" }}
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-content">
+        <div>
+            <div class="hero-badge">Civil 3D Eklenti Çözümleri</div>
+            <h1>
+                Türk Altyapı Projelerine<br>
+                <span class="highlight">Özel Tasarlanmış</span><br>
+                Civil 3D Eklentileri
+            </h1>
+            <p class="hero-desc">
+                İller Bankası, İSKİ ve DSİ standartlarına tam uyumlu otomatik metraj, 
+                hendek kesitleri ve hacim hesapları. Saatler süren işleri dakikalara indirin.
+            </p>
+            <div class="hero-actions">
+                <a href="/urunler/" class="btn-primary">Ürünleri İncele →</a>
+                <a href="#nasil" class="btn-secondary">Nasıl Çalışır?</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                    <span class="terminal-title">AltyapiAsistan.cs</span>
+                </div>
+                <div class="terminal-body">
+                    <div><span class="code-comment">// Otomatik hendek kesiti oluşturma</span></div>
+                    <div><span class="code-keyword">var</span> profil = <span class="code-type">Alignment</span>.<span class="code-method">GetProfile</span>();</div>
+                    <div><span class="code-keyword">var</span> boru = <span class="code-keyword">new</span> <span class="code-type">BoruHatti</span> {</div>
+                    <div>&nbsp;&nbsp;Cap = <span class="code-number">400</span>,</div>
+                    <div>&nbsp;&nbsp;Malzeme = <span class="code-string">"Korige"</span>,</div>
+                    <div>&nbsp;&nbsp;Standart = <span class="code-string">"İller Bankası"</span></div>
+                    <div>};</div>
+                    <br>
+                    <div><span class="code-comment">// Metraj otomatik hesaplanır</span></div>
+                    <div>boru.<span class="code-method">HesaplaMetraj</span>();</div>
+                    <div>boru.<span class="code-method">ExcelRapor</span>(<span class="code-string">"metraj.xlsx"</span>);</div>
+                    <br>
+                    <div style="color: #10b981;">✓ 847 kesit işlendi — 2.3 saniye</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+    <div class="stats-inner">
+        <div class="stat-item">
+            <h3>8+</h3>
+            <p>Yıllık Sektör Deneyimi</p>
+        </div>
+        <div class="stat-item">
+            <h3>%95</h3>
+            <p>Zaman Tasarrufu</p>
+        </div>
+        <div class="stat-item">
+            <h3>3</h3>
+            <p>Standart Uyumu</p>
+        </div>
+        <div class="stat-item">
+            <h3>∞</h3>
+            <p>Kesit Hesaplama</p>
+        </div>
+    </div>
+</div>
+
+<!-- PRODUCTS -->
+<section id="urunler" class="container">
+    <div class="section-label">Ürünler</div>
+    <h2 class="section-title">Civil 3D Eklentileri</h2>
+    <p class="section-desc">
+        Sahadaki deneyimle yazılmış, Türk mühendislerinin gerçek ihtiyaçlarına göre tasarlanmış eklentiler.
+    </p>
+
+    <div class="products-grid">
+        <!-- Altyapı Asistanı -->
+        <div class="product-card">
+            <div class="product-icon">📐</div>
+            <div class="product-tag">En Popüler</div>
+            <h3>Altyapı Asistanı</h3>
+            <p>Kanalizasyon, yağmursuyu ve içmesuyu projeleriniz için otomatik hendek kesiti, metraj tablosu ve hacim hesabı.</p>
+            <ul class="product-features">
+                <li>Otomatik hendek kesiti oluşturma</li>
+                <li>İller Bankası / İSKİ standartlarına uygun metraj</li>
+                <li>Çoklu boru desteği (HDPE, Korige, Sünek Döküm)</li>
+                <li>Excel rapor çıktısı</li>
+                <li>Boyuna profil üzerinde otomatik çizim</li>
+            </ul>
+            <a href="/urunler/" class="btn-primary">Detaylı İncele →</a>
+        </div>
+
+        <!-- İstinat Duvarı Asistanı -->
+        <div class="product-card">
+            <div class="product-icon">🧱</div>
+            <div class="product-tag">Yeni</div>
+            <h3>İstinat Duvarı Asistanı</h3>
+            <p>Konsol ve ağırlık tipi istinat duvarlarının stabilite kontrolü, kesit çizimi ve metraj hesabı.</p>
+            <ul class="product-features">
+                <li>Devrilme, kayma ve taşıma gücü kontrolü</li>
+                <li>TBDY-2018 deprem hesabı</li>
+                <li>Otomatik kesit çizimi</li>
+                <li>Kazı, beton, dolgu, kalıp metrajı</li>
+                <li>Rankine & Coulomb toprak basıncı</li>
+            </ul>
+            <a href="/urunler/" class="btn-primary">Detaylı İncele →</a>
+        </div>
+
+        <!-- Özel Geliştirme -->
+        <div class="product-card">
+            <div class="product-icon">⚡</div>
+            <div class="product-tag">Hizmet</div>
+            <h3>Özel Eklenti Geliştirme</h3>
+            <p>İhtiyacınıza özel Civil 3D / AutoCAD eklentisi geliştirilmesi. Tekrarlayan işlerinizi otomasyona dönüştürün.</p>
+            <ul class="product-features">
+                <li>İhtiyaç analizi ve tasarım</li>
+                <li>C# / AutoCAD .NET API ile geliştirme</li>
+                <li>Test ve kurulum desteği</li>
+                <li>Belirli standartlara özel çözümler</li>
+                <li>Eğitim ve dokümantasyon</li>
+            </ul>
+            <a href="/hizmetler/" class="btn-primary">Detaylı İncele →</a>
+        </div>
+    </div>
+</section>
+
+<!-- STANDARDS -->
+<section id="standartlar" class="container">
+    <div class="section-label">Uyumluluk</div>
+    <h2 class="section-title">Türk Standartlarına Tam Uyum</h2>
+    <p class="section-desc">Eklentilerimiz Türkiye'deki resmi altyapı standartlarına göre geliştirilmiştir.</p>
+    <div class="standards-grid">
+        <div class="standard-card">
+            <div class="icon">🏛️</div>
+            <h4>İller Bankası</h4>
+            <p>Altyapı proje standartları ve teknik şartnamelere tam uyum</p>
+        </div>
+        <div class="standard-card">
+            <div class="icon">💧</div>
+            <h4>İSKİ</h4>
+            <p>İstanbul Su ve Kanalizasyon İdaresi teknik esasları</p>
+        </div>
+        <div class="standard-card">
+            <div class="icon">🌊</div>
+            <h4>DSİ</h4>
+            <p>Devlet Su İşleri standartları ve yönetmelikleri</p>
+        </div>
+    </div>
+</section>
+
+<!-- WORKFLOW -->
+<section id="nasil" class="container">
+    <div class="section-label">Nasıl Çalışır</div>
+    <h2 class="section-title">4 Adımda Metraj Hesabı</h2>
+    <p class="section-desc">Civil 3D projenizi açın, eklentiyi çalıştırın, gerisini biz halledelim.</p>
+    <div class="workflow-steps">
+        <div class="workflow-step">
+            <div class="step-number">01</div>
+            <h4>Projeyi Aç</h4>
+            <p>Civil 3D'de alignment ve profilinizi hazırlayın.</p>
+        </div>
+        <div class="workflow-step">
+            <div class="step-number">02</div>
+            <h4>Parametreleri Gir</h4>
+            <p>Boru çapı, malzeme ve standart seçimini yapın.</p>
+        </div>
+        <div class="workflow-step">
+            <div class="step-number">03</div>
+            <h4>Hesapla</h4>
+            <p>Otomatik hendek kesiti, hacim ve metraj hesaplanır.</p>
+        </div>
+        <div class="workflow-step">
+            <div class="step-number">04</div>
+            <h4>Rapor Al</h4>
+            <p>Excel metraj tablosu ve çizimler anında hazır.</p>
+        </div>
+    </div>
+</section>
+
+<!-- BLOG PREVIEW -->
+{{ $posts := where .Site.RegularPages "Section" "blog" }}
+{{ if $posts }}
+<section class="container">
+    <div class="section-label">Blog</div>
+    <h2 class="section-title">Son Yazılar</h2>
+    <p class="section-desc">Altyapı mühendisliği, Civil 3D ve otomasyon üzerine yazılar.</p>
+    <div class="blog-grid">
+        {{ range first 3 $posts }}
+        <a href="{{ .Permalink }}" class="blog-card">
+            <div class="blog-date">{{ .Date.Format "2 January 2006" }}</div>
+            <h4>{{ .Title }}</h4>
+            <p>{{ .Description }}</p>
+        </a>
+        {{ end }}
+    </div>
+</section>
+{{ end }}
+
+<!-- CTA -->
+<section class="cta-section" id="iletisim">
+    <div class="cta-box">
+        <div class="section-label">İletişim</div>
+        <h2>Projeniz İçin Doğru Çözümü Bulalım</h2>
+        <p>Eklentiler hakkında bilgi almak, demo talep etmek veya özel geliştirme için iletişime geçin.</p>
+        <div class="cta-buttons">
+            <a href="https://api.whatsapp.com/send?phone=905455636867&text=Merhaba,%20AltyapiCode%20eklentileri%20hakkında%20bilgi%20almak%20istiyorum." class="whatsapp-btn">
+                💬 WhatsApp ile Yazın
+            </a>
+            <a href="mailto:info@altyapicode.com.tr" class="btn-secondary">
+                ✉️ E-posta Gönderin
+            </a>
+        </div>
+    </div>
+</section>
+{{ end }}
