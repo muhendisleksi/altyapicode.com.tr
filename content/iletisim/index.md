@@ -16,7 +16,7 @@ En hızlı iletişim yolu. Mesaj atın, en kısa sürede dönüş yapalım.
 ### ✉️ E-posta
 Detaylı talepler ve proje bilgileri için:
 
-**info@altyapicode.com**
+**abdulbakiatakan@gmail.com**
 
 ### 💼 Fiverr
 Uluslararası müşteriler için:
