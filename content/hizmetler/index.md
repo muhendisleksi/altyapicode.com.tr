@@ -12,7 +12,7 @@ Hazır eklentilerimizin ötesinde, ihtiyaçlarınıza özel hizmetler.
 
 ### ⚡ Özel Eklenti Geliştirme
 
-Tekrarlayan iş süreçlerinizi otomasyona dönüştürün. Civil 3D / AutoCAD üzerinde C# ve .NET API ile özel eklenti geliştirme hizmeti sunuyoruz.
+Tekrarlayan iş süreçlerinizi otomasyona dönüştürün. AutoCAD & Civil 3D / AutoCAD üzerinde C# ve .NET API ile özel eklenti geliştirme hizmeti sunuyoruz.
 
 - İhtiyaç analizi ve tasarım
 - C# / AutoCAD .NET API ile geliştirme
@@ -24,13 +24,13 @@ Tekrarlayan iş süreçlerinizi otomasyona dönüştürün. Civil 3D / AutoCAD �
 
 ### 🎯 Teknik Danışmanlık
 
-Civil 3D altyapı projelendirmesinde teknik danışmanlık. Standart uyumu, hesap kontrolü ve süreç optimizasyonu konularında destek.
+AutoCAD & Civil 3D altyapı projelendirmesinde teknik danışmanlık. Standart uyumu, hesap kontrolü ve süreç optimizasyonu konularında destek.
 
 ---
 
 ### 📋 Proje Bazlı Çalışma
 
-Altyapı projelerinizin Civil 3D modellemesi, metraj çıkartılması ve projelendirme süreçlerinde proje bazlı işbirliği.
+Altyapı projelerinizin AutoCAD & Civil 3D modellemesi, metraj çıkartılması ve projelendirme süreçlerinde proje bazlı işbirliği.
 
 ---
 

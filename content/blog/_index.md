@@ -1,4 +1,4 @@
 ---
 title: "Blog"
-description: "Altyapı mühendisliği, Civil 3D ve otomasyon üzerine yazılar"
+description: "Altyapı mühendisliği, AutoCAD & Civil 3D ve otomasyon üzerine yazılar"
 ---

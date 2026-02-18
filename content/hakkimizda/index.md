@@ -1,16 +1,16 @@
 ---
 title: "Hakkımızda"
-description: "AltyapiCode - 8+ yıllık saha deneyimiyle yazılmış Civil 3D çözümleri"
+description: "AltyapiCode - 8+ yıllık saha deneyimiyle yazılmış AutoCAD & Civil 3D çözümleri"
 layout: "single"
 ---
 
 ## AltyapiCode Hakkında
 
-AltyapiCode, Türk altyapı mühendisliğine özel Civil 3D eklentileri geliştiren bir yazılım markasıdır.
+AltyapiCode, Türk altyapı mühendisliğine özel AutoCAD & Civil 3D eklentileri geliştiren bir yazılım markasıdır.
 
 ### Hikayemiz
 
-8 yılı aşkın altyapı proje deneyimimizle sahada yaşanan gerçek sorunları biliyoruz. Metraj hesaplarının günler sürmesi, hendek kesitlerinin tek tek çizilmesi, standart değişikliklerinde tüm projenin baştan yapılması... Bu sorunları çözmek için Civil 3D eklentileri geliştirmeye başladık.
+8 yılı aşkın altyapı proje deneyimimizle sahada yaşanan gerçek sorunları biliyoruz. Metraj hesaplarının günler sürmesi, hendek kesitlerinin tek tek çizilmesi, standart değişikliklerinde tüm projenin baştan yapılması... Bu sorunları çözmek için AutoCAD & Civil 3D eklentileri geliştirmeye başladık.
 
 ### Farkımız
 
@@ -24,7 +24,7 @@ AltyapiCode, Türk altyapı mühendisliğine özel Civil 3D eklentileri gelişti
 - Kanalizasyon ve yağmursuyu projeleri
 - İçmesuyu hat projeleri
 - İstinat duvarı tasarımı ve stabilite analizi
-- Civil 3D otomasyon ve özel eklenti geliştirme
+- AutoCAD & Civil 3D otomasyon ve özel eklenti geliştirme
 - C# / AutoCAD .NET API programlama
 
 ---

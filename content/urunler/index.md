@@ -1,10 +1,10 @@
 ---
 title: "Ürünler"
-description: "Türk altyapı mühendisliği için Civil 3D eklentileri"
+description: "Türk altyapı mühendisliği için AutoCAD & Civil 3D eklentileri"
 layout: "single"
 ---
 
-## Civil 3D Eklentilerimiz
+## AutoCAD & Civil 3D Eklentilerimiz
 
 Sahadaki deneyimle yazılmış, Türk mühendislerinin gerçek ihtiyaçlarına göre tasarlanmış eklentiler.
 
@@ -14,7 +14,7 @@ Sahadaki deneyimle yazılmış, Türk mühendislerinin gerçek ihtiyaçlarına g
 
 **Kanalizasyon, Yağmursuyu & İçmesuyu Projeleriniz İçin**
 
-Civil 3D içinden tek tıkla otomatik hendek kesiti oluşturun, metraj tablosu çıkarın ve hacim hesaplarını yapın. Çoklu boru hatlarını destekler, kesişen hendekleri otomatik birleştirir ve Türk idari şartname formatında Excel raporu üretir.
+AutoCAD & AutoCAD & Civil 3D içinden tek tıkla otomatik hendek kesiti oluşturun, metraj tablosu çıkarın ve hacim hesaplarını yapın. Çoklu boru hatlarını destekler, kesişen hendekleri otomatik birleştirir ve Türk idari şartname formatında Excel raporu üretir.
 
 **Desteklenen Standartlar:** İller Bankası · İSKİ · DSİ
 
@@ -27,7 +27,7 @@ Civil 3D içinden tek tıkla otomatik hendek kesiti oluşturun, metraj tablosu �
 - Kazı / dolgu / beton gömlekleme hesabı
 - Kesişen hendek birleştirme algoritması
 
-**Uyumluluk:** Civil 3D 2022–2025
+**Uyumluluk:** AutoCAD & Civil 3D 2022–2025
 
 [Fiyat bilgisi almak için iletişime geçin →](/iletisim/)
 
@@ -49,6 +49,6 @@ Civil 3D içinden tek tıkla otomatik hendek kesiti oluşturun, metraj tablosu �
 - Kazı, beton, dolgu, kalıp metrajı
 - Detaylı stabilite raporu
 
-**Uyumluluk:** Civil 3D 2022–2025
+**Uyumluluk:** AutoCAD & Civil 3D 2022–2025
 
 [Fiyat bilgisi almak için iletişime geçin →](/iletisim/)
