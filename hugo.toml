@@ -1,0 +1,91 @@
+baseURL = "https://altyapicode.com/"
+languageCode = "tr"
+defaultContentLanguage = "tr"
+title = "AltyapiCode — Civil 3D Eklentileri"
+theme = "PaperMod"
+[pagination]
+  pagerSize = 10
+
+[params]
+  description = "Türk Altyapı Mühendisliği için Civil 3D Eklentileri. İller Bankası, İSKİ ve DSİ standartlarına tam uyumlu."
+  author = "AltyapiCode"
+  ShowShareButtons = false
+  ShowReadingTime = false
+  ShowBreadCrumbs = true
+  ShowPostNavLinks = true
+  ShowCodeCopyButtons = true
+  defaultTheme = "dark"
+  disableThemeToggle = false
+
+  [params.homeInfoParams]
+    Title = "Türk Altyapı Projelerine Özel Civil 3D Eklentileri"
+    Content = """
+İller Bankası, İSKİ ve DSİ standartlarına tam uyumlu otomatik metraj, \
+hendek kesitleri ve hacim hesapları. Saatler süren işleri dakikalara indirin.
+"""
+
+  [[params.homeInfoParams.buttons]]
+    name = "Ürünleri İncele"
+    url = "/urunler/"
+
+  [[params.homeInfoParams.buttons]]
+    name = "İletişime Geç"
+    url = "/iletisim/"
+
+  [params.profileMode]
+    enabled = false
+
+  # SEO
+  [params.cover]
+    hidden = false
+    hiddenInSingle = true
+
+  # Arama
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 1000
+    threshold = 0.4
+    minMatchCharLength = 0
+    keys = ["title", "permalink", "summary", "content"]
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+# Ana menü
+[[menu.main]]
+  name = "Ürünler"
+  url = "/urunler/"
+  weight = 10
+
+[[menu.main]]
+  name = "Hizmetler"
+  url = "/hizmetler/"
+  weight = 20
+
+[[menu.main]]
+  name = "Blog"
+  url = "/blog/"
+  weight = 30
+
+[[menu.main]]
+  name = "Hakkımızda"
+  url = "/hakkimizda/"
+  weight = 40
+
+[[menu.main]]
+  name = "İletişim"
+  url = "/iletisim/"
+  weight = 50
+
+[[menu.main]]
+  name = "🔍"
+  url = "/search/"
+  weight = 60
+
+[markup]
+  [markup.highlight]
+    style = "dracula"
+    lineNos = false
+    guessSyntax = true
