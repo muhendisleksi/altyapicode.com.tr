@@ -1,6 +1,6 @@
 ---
 title: "İletişim"
-description: "AltyapiCode ile iletişime geçin"
+description: "Abdulbaki Atakan ile iletişime geçin"
 layout: "single"
 ---
 
