@@ -1,19 +1,32 @@
 {{ define "main" }}
 <section class="page-content container">
-    <div class="page-header">
-        {{ if .Params.tags }}
-        <div class="section-label">{{ index .Params.tags 0 }}</div>
-        {{ end }}
-        <h1>{{ .Title }}</h1>
-        {{ with .Description }}<p class="page-desc">{{ . }}</p>{{ end }}
-        {{ if .Date }}
+    <div class="back-nav">
         {{ if eq .Section "blog" }}
-        <div class="page-meta">{{ .Date.Format "2 January 2006" }} · {{ .ReadingTime }} dk okuma</div>
-        {{ end }}
+        <a href="/blog/" class="back-link">← Blog'a Dön</a>
+        {{ else if eq .Section "urunler" }}
+        <a href="/urunler/" class="back-link">← Ürünlere Dön</a>
+        {{ else if eq .Section "hizmetler" }}
+        <a href="/hizmetler/" class="back-link">← Hizmetlere Dön</a>
+        {{ else }}
+        <a href="/" class="back-link">← Ana Sayfa</a>
         {{ end }}
     </div>
-    <div class="page-body">
-        {{ .Content }}
+    <div class="content-card">
+        <div class="page-header">
+            {{ if .Params.tags }}
+            <div class="section-label">{{ delimit .Params.tags " · " }}</div>
+            {{ end }}
+            <h1>{{ .Title }}</h1>
+            {{ with .Description }}<p class="page-desc">{{ . }}</p>{{ end }}
+            {{ if .Date }}
+            {{ if eq .Section "blog" }}
+            <div class="page-meta">{{ .Date.Format "2 January 2006" }} · {{ .ReadingTime }} dk okuma</div>
+            {{ end }}
+            {{ end }}
+        </div>
+        <div class="page-body">
+            {{ .Content }}
+        </div>
     </div>
 
     {{ if eq .Section "blog" }}

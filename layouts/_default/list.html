@@ -1,13 +1,24 @@
 {{ define "main" }}
 <section class="page-content container">
-    <div class="page-header">
-        <div class="section-label">{{ .Section }}</div>
-        <h1>{{ .Title }}</h1>
-        {{ with .Description }}<p class="page-desc">{{ . }}</p>{{ end }}
+    <div class="back-nav">
+        <a href="/" class="back-link">← Ana Sayfa</a>
+    </div>
+    <div class="content-card">
+        <div class="page-header">
+            <div class="section-label">{{ .Section }}</div>
+            <h1>{{ .Title }}</h1>
+            {{ with .Description }}<p class="page-desc">{{ . }}</p>{{ end }}
+        </div>
+
+        {{ if .Content }}
+        <div class="page-body">
+            {{ .Content }}
+        </div>
+        {{ end }}
     </div>
 
     {{ if .Pages }}
-    <div class="blog-grid">
+    <div class="blog-grid" style="margin-top: 2rem;">
         {{ range .Pages }}
         <a href="{{ .Permalink }}" class="blog-card">
             <div class="blog-date">{{ .Date.Format "2 January 2006" }}</div>
@@ -16,8 +27,6 @@
         </a>
         {{ end }}
     </div>
-    {{ else }}
-    <p class="empty-message">Henüz içerik eklenmedi.</p>
     {{ end }}
 </section>
 {{ end }}
