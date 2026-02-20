@@ -3,19 +3,14 @@
    ══════════════════════════════════════ */
 
 /* ── SCROLL REVEAL ── */
-/* When GSAP is available, it handles animations via inline styles.
-   The .gsap-ready class is added to <html> by gsap-animations.js
-   so CSS reveal stays as fallback only when GSAP fails to load. */
+/* CSS fallback when GSAP is not available.
+   When GSAP loads, it removes .reveal-element class from all elements
+   and handles animations itself. */
 .reveal-element {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
                 transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-html.gsap-ready .reveal-element {
-    opacity: 1;
-    transform: none;
-    transition: none;
 }
 .reveal-element.revealed {
     opacity: 1;
