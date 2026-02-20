@@ -9,6 +9,9 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
+  // Signal CSS that GSAP is handling animations
+  document.documentElement.classList.add('gsap-ready');
+
   // Default ease
   var ease = 'power3.out';
 
@@ -59,14 +62,19 @@
   });
 
   // ── SPECS ──
-  gsap.from('.spec-check-item', {
-    scrollTrigger: { trigger: '.specs-layout', start: 'top 80%' },
-    opacity: 0, x: -30, stagger: 0.1, duration: 0.6, ease: 'power2.out',
+  gsap.from('.specs-text', {
+    scrollTrigger: { trigger: '.specs-hero', start: 'top 80%' },
+    opacity: 0, x: -60, duration: 0.8, ease: 'power2.out',
+    clearProps: 'all'
+  });
+  gsap.from('.specs-image', {
+    scrollTrigger: { trigger: '.specs-hero', start: 'top 80%' },
+    opacity: 0, x: 60, scale: 1.03, duration: 0.8, ease: 'power2.out',
     clearProps: 'all'
   });
   gsap.from('.spec-metric-card', {
-    scrollTrigger: { trigger: '.specs-metrics', start: 'top 80%' },
-    opacity: 0, scale: 0.9, stagger: 0.12, duration: 0.7, ease: 'back.out(1.4)',
+    scrollTrigger: { trigger: '.specs-metrics-row', start: 'top 85%' },
+    opacity: 0, y: 40, stagger: 0.12, duration: 0.7, ease: 'back.out(1.4)',
     clearProps: 'all'
   });
 
