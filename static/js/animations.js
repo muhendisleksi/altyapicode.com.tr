@@ -4,18 +4,21 @@
 
 (function() {
   // ── SCROLL REVEAL (IntersectionObserver) ──
-  const revealElements = document.querySelectorAll('.reveal-element');
-  if (revealElements.length > 0) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  // Skip if GSAP is handling animations (gsap-ready class added by gsap-animations.js)
+  if (!document.documentElement.classList.contains('gsap-ready')) {
+    const revealElements = document.querySelectorAll('.reveal-element');
+    if (revealElements.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-    revealElements.forEach(el => observer.observe(el));
+      revealElements.forEach(el => observer.observe(el));
+    }
   }
 
   // ── TERMINAL TAB SWITCHING ──

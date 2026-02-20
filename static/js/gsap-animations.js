@@ -28,7 +28,6 @@
   gsap.from('.stat-item', {
     scrollTrigger: { trigger: '.stats-bar', start: 'top 85%' },
     opacity: 0, y: 40, stagger: 0.12, duration: 0.7, ease: ease,
-    clearProps: 'all'
   });
 
   // ── SECTION HEADINGS ──
@@ -36,60 +35,51 @@
     gsap.from(el, {
       scrollTrigger: { trigger: el, start: 'top 90%' },
       opacity: 0, y: 24, duration: 0.65, ease: 'power2.out',
-      clearProps: 'all'
-    });
+      });
   });
 
   // ── PRODUCT CARDS ──
   gsap.from('.product-card', {
     scrollTrigger: { trigger: '.products-grid', start: 'top 80%' },
     opacity: 0, y: 60, stagger: 0.15, duration: 0.8, ease: ease,
-    clearProps: 'all'
   });
 
   // ── STANDARDS ──
   gsap.from('.standard-card', {
     scrollTrigger: { trigger: '.standards-grid', start: 'top 80%' },
     opacity: 0, x: -40, stagger: 0.12, duration: 0.7, ease: 'power2.out',
-    clearProps: 'all'
   });
 
   // ── WORKFLOW STEPS ──
   gsap.from('.workflow-step', {
     scrollTrigger: { trigger: '.workflow-steps', start: 'top 80%' },
     opacity: 0, y: 50, stagger: 0.18, duration: 0.7, ease: ease,
-    clearProps: 'all'
   });
 
   // ── SPECS ──
   gsap.from('.specs-text', {
     scrollTrigger: { trigger: '.specs-hero', start: 'top 80%' },
     opacity: 0, x: -60, duration: 0.8, ease: 'power2.out',
-    clearProps: 'all'
   });
   gsap.from('.specs-image', {
     scrollTrigger: { trigger: '.specs-hero', start: 'top 80%' },
     opacity: 0, x: 60, scale: 1.03, duration: 0.8, ease: 'power2.out',
-    clearProps: 'all'
   });
   gsap.from('.spec-metric-card', {
     scrollTrigger: { trigger: '.specs-metrics-row', start: 'top 85%' },
     opacity: 0, y: 40, stagger: 0.12, duration: 0.7, ease: 'back.out(1.4)',
-    clearProps: 'all'
   });
 
   // ── TESTIMONIAL ──
   gsap.from('.testimonial-card', {
     scrollTrigger: { trigger: '.testimonial-card', start: 'top 85%' },
     opacity: 0, y: 40, scale: 0.97, duration: 0.9, ease: ease,
-    clearProps: 'all'
   });
 
   // ── PRICING CARDS ──
   gsap.from('.pricing-card', {
     scrollTrigger: { trigger: '.pricing-grid', start: 'top 80%' },
     opacity: 0, y: 50, stagger: 0.15, duration: 0.8, ease: ease,
-    clearProps: 'all'
   });
 
   // ── BLOG CARDS ──
@@ -98,29 +88,25 @@
     gsap.from('.blog-card', {
       scrollTrigger: { trigger: '.blog-grid', start: 'top 80%' },
       opacity: 0, y: 40, stagger: 0.12, duration: 0.7, ease: 'power2.out',
-      clearProps: 'all'
-    });
+      });
   }
 
   // ── CTA BOX ──
   gsap.from('.cta-box', {
     scrollTrigger: { trigger: '.cta-section', start: 'top 80%' },
     opacity: 0, y: 30, duration: 0.8, ease: ease,
-    clearProps: 'all'
   });
 
   // ── CONTACT CHANNELS ──
   gsap.from('.contact-channel', {
     scrollTrigger: { trigger: '.contact-channels', start: 'top 85%' },
     opacity: 0, y: 30, stagger: 0.12, duration: 0.6, ease: 'power2.out',
-    clearProps: 'all'
   });
 
   // ── FOOTER ──
   gsap.from('.footer-inner', {
     scrollTrigger: { trigger: 'footer', start: 'top 90%' },
     opacity: 0, y: 30, duration: 0.7, ease: 'power2.out',
-    clearProps: 'all'
   });
 
 })();
