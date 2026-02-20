@@ -38,7 +38,8 @@ nav {
     transition: transform 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
 }
 nav.nav-scrolled {
-    background: rgba(10, 14, 23, 0.95);
+    background: rgba(7, 11, 16, 0.92);
+    border-bottom-color: rgba(34, 211, 238, 0.15);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 nav.nav-hidden {
@@ -227,6 +228,14 @@ nav.nav-hidden {
     box-shadow: 0 4px 20px var(--accent-glow);
 }
 
+/* ── PRODUCT IMAGE BORDER GLOW ── */
+.product-image {
+    transition: border-color 0.3s;
+}
+.product-card:hover .product-image {
+    border-color: var(--accent-dim);
+}
+
 /* ── SMOOTH PAGE TRANSITIONS ── */
 .page-content {
     animation: pageIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -238,8 +247,8 @@ nav.nav-hidden {
 
 /* ── SELECTION COLOR ── */
 ::selection {
-    background: rgba(34, 211, 238, 0.25);
-    color: var(--text-primary);
+    background: rgba(34, 211, 238, 0.3);
+    color: #F2F5F9;
 }
 
 /* ── SCROLLBAR STYLING ── */
@@ -250,11 +259,52 @@ nav.nav-hidden {
     background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-    background: var(--border);
+    background: rgba(34, 211, 238, 0.3);
     border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-dim);
+    background: rgba(34, 211, 238, 0.5);
+}
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(34, 211, 238, 0.3) var(--bg-primary);
+}
+
+/* ── PRICING CARD STAGGER ── */
+.pricing-card.reveal-element:nth-child(1) { transition-delay: 0s; }
+.pricing-card.reveal-element:nth-child(2) { transition-delay: 0.12s; }
+.pricing-card.reveal-element:nth-child(3) { transition-delay: 0.24s; }
+
+/* ── SPEC METRIC STAGGER ── */
+.spec-metric-card.reveal-element:nth-child(1) { transition-delay: 0s; }
+.spec-metric-card.reveal-element:nth-child(2) { transition-delay: 0.12s; }
+.spec-metric-card.reveal-element:nth-child(3) { transition-delay: 0.24s; }
+
+/* ── PRICING CARD HOVER GLOW ── */
+.pricing-card {
+    position: relative;
+}
+.pricing-card::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.15), transparent 50%, rgba(34, 211, 238, 0.08));
+    opacity: 0;
+    transition: opacity 0.4s;
+    z-index: -1;
+}
+.pricing-card:hover::after {
+    opacity: 1;
+}
+
+/* ── TESTIMONIAL CARD HOVER ── */
+.testimonial-card {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.testimonial-card:hover {
+    border-color: var(--accent-dim);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
 }
 
 /* ── REDUCE MOTION FOR ACCESSIBILITY ── */
