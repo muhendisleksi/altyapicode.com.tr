@@ -12,11 +12,6 @@
   // Signal that GSAP is handling animations
   document.documentElement.classList.add('gsap-ready');
 
-  // Remove .reveal-element class from all elements so CSS opacity:0 no longer applies.
-  // GSAP will handle show/hide via its own inline styles.
-  document.querySelectorAll('.reveal-element').forEach(function (el) {
-    el.classList.remove('reveal-element');
-  });
 
   // Default ease
   var ease = 'power3.out';
