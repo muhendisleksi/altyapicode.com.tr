@@ -49,19 +49,12 @@
     document.documentElement.setAttribute('data-theme', savedTheme);
   }
   var themeBtn = document.getElementById('themeToggle');
-  function updateIcon() {
-    if (!themeBtn) return;
-    var current = document.documentElement.getAttribute('data-theme');
-    themeBtn.textContent = current === 'light' ? '☀️' : '🌙';
-  }
-  updateIcon();
   if (themeBtn) {
     themeBtn.addEventListener('click', function() {
       var current = document.documentElement.getAttribute('data-theme');
       var next = current === 'light' ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
-      updateIcon();
     });
   }
 
