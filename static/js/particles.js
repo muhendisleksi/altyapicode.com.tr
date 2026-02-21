@@ -21,17 +21,36 @@
   let mouse = { x: -1000, y: -1000 };
   let animationId;
   
-  const CONFIG = {
-    particleCount: 80,
-    maxDistance: 150,       // Max connection distance
-    mouseRadius: 200,      // Mouse influence radius
-    mousePush: 0.08,       // How much mouse pushes particles
-    baseSpeed: 0.3,
-    particleSize: 1.5,
-    lineOpacity: 0.15,
-    particleColor: '34, 211, 238',   // cyan
+  const DARK_CONFIG = {
+    particleColor: '34, 211, 238',
     lineColor: '34, 211, 238',
     mouseGlowColor: '34, 211, 238',
+    lineOpacity: 0.15,
+    glowIntensity: 0.06,
+    particleBaseOpacity: 0.3,
+  };
+
+  const LIGHT_CONFIG = {
+    particleColor: '6, 148, 180',
+    lineColor: '6, 148, 180',
+    mouseGlowColor: '6, 182, 212',
+    lineOpacity: 0.25,
+    glowIntensity: 0.12,
+    particleBaseOpacity: 0.5,
+  };
+
+  function getThemeConfig() {
+    var theme = document.documentElement.getAttribute('data-theme');
+    return theme === 'light' ? LIGHT_CONFIG : DARK_CONFIG;
+  }
+
+  const CONFIG = {
+    particleCount: 80,
+    maxDistance: 150,
+    mouseRadius: 200,
+    mousePush: 0.08,
+    baseSpeed: 0.3,
+    particleSize: 1.5,
     mouseGlowRadius: 250,
   };
 
@@ -60,15 +79,16 @@
 
   function drawMouseGlow() {
     if (mouse.x < 0) return;
-    
+    const tc = getThemeConfig();
+
     const gradient = ctx.createRadialGradient(
       mouse.x, mouse.y, 0,
       mouse.x, mouse.y, CONFIG.mouseGlowRadius
     );
-    gradient.addColorStop(0, `rgba(${CONFIG.mouseGlowColor}, 0.06)`);
-    gradient.addColorStop(0.5, `rgba(${CONFIG.mouseGlowColor}, 0.02)`);
+    gradient.addColorStop(0, `rgba(${tc.mouseGlowColor}, ${tc.glowIntensity})`);
+    gradient.addColorStop(0.5, `rgba(${tc.mouseGlowColor}, ${tc.glowIntensity * 0.33})`);
     gradient.addColorStop(1, 'transparent');
-    
+
     ctx.fillStyle = gradient;
     ctx.fillRect(
       mouse.x - CONFIG.mouseGlowRadius,
@@ -122,61 +142,63 @@
     // Mouse glow
     drawMouseGlow();
     
+    const tc = getThemeConfig();
+
     // Draw connections
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
         const dy = particles[i].y - particles[j].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        
+
         if (dist < CONFIG.maxDistance) {
-          const opacity = (1 - dist / CONFIG.maxDistance) * CONFIG.lineOpacity;
-          
+          const opacity = (1 - dist / CONFIG.maxDistance) * tc.lineOpacity;
+
           // Brighter lines near mouse
           const midX = (particles[i].x + particles[j].x) / 2;
           const midY = (particles[i].y + particles[j].y) / 2;
           const mouseDist = Math.sqrt(
             (mouse.x - midX) ** 2 + (mouse.y - midY) ** 2
           );
-          const mouseBoost = mouseDist < CONFIG.mouseRadius ? 
-            (1 - mouseDist / CONFIG.mouseRadius) * 0.3 : 0;
-          
+          const mouseBoost = mouseDist < CONFIG.mouseRadius ?
+            (1 - mouseDist / CONFIG.mouseRadius) * 0.4 : 0;
+
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(${CONFIG.lineColor}, ${opacity + mouseBoost})`;
-          ctx.lineWidth = 0.5 + mouseBoost;
+          ctx.strokeStyle = `rgba(${tc.lineColor}, ${opacity + mouseBoost})`;
+          ctx.lineWidth = 0.5 + mouseBoost * 1.5;
           ctx.stroke();
         }
       }
     }
-    
+
     // Draw particles
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
-      
+
       // Check mouse proximity for glow effect
       const mouseDist = Math.sqrt(
         (mouse.x - p.x) ** 2 + (mouse.y - p.y) ** 2
       );
       const isNearMouse = mouseDist < CONFIG.mouseRadius;
-      
+
       const size = p.isAnchor ? p.size * 2.5 : p.size;
-      const baseOpacity = p.isAnchor ? 0.8 : p.opacity;
-      const glowBoost = isNearMouse ? (1 - mouseDist / CONFIG.mouseRadius) * 0.5 : 0;
-      
+      const baseOpacity = p.isAnchor ? 0.9 : (p.opacity + tc.particleBaseOpacity * 0.5);
+      const glowBoost = isNearMouse ? (1 - mouseDist / CONFIG.mouseRadius) * 0.6 : 0;
+
       // Outer glow for anchor nodes or mouse-near particles
       if (p.isAnchor || isNearMouse) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, size * 3, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${CONFIG.particleColor}, ${0.05 + glowBoost * 0.1})`;
+        ctx.fillStyle = `rgba(${tc.particleColor}, ${0.08 + glowBoost * 0.15})`;
         ctx.fill();
       }
-      
+
       // Core particle
       ctx.beginPath();
       ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${CONFIG.particleColor}, ${baseOpacity + glowBoost})`;
+      ctx.fillStyle = `rgba(${tc.particleColor}, ${baseOpacity + glowBoost})`;
       ctx.fill();
     }
   }

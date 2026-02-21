@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+      (function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})();
+    </script>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/animations.css">
     <link rel="stylesheet" href="/css/fixes.css">
@@ -25,7 +28,10 @@
             <li><a href="/hakkimizda/">Hakkımızda</a></li>
             <li><a href="/iletisim/" class="nav-cta">İletişime Geç</a></li>
         </ul>
-        <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+        <div class="nav-right">
+            <button id="themeToggle" title="Tema Değiştir" aria-label="Tema Değiştir">🌙</button>
+            <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+        </div>
     </nav>
 
     {{ block "main" . }}{{ end }}

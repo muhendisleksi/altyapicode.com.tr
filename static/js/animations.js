@@ -1,132 +1,67 @@
 /* ══════════════════════════════════════
-   AltyapıCode — Animations & Interactions
+   AltyapıCode — Interactions only (no animations)
    ══════════════════════════════════════ */
-
 (function() {
-  // ── SCROLL REVEAL (IntersectionObserver) ──
-  // Skip if GSAP is handling animations (gsap-ready class added by gsap-animations.js)
-  if (!document.documentElement.classList.contains('gsap-ready')) {
-    const revealElements = document.querySelectorAll('.reveal-element');
-    if (revealElements.length > 0) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-      revealElements.forEach(el => observer.observe(el));
-    }
-  }
 
   // ── TERMINAL TAB SWITCHING ──
-  const terminalTabs = document.querySelectorAll('.terminal-tab');
-  const terminalPanels = document.querySelectorAll('.terminal-panel');
-
-  terminalTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const target = tab.dataset.tab;
-
-      terminalTabs.forEach(t => t.classList.remove('active'));
-      terminalPanels.forEach(p => p.classList.remove('active'));
-
+  var terminalTabs = document.querySelectorAll('.terminal-tab');
+  var terminalPanels = document.querySelectorAll('.terminal-panel');
+  terminalTabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var target = tab.dataset.tab;
+      terminalTabs.forEach(function(t) { t.classList.remove('active'); });
+      terminalPanels.forEach(function(p) { p.classList.remove('active'); });
       tab.classList.add('active');
-      const panel = document.querySelector('.terminal-panel[data-panel="' + target + '"]');
+      var panel = document.querySelector('.terminal-panel[data-panel="' + target + '"]');
       if (panel) panel.classList.add('active');
     });
   });
 
-  // ── STATS COUNTER ANIMATION ──
-  const statItems = document.querySelectorAll('.stat-item h3');
-  let statsAnimated = false;
-
-  function animateCounters() {
-    if (statsAnimated) return;
-    statsAnimated = true;
-
-    statItems.forEach(function(el) {
-      const text = el.textContent.trim();
-      const hasPlus = text.includes('+');
-      const hasPercent = text.includes('%');
-
-      var numStr = text.replace(/[+%]/g, '');
-      var target = parseInt(numStr, 10);
-      if (isNaN(target)) return;
-
-      var duration = 1500;
-      var start = performance.now();
-
-      function tick(now) {
-        var elapsed = now - start;
-        var progress = Math.min(elapsed / duration, 1);
-        var eased = 1 - Math.pow(1 - progress, 3);
-        var current = Math.round(target * eased);
-
-        var display = '';
-        if (hasPercent) display = '%' + current;
-        else display = current + (hasPlus ? '+' : '');
-
-        el.textContent = display;
-
-        if (progress < 1) requestAnimationFrame(tick);
-      }
-
-      el.textContent = hasPercent ? '%0' : '0';
-      requestAnimationFrame(tick);
-    });
-  }
-
-  var statsBar = document.querySelector('.stats-bar');
-  if (statsBar) {
-    var statsObserver = new IntersectionObserver(function(entries) {
-      if (entries[0].isIntersecting) {
-        animateCounters();
-        statsObserver.unobserve(statsBar);
-      }
-    }, { threshold: 0.3 });
-    statsObserver.observe(statsBar);
-  }
-
-  // ── NAVBAR SCROLL BEHAVIOR ──
+  // ── NAVBAR SCROLL ──
   var lastScroll = 0;
   var nav = document.querySelector('nav');
-
   window.addEventListener('scroll', function() {
-    var currentScroll = window.pageYOffset;
-
-    if (currentScroll > 50) {
-      nav.classList.add('nav-scrolled');
-    } else {
-      nav.classList.remove('nav-scrolled');
-    }
-
-    if (currentScroll > 300) {
-      if (currentScroll > lastScroll + 10) {
-        nav.classList.add('nav-hidden');
-      } else if (currentScroll < lastScroll - 10) {
-        nav.classList.remove('nav-hidden');
-      }
-    } else {
-      nav.classList.remove('nav-hidden');
-    }
-
-    lastScroll = currentScroll;
+    var s = window.pageYOffset;
+    if (s > 50) nav.classList.add('nav-scrolled');
+    else nav.classList.remove('nav-scrolled');
+    if (s > 300) {
+      if (s > lastScroll + 10) nav.classList.add('nav-hidden');
+      else if (s < lastScroll - 10) nav.classList.remove('nav-hidden');
+    } else nav.classList.remove('nav-hidden');
+    lastScroll = s;
   }, { passive: true });
 
-  // ── BACK TO TOP BUTTON ──
-  var backToTop = document.getElementById('backToTop');
-  if (backToTop) {
+  // ── BACK TO TOP ──
+  var btn = document.getElementById('backToTop');
+  if (btn) {
     window.addEventListener('scroll', function() {
-      if (window.pageYOffset > 500) {
-        backToTop.classList.add('visible');
-      } else {
-        backToTop.classList.remove('visible');
-      }
+      if (window.pageYOffset > 500) btn.classList.add('visible');
+      else btn.classList.remove('visible');
     });
-    backToTop.addEventListener('click', function() {
+    btn.addEventListener('click', function() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // ── THEME TOGGLE ──
+  var savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }
+  var themeBtn = document.getElementById('themeToggle');
+  function updateIcon() {
+    if (!themeBtn) return;
+    var current = document.documentElement.getAttribute('data-theme');
+    themeBtn.textContent = current === 'light' ? '☀️' : '🌙';
+  }
+  updateIcon();
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function() {
+      var current = document.documentElement.getAttribute('data-theme');
+      var next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateIcon();
     });
   }
 
