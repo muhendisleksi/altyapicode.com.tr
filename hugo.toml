@@ -1,7 +1,7 @@
 baseURL = "https://altyapicode.com.tr/"
 languageCode = "tr-TR"
 defaultContentLanguage = "tr"
-title = "ATA CAD — İller Bankası, İSKİ ve DSİ standartlarında bağımsız altyapı CAD platformu"
+title = "ATA CAD — Bağımsız Altyapı CAD Platformu"
 enableRobotsTXT = true
 
 # Bu sitede etiket/kategori arsivi yok — gurultu yapiyordu.
