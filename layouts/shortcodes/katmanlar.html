@@ -1,0 +1,40 @@
+{{- /* Modüler yapı şeması.  {{< katmanlar >}}
+
+       Ürün sayfasında kullanılır; ziyaretçiye platformun katmanlarını ve
+       modüllerin durumunu gösterir. Teknik mimari ayrıntısı (bağımlılık yönü,
+       sözleşmeler) bilinçli olarak yer almaz — hedef kitle son kullanıcıdır.
+
+       Modül durumları `params.moduller` listesinden okunmuyor; oradaki liste
+       ürün modüllerinin tamamı, buradaki ise KATMAN yerleşimi.               */ -}}
+<figure class="katman-diyagram">
+  <div class="kd-govde">
+
+    <div class="kd-kat kd-kabuk">
+      <p class="kd-ad">Arayüz</p>
+      <p class="kd-not">Şerit · çizim sekmeleri · araç alanı · özellikler paneli · durum çubuğu</p>
+    </div>
+
+    <div class="kd-kat kd-modul">
+      <p class="kd-ad">Uzmanlık modülleri</p>
+      <div class="kd-kutular">
+        <span class="kd-kutu var">Güzergâh</span>
+        <span class="kd-kutu var">Profil ve en kesit</span>
+        <span class="kd-kutu var">Tip kesit ve koridor</span>
+        <span class="kd-kutu var">Kübaj</span>
+        <span class="kd-kutu planli">Altyapı</span>
+        <span class="kd-kutu planli">Havza</span>
+        <span class="kd-kutu planli">İstinat duvarı</span>
+      </div>
+      <p class="kd-lejant">
+        <b class="var">çalışıyor</b><b class="planli">planlı</b>
+      </p>
+    </div>
+
+    <div class="kd-kat kd-cekirdek">
+      <p class="kd-ad">CAD çekirdeği</p>
+      <p class="kd-not">Çizim ve düzenleme · katman, stil, metin, ölçü, tarama ve blok ·
+         seçim, kenetleme ve grip · 3B görünüm · içe/dışa aktarma ve baskı</p>
+    </div>
+
+  </div>
+</figure>

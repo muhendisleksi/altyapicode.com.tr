@@ -1,346 +1,376 @@
 {{ define "main" }}
-<!-- HERO -->
+
+{{/* ═══════════════════════════════════════════════════════════════ HERO ══ */}}
 <section class="hero">
-    <div class="hero-grid-bg"></div>
-    <div class="hero-content">
-        <div>
-            <div class="hero-badge">AutoCAD &amp; Civil 3D Eklenti Çözümleri</div>
-            <h1>
-                Türk Altyapı Projelerine<br>
-                <span class="highlight">Özel Tasarlanmış</span><br>
-                AutoCAD &amp; Civil 3D Eklentileri
-            </h1>
-            <p class="hero-desc">
-                İller Bankası, İSKİ ve DSİ standartlarına tam uyumlu otomatik metraj, 
-                hendek kesitleri ve hacim hesapları. Saatler süren işleri dakikalara indirin.
-            </p>
-            <div class="hero-actions">
-                <a href="/urunler/" class="btn-primary">Ürünleri İncele →</a>
-                <a href="#nasil" class="btn-secondary">Nasıl Çalışır?</a>
-            </div>
-        </div>
-        <div class="hero-visual">
-            <div class="terminal showcase">
-                <div class="terminal-header">
-                    <div class="terminal-dot red"></div>
-                    <div class="terminal-dot yellow"></div>
-                    <div class="terminal-dot green"></div>
-                    <div class="terminal-tabs">
-                        <button class="terminal-tab active" data-tab="0">Arayüz</button>
-                        <button class="terminal-tab" data-tab="1">AutoCAD Çizim</button>
-                        <button class="terminal-tab" data-tab="2">Excel Rapor</button>
-                    </div>
-                </div>
-                <div class="terminal-body showcase-body">
-                    <div class="terminal-panel active" data-panel="0">
-                        <img src="/images/hero-ui-panel.jpg" alt="Altyapı Asistanı — parametre giriş arayüzü" loading="eager" width="800" height="500">
-                    </div>
-                    <div class="terminal-panel" data-panel="1">
-                        <img src="/images/hero-autocad-drawing.jpg" alt="AutoCAD'de otomatik hendek kesiti çizimi" loading="lazy" width="800" height="500">
-                    </div>
-                    <div class="terminal-panel" data-panel="2">
-                        <img src="/images/hero-excel-report.jpg" alt="İller Bankası formatında Excel metraj raporu" loading="lazy" width="800" height="500">
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="hero-ic sinir">
+
+    <div class="hero-metin">
+      <p class="hero-etiket">{{ .Site.Params.asama }} · {{ .Site.Params.surum }}</p>
+      {{/* Başlık eskiden "Yıllık CAD lisansı ödemeden altyapı projesi" idi.
+           Değiştirildi: ATA CAD de yıllık lisanslanacak — o cümle tutulamayacak
+           bir söz veriyordu ve faturayı gören ilk kullanıcıda sitenin bütün
+           dürüstlük tonunu çürütürdü. Kaçınılan bedel Autodesk'in bedelidir;
+           ürünün kendi bedeli ayrı bir kalemdir ve fiyatı henüz belli değil. */}}
+      <h1 class="ac">Türk kurum standartlarıyla <em>bağımsız altyapı CAD'i</em></h1>
+      <p class="hero-giris ac" style="--g:.05s">
+        ATA CAD, altyapı projeleri için geliştirilmiş bağımsız bir 3B CAD
+        platformudur. Çizim, yüzey, güzergâh, profil, kesit, koridor ve kübaj
+        tek programda; altyapı, istinat duvarı ve havza modül olarak eklenir.
+      </p>
+
+      {{/* Burada eskiden bir maliyet kutusu vardı (≈2.500 $ → 0 $). Kaldırıldı:
+           ① "0 $" ürünün fiyatı DEĞİL, henüz fiyat yok — hero'da bedava sözü
+           veriyordu; ② sayfanın en büyük rakamı rakibin fiyatıydı; ③ maliyet
+           iddiası H1'de duruyor, /karsilastirma/ ▸ "Abonelik yükü" de anlatıyor.
+           Fiyat kapanış argümanıdır; açılışta sorulan soru "bu gerçek mi".
+           Zincir o soruyu yanıtlıyor ve sağdaki ekran dönüşümüyle eşleşiyor. */}}
+      {{/* Adımların `data-adim` değerleri sağdaki hero karelerinin aynı
+           özniteliğiyle eşleşir: hangi kare açıksa zincirin o halkası yanar.
+           Görsel ile iddia böylece aynı şeyi söyler — süsleme değil, işaret. */}}
+      <div class="zincir ac" style="--g:.1s">
+        <p class="zincir-bas">Tek programda</p>
+        <ol class="zincir-adimlar">
+          <li data-adim="nokta"><span>Nokta</span></li>
+          <li data-adim="yuzey"><span>Yüzey</span></li>
+          <li data-adim="guzergah"><span>Güzergâh</span></li>
+          <li data-adim="profil"><span>Profil</span></li>
+          <li data-adim="tipkesit"><span>Tip kesit</span></li>
+          <li data-adim="koridor"><span>Koridor</span></li>
+          <li data-adim="kubaj"><span>Kübaj</span></li>
+        </ol>
+        <p class="zincir-not">Ölçüm noktasından kütle dağılımına kadar tüm iş akışı
+           ATA CAD içinde tamamlanır; araya başka bir program girmez.
+           <a href="/karsilastirma/">Yetenek karşılaştırması →</a></p>
+      </div>
+
+      <div class="dugmeler ac" style="--g:.14s">
+        <a href="/iletisim/" class="dugme dolu">Erken erişim listesine katıl</a>
+        <a href="/ekran-goruntuleri/" class="dugme bos">Ekran görüntüleri →</a>
+      </div>
     </div>
+
+    {{/* Görsel dönüşümü. Kareler ATA CAD'in KENDİ geliştirme sürümünden;
+         hepsi tek bir gerçek örnek projenin (vadi yolu) ekranlarıdır.
+         Tamamı /ekran-goruntuleri/ sayfasında. */}}
+    <div class="hero-gorsel ac" style="--g:.08s">
+      <div class="hero-cerceve">
+        <div class="hero-cerceve-bas">
+          <span class="nokta"></span><span class="nokta"></span><span class="nokta"></span>
+          <span style="margin-left:6px">ATA CAD · {{ .Site.Params.surum }}</span>
+        </div>
+
+        {{/* Kareler tek listeden üretilir; kare eklemek/çıkarmak için aşağıdaki
+             diziye dokunmak yeterli — nokta göstergeleri de aynı listeden gelir,
+             sayıları elle tutulmuyor.
+
+             `yon` = Ken Burns yönü. Ardışık kareler aynı yöne kaymasın diye
+             dönüşümlü verildi, yoksa dönüş tek bir sürekli kaydırma gibi
+             görünüyor. `adim` = soldaki zincirin hangi halkasını yakacağı.
+
+             VİDEO: bir karenin `static/video/hero-<ad>.webm` dosyası varsa o
+             kare donmuş JPEG yerine ekran kaydını oynatır; yoksa bugünkü
+             görsel durur. Böylece kayıtlar teker teker eklenebilir, hepsi
+             birden hazır olmak zorunda değil. JPEG her hâlükârda `poster`
+             olarak kalır: video oynamadan önce, hareket kısıtlıyken ve dar
+             ekranda görünen şey odur. */}}
+        {{ $kareler := slice
+          (dict "ad" "yuzey-tin"          "adim" "nokta yuzey"     "yon" "1"
+                "alt" "ATA CAD'de TIN yüzey ve eşyükselti eğrileri"
+                "yazi" "TIN yüzey ve eşyükselti eğrileri — ölçüm noktalarından kurulmuş arazi yüzeyi")
+          (dict "ad" "boy-profil"         "adim" "guzergah profil" "yon" "2"
+                "alt" "ATA CAD'de boyuna profil görünümü"
+                "yazi" "Boyuna profil — siyah kot, kırmızı hat, yatay ve düşey geometri şeritleri")
+          (dict "ad" "tip-kesit"          "adim" "tipkesit"        "yon" "3"
+                "alt" "ATA CAD'de tip kesit tanımlama penceresi"
+                "yazi" "Tip kesit tanımı — KGM TİP3F, 25,30 m; her ölçü paftadaki adıyla")
+          (dict "ad" "koridor-3b-yakin"   "adim" "koridor"         "yon" "4"
+                "alt" "ATA CAD'de koridorun 3B görünümü"
+                "yazi" "Koridor 3B — arazi yüzeyi üzerinde kazı (kırmızı) ve dolgu (yeşil) şevleri")
+          (dict "ad" "kazi-hacim-yuzeyi"  "adim" "kubaj"           "yon" "1"
+                "alt" "ATA CAD'de kazı tasarımı ve hacim yüzeyi"
+                "yazi" "Kazı tasarımı — ortofoto altlık üzerinde şevli hacim yüzeyi")
+        }}
+
+        <div class="hero-kareler" id="hero-kareler">
+          {{- range $i, $k := $kareler }}
+          {{- $gorsel := printf "/images/ata-cad/hero-%s.jpg" $k.ad }}
+          {{- $webm   := printf "static/video/hero-%s.webm" $k.ad }}
+          {{- $mp4    := printf "static/video/hero-%s.mp4"  $k.ad }}
+          {{- $kwebm  := printf "static/video/hero-%s-kucuk.webm" $k.ad }}
+          {{- $kmp4   := printf "static/video/hero-%s-kucuk.mp4"  $k.ad }}
+          <figure class="hero-kare{{ if eq $i 0 }} etkin{{ end }}" data-adim="{{ $k.adim }}" data-yon="{{ $k.yon }}">
+            {{- if os.FileExists $webm }}
+            {{/* `preload=none`: dosyayı betik indirir. Hero'nun ilk boyaması
+                 poster ile yapılır, video onu sonradan devralır.
+
+                 `data-kucuk-*` dar ekranın hafif sürümüdür (960×600). Kaynağı
+                 betik seçer; `<source media="...">` bu iş için güvenilmez,
+                 tarayıcılar video kaynağı seçerken onu dikkate almıyor. */}}
+            <video class="hero-video" poster="{{ $gorsel }}" width="1600" height="1000"
+                   muted loop playsinline preload="none" aria-label="{{ $k.alt }}"
+                   {{- if os.FileExists $kwebm }} data-kucuk-webm="/video/hero-{{ $k.ad }}-kucuk.webm"{{ end }}
+                   {{- if os.FileExists $kmp4 }} data-kucuk-mp4="/video/hero-{{ $k.ad }}-kucuk.mp4"{{ end }}>
+              <source src="/video/hero-{{ $k.ad }}.webm" type="video/webm">
+              {{- if os.FileExists $mp4 }}
+              <source src="/video/hero-{{ $k.ad }}.mp4" type="video/mp4">
+              {{- end }}
+            </video>
+            {{- else }}
+            <img src="{{ $gorsel }}" alt="{{ $k.alt }}" width="1600" height="1000"
+                 {{ if eq $i 0 }}fetchpriority="high" {{ end }}decoding="async">
+            {{- end }}
+            <figcaption>{{ $k.yazi }}</figcaption>
+          </figure>
+          {{- end }}
+        </div>
+
+        {{/* Kalan süreyi gösteren şerit. Nokta göstergelerinin yerine değil,
+             üstüne konuldu: nokta "kaçıncı karedeyiz", şerit "ne kadar kaldı"
+             sorusunu yanıtlar. Süslemedir, ekran okuyucudan gizli. */}}
+        <div class="hero-sure" aria-hidden="true"><span class="hero-sure-dolgu" id="hero-sure-dolgu"></span></div>
+
+        <div class="hero-noktalar" role="tablist" aria-label="Ürün görselleri">
+          {{- range $i, $k := $kareler }}
+          <button class="hero-nokta" role="tab" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}"
+                  aria-label="{{ add $i 1 }}. görsel"></button>
+          {{- end }}
+        </div>
+      </div>
+    </div>
+
+  </div>
 </section>
 
-<!-- PRODUCTS -->
-<section id="urunler" class="container">
-    <div class="section-label">Ürünler</div>
-    <h2 class="section-title">AutoCAD &amp; Civil 3D Eklentileri</h2>
-    <p class="section-desc">
-        Sahadaki deneyimle yazılmış, Türk mühendislerinin gerçek ihtiyaçlarına göre tasarlanmış eklentiler.
-    </p>
-
-    <div class="products-grid">
-        <!-- Altyapı Asistanı -->
-        <div class="product-card">
-            <div class="product-image">
-                <img src="/images/product-altyapi.jpg" alt="Altyapı Asistanı ekran görüntüsü" loading="lazy" width="400" height="250">
-                <div class="product-tag">En Popüler</div>
-            </div>
-            <div class="product-content">
-                <h3>Altyapı Asistanı</h3>
-                <p>Kanalizasyon, yağmursuyu ve içmesuyu projeleriniz için otomatik hendek kesiti, metraj tablosu ve hacim hesabı.</p>
-                <ul class="product-features">
-                    <li>Otomatik hendek kesiti oluşturma</li>
-                    <li>İller Bankası / İSKİ standartlarına uygun metraj</li>
-                    <li>Çoklu boru desteği (HDPE, Korige, Sünek Döküm)</li>
-                    <li>Excel rapor çıktısı</li>
-                    <li>Boyuna profil üzerinde otomatik çizim</li>
-                </ul>
-                <button class="btn-primary" data-product-modal="1">Detaylı İncele →</button>
-            </div>
-        </div>
-
-        <!-- İstinat Duvarı Asistanı -->
-        <div class="product-card">
-            <div class="product-image">
-                <img src="/images/product-istinat.jpg" alt="İstinat Duvarı Asistanı ekran görüntüsü" loading="lazy" width="400" height="250">
-                <div class="product-tag">Yeni</div>
-            </div>
-            <div class="product-content">
-                <h3>İstinat Duvarı Asistanı</h3>
-                <p>Konsol ve ağırlık tipi istinat duvarlarının stabilite kontrolü, kesit çizimi ve metraj hesabı.</p>
-                <ul class="product-features">
-                    <li>Devrilme, kayma ve taşıma gücü kontrolü</li>
-                    <li>TBDY-2018 deprem hesabı</li>
-                    <li>Otomatik kesit çizimi</li>
-                    <li>Kazı, beton, dolgu, kalıp metrajı</li>
-                    <li>Rankine &amp; Coulomb toprak basıncı</li>
-                </ul>
-                <button class="btn-primary" data-product-modal="2">Detaylı İncele →</button>
-            </div>
-        </div>
-
-        <!-- Özel Geliştirme -->
-        <div class="product-card">
-            <div class="product-image">
-                <img src="/images/product-ozel.jpg" alt="Özel AutoCAD eklenti geliştirme" loading="lazy" width="400" height="250">
-                <div class="product-tag">Hizmet</div>
-            </div>
-            <div class="product-content">
-                <h3>Özel Eklenti Geliştirme</h3>
-                <p>İhtiyacınıza özel AutoCAD &amp; Civil 3D eklentisi geliştirilmesi. Tekrarlayan işlerinizi otomasyona dönüştürün.</p>
-                <ul class="product-features">
-                    <li>İhtiyaç analizi ve tasarım</li>
-                    <li>C# / AutoCAD .NET API ile geliştirme</li>
-                    <li>Test ve kurulum desteği</li>
-                    <li>Belirli standartlara özel çözümler</li>
-                    <li>Eğitim ve dokümantasyon</li>
-                </ul>
-                <button class="btn-primary" data-product-modal="3">Detaylı İncele →</button>
-            </div>
-        </div>
+{{/* ═══════════════════════════════════════════════════════════ ÜRÜNLER ══ */}}
+<section class="kesim">
+  <div class="sinir">
+    <div class="kesim-bas ac">
+      <p class="komut">Ürünler</p>
+      <h2>Platform ve eklentiler</h2>
+      <p>ATA CAD geliştirme aşamasında; erken erişim listesi açık. AutoCAD kullanan
+         firmalar için hendek kesiti ve istinat duvarı eklentileri bugün satışta.</p>
     </div>
+
+    {{/* `data-kademe` = kartlar arası gecikme (sn). Betik çocuklara sırayla
+         gecikme dağıtır; ızgara tek blok hâlinde değil, dalga gibi açılır. */}}
+    <div class="urun-izgara" data-kademe=".08">
+
+      {{/* ── ATA CAD: öne çıkan geniş kart ─────────────────────────────── */}}
+      <a class="urun one-cikan" href="/urun/">
+        <div class="urun-gorsel">
+          <span class="urun-rozet yakinda">Yakında · Erken erişim</span>
+          <img src="/images/ata-cad/hero-koridor-3b-yakin.jpg" alt="ATA CAD'de koridorun 3B görünümü" width="1600" height="1000">
+        </div>
+        <div class="urun-ic">
+          <h3>ATA CAD — Bağımsız 3B CAD Platformu</h3>
+          <p>Altyapı projesinin tüm adımları tek programda: araziden kübaja kadar
+             kesintisiz bir iş akışı.</p>
+          <ul class="urun-liste">
+            <li>Çizim · katman · stil · kenetleme · grip · blok · ölçü · çıktı</li>
+            <li>Arazi ve TIN yüzey, eşyükselti eğrileri, yüzey analizi</li>
+            <li>Güzergâh, boyuna profil, kırmızı hat ve en kesit</li>
+            <li>Tip kesit, koridor modeli ve koridordan proje yüzeyi</li>
+            <li>Kübaj, kazı tasarımı ve kütle dağılımı</li>
+            <li>DWG/DXF/LandXML aktarımı · ortofoto altlık · Excel metraj raporu</li>
+          </ul>
+          <div class="urun-alt">
+            <span class="urun-fiyat yok">Erken erişim ücretsiz</span>
+            <span class="dugme dolu kucuk">Ürünü incele →</span>
+          </div>
+        </div>
+      </a>
+
+      {{/* ── AutoCAD eklentileri ────────────────────────────────────────── */}}
+      <a class="urun" href="/eklentiler/altyapi-asistani/">
+        <div class="urun-gorsel">
+          <span class="urun-rozet satista">Satışta</span>
+          {{ partial "kapak-hendek.html" . }}
+        </div>
+        <div class="urun-ic">
+          <h3>Altyapı Asistanı</h3>
+          <p>AutoCAD ve Civil 3D eklentisi. Kanalizasyon, yağmursuyu ve içmesuyu için
+             otomatik hendek kesiti, İller Bankası formatında metraj ve hacim hesabı.</p>
+          <div class="urun-alt">
+            <span class="urun-fiyat">250 $ <i>/ yıl</i></span>
+            <span class="dugme bos kucuk">İncele →</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="urun" href="/eklentiler/istinat-duvari/">
+        <div class="urun-gorsel">
+          <span class="urun-rozet satista">Satışta</span>
+          {{ partial "kapak-istinat.html" . }}
+        </div>
+        <div class="urun-ic">
+          <h3>İstinat Duvarı Asistanı</h3>
+          <p>Devrilme, kayma ve taşıma gücü kontrolü, TBDY-2018 deprem hesabı,
+             otomatik kesit çizimi ve metraj — hepsi tek panelde.</p>
+          <div class="urun-alt">
+            <span class="urun-fiyat">250 $ <i>/ yıl</i></span>
+            <span class="dugme bos kucuk">İncele →</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
 </section>
 
-<!-- STANDARDS -->
-<section id="standartlar" class="container">
-    <div class="section-label">Uyumluluk</div>
-    <h2 class="section-title">Türk Standartlarına Tam Uyum</h2>
-    <p class="section-desc">Eklentilerimiz Türkiye'deki resmi altyapı standartlarına göre geliştirilmiştir.</p>
-    <div class="standards-grid">
-        <div class="standard-card">
-            <div class="standard-logo">
-                <img src="/images/logo-iller-bankasi.png" alt="İller Bankası logosu" loading="lazy" width="120" height="120">
-            </div>
-            <h4>İller Bankası</h4>
-            <p>Altyapı proje standartları ve teknik şartnamelere tam uyum</p>
-        </div>
-        <div class="standard-card">
-            <div class="standard-logo">
-                <img src="/images/logo-iski.png" alt="İSKİ logosu" loading="lazy" width="180" height="80">
-            </div>
-            <h4>İSKİ</h4>
-            <p>İstanbul Su ve Kanalizasyon İdaresi teknik esasları</p>
-        </div>
-        <div class="standard-card">
-            <div class="standard-logo">
-                <img src="/images/logo-dsi.png" alt="DSİ logosu" loading="lazy" width="120" height="90">
-            </div>
-            <h4>DSİ</h4>
-            <p>Devlet Su İşleri standartları ve yönetmelikleri</p>
-        </div>
+{{/* ═══════════════════════════════════════════════════════════ MODÜLLER ══ */}}
+<section class="kesim vurgulu">
+  <div class="sinir">
+    <div class="kesim-bas ac">
+      <p class="komut">Modüller</p>
+      <h2>Tek çekirdek, uzmanlık alanına göre modüller</h2>
+      <p>Genel çizim ve düzenleme işlevlerini CAD çekirdeği sağlar; arazi, güzergâh,
+         kübaj gibi mühendislik yetenekleri modül olarak eklenir. İhtiyacınız olan
+         alan hazır olduğunda kullanmaya başlarsınız.</p>
     </div>
+
+    <div class="paneller" data-kademe=".05">
+      {{- range .Site.Params.moduller }}
+      <a class="pnl" href="/moduller/#{{ .id }}">
+        <div class="pnl-bas">
+          {{ .kod }}
+          <span class="rozetcik durum-{{ .durum }}">{{ .etiket }}</span>
+        </div>
+        <div class="pnl-ic">
+          <h3>{{ .ad }}</h3>
+          <p>{{ .aciklama }}</p>
+        </div>
+      </a>
+      {{- end }}
+    </div>
+  </div>
 </section>
 
-<!-- WORKFLOW -->
-<section id="nasil" class="container">
-    <div class="section-label">Nasıl Çalışır</div>
-    <h2 class="section-title">4 Adımda Metraj Hesabı</h2>
-    <p class="section-desc">AutoCAD &amp; Civil 3D projenizi açın, eklentiyi çalıştırın, gerisini biz halledelim.</p>
-    <div class="workflow-steps">
-        <div class="workflow-step">
-            <div class="step-number">01</div>
-            <h4>Projeyi Aç</h4>
-            <p>AutoCAD &amp; Civil 3D'de alignment ve profilinizi hazırlayın.</p>
-        </div>
-        <div class="workflow-step">
-            <div class="step-number">02</div>
-            <h4>Parametreleri Gir</h4>
-            <p>Boru çapı, malzeme ve standart seçimini yapın.</p>
-        </div>
-        <div class="workflow-step">
-            <div class="step-number">03</div>
-            <h4>Hesapla</h4>
-            <p>Otomatik hendek kesiti, hacim ve metraj hesaplanır.</p>
-        </div>
-        <div class="workflow-step">
-            <div class="step-number">04</div>
-            <h4>Rapor Al</h4>
-            <p>Excel metraj tablosu ve çizimler anında hazır.</p>
-        </div>
-    </div>
-</section>
-
-<!-- TECHNICAL SPECS -->
-<section id="teknik" class="container">
-    <div class="specs-hero">
-        <!-- Left - Text -->
-        <div class="specs-text">
-            <h2 class="specs-heading">Teknik <span class="highlight">Uyumluluk</span></h2>
-            <p class="specs-description">
-                Eklentilerimiz AutoCAD &amp; Civil 3D 2022–2025 ile tam uyumlu çalışır.
-                .NET API üzerinden geliştirilmiştir; stabil, hızlı ve güvenilirdir.
-            </p>
-            <ul class="specs-list">
-                <li>
-                    <span class="specs-check-icon">✓</span>
-                    <span>AutoCAD &amp; Civil 3D 2022–2025</span>
-                </li>
-                <li>
-                    <span class="specs-check-icon">✓</span>
-                    <span>C# / .NET API</span>
-                </li>
-                <li>
-                    <span class="specs-check-icon">✓</span>
-                    <span>Excel çıktı desteği</span>
-                </li>
-                <li>
-                    <span class="specs-check-icon">✓</span>
-                    <span>Türkçe arayüz ve raporlama</span>
-                </li>
-            </ul>
-        </div>
-        <!-- Right - Image -->
-        <div class="specs-image">
-            <div class="specs-image-wrapper">
-                <img src="/images/tech_specs.jpg" alt="Teknik Uyumluluk — AutoCAD &amp; Civil 3D" loading="lazy" width="600" height="400">
-                <div class="specs-image-overlay"></div>
-            </div>
-            <div class="specs-image-glow"></div>
-        </div>
+{{/* ═══════════════════════════════════════════════════════════ EKRANDAN ══ */}}
+{{/* Ürünün en zor iddiası "gerçekten çalışıyor" idi; bu bölüm onu göstermek
+     için var. Kareler geliştirme sürümünden, temsilî çizim değil. */}}
+<section class="kesim">
+  <div class="sinir">
+    <div class="kesim-bas ac">
+      <p class="komut">Ekrandan</p>
+      <h2>ATA CAD ekranda</h2>
+      <p>Arazi yüzeyinden boyuna profile, tip kesitten koridor ve kübaja —
+         programın başlıca ekranları.</p>
     </div>
 
-    <!-- Metrics -->
-    <div class="specs-metrics-row">
-        <div class="spec-metric-card">
-            <div class="spec-metric-icon">⚡</div>
-            <div class="spec-metric-value">2.3<span class="spec-metric-unit">sn</span></div>
-            <p>Ortalama işlem süresi (100 kesit)</p>
-        </div>
-        <div class="spec-metric-card">
-            <div class="spec-metric-icon">🎯</div>
-            <div class="spec-metric-value">%99.9</div>
-            <p>Hesaplama doğruluğu</p>
-        </div>
-        <div class="spec-metric-card">
-            <div class="spec-metric-icon">📞</div>
-            <div class="spec-metric-value">7/24</div>
-            <p>Teknik destek</p>
-        </div>
-    </div>
-</section>
-
-<!-- PRICING -->
-<section id="fiyatlar" class="container">
-    <div class="section-label">Fiyatlandırma</div>
-    <h2 class="section-title">İhtiyacınıza Uygun Plan Seçin</h2>
-    <p class="section-desc">Tüm planlar kurulum desteği ve teknik dokümantasyon içerir.</p>
-
-    <div class="pricing-grid">
-        <div class="pricing-card">
-            <h3>Altyapı Asistanı</h3>
-            <p class="pricing-desc">Kanalizasyon, yağmursuyu ve içmesuyu projeleri için eksiksiz çözüm.</p>
-            <ul class="pricing-features">
-                <li>Otomatik hendek kesiti</li>
-                <li>İller Bankası / İSKİ metraj formatı</li>
-                <li>Çoklu boru desteği</li>
-                <li>Excel rapor çıktısı</li>
-                <li>1 yıl güncelleme</li>
-                <li>E-posta teknik destek</li>
-            </ul>
-            <a href="https://api.whatsapp.com/send?phone=905455636867&text=Merhaba,%20Altyapı%20Asistanı%20hakkında%20bilgi%20almak%20istiyorum." class="btn-primary">Teklif Alın →</a>
-        </div>
-
-        <div class="pricing-card pricing-highlighted">
-            <div class="pricing-badge">En Popüler</div>
-            <h3>Profesyonel Paket</h3>
-            <p class="pricing-desc">Altyapı + İstinat Duvarı Asistanı birlikte, ekstra avantajlarla.</p>
-            <ul class="pricing-features">
-                <li>Altyapı Asistanı (tam sürüm)</li>
-                <li>İstinat Duvarı Asistanı</li>
-                <li>TBDY-2018 deprem hesabı</li>
-                <li>Öncelikli teknik destek</li>
-                <li>1 yıl güncelleme</li>
-                <li>Uzaktan kurulum desteği</li>
-            </ul>
-            <a href="https://api.whatsapp.com/send?phone=905455636867&text=Merhaba,%20Profesyonel%20Paket%20hakkında%20bilgi%20almak%20istiyorum." class="btn-primary">Teklif Alın →</a>
-        </div>
-
-        <div class="pricing-card">
-            <h3>Özel Geliştirme</h3>
-            <p class="pricing-desc">İhtiyacınıza özel AutoCAD &amp; Civil 3D eklentisi geliştirme hizmeti.</p>
-            <ul class="pricing-features">
-                <li>İhtiyaç analizi &amp; tasarım</li>
-                <li>C# / .NET API geliştirme</li>
-                <li>Belirli standartlara özel çözüm</li>
-                <li>Test ve kurulum</li>
-                <li>Eğitim &amp; dokümantasyon</li>
-                <li>Sürekli bakım opsiyonu</li>
-            </ul>
-            <a href="https://api.whatsapp.com/send?phone=905455636867&text=Merhaba,%20özel%20eklenti%20geliştirme%20hizmeti%20hakkında%20bilgi%20almak%20istiyorum." class="btn-primary">İletişime Geçin →</a>
-        </div>
-    </div>
-</section>
-
-
-<!-- BLOG PREVIEW -->
-{{ $posts := where .Site.RegularPages "Section" "blog" }}
-{{ if $posts }}
-<section class="container">
-    <div class="section-label">Blog</div>
-    <h2 class="section-title">Son Yazılar</h2>
-    <p class="section-desc">Altyapı mühendisliği, AutoCAD &amp; Civil 3D ve otomasyon üzerine yazılar.</p>
-    <div class="blog-grid">
-        {{ range first 3 $posts }}
-        <a href="{{ .Permalink }}" class="blog-card">
-            <div class="blog-date">{{ .Date.Format "2 January 2006" }}</div>
-            <h4>{{ .Title }}</h4>
-            <p>{{ .Description }}</p>
+    <div class="galeri genis" data-kademe=".06">
+      <figure class="galeri-hucre">
+        <a href="/images/ata-cad/yuzey-tin.jpg" data-buyut>
+          <img src="/images/ata-cad/kucuk/yuzey-tin.jpg" class="sigdir" loading="lazy" decoding="async"
+               alt="TIN yüzey, eşyükselti eğrileri ve araç alanı ağacı">
         </a>
-        {{ end }}
+        <figcaption>TIN yüzey ve eşyükselti eğrileri</figcaption>
+      </figure>
+      <figure class="galeri-hucre">
+        <a href="/images/ata-cad/boy-profil.jpg" data-buyut>
+          <img src="/images/ata-cad/kucuk/boy-profil.jpg" class="sigdir" loading="lazy" decoding="async"
+               alt="Boyuna profil görünümü, kırmızı hat ve geometri şeritleri">
+        </a>
+        <figcaption>Boyuna profil ve kırmızı hat</figcaption>
+      </figure>
+      <figure class="galeri-hucre">
+        <a href="/images/ata-cad/tip-kesit.jpg" data-buyut>
+          <img src="/images/ata-cad/kucuk/tip-kesit.jpg" class="sigdir" loading="lazy" decoding="async"
+               alt="Tip kesit tanımlama penceresi ve zincir tablosu">
+        </a>
+        <figcaption>Tip kesit tanımı — KGM TİP3F</figcaption>
+      </figure>
+      <figure class="galeri-hucre">
+        <a href="/images/ata-cad/koridor-3b.jpg" data-buyut>
+          <img src="/images/ata-cad/kucuk/koridor-3b.jpg" class="sigdir" loading="lazy" decoding="async"
+               alt="Koridorun 3B görünümü ve nesne görüntüleyici">
+        </a>
+        <figcaption>Koridor 3B — kazı ve dolgu şevleri</figcaption>
+      </figure>
+      <figure class="galeri-hucre">
+        <a href="/images/ata-cad/kutle-dagilimi.jpg" data-buyut>
+          <img src="/images/ata-cad/kucuk/kutle-dagilimi.jpg" class="sigdir" loading="lazy" decoding="async"
+               alt="Kütle dağılımı diyagramı — depo fazlası ve ariyet">
+        </a>
+        <figcaption>Kütle dağılımı (Brückner)</figcaption>
+      </figure>
+      <figure class="galeri-hucre">
+        <a href="/images/ata-cad/kazi-hacim-yuzeyi.jpg" data-buyut>
+          <img src="/images/ata-cad/kucuk/kazi-hacim-yuzeyi.jpg" class="sigdir" loading="lazy" decoding="async"
+               alt="Ortofoto altlık üzerinde kazı hacim yüzeyi">
+        </a>
+        <figcaption>Kazı tasarımı — ortofoto altlıkla</figcaption>
+      </figure>
     </div>
+
+    <p class="ac" style="--g:.1s; margin:24px 0 0; text-align:center">
+      <a href="/ekran-goruntuleri/" class="dugme bos">Ekran görüntülerinin tamamı →</a>
+    </p>
+  </div>
 </section>
-{{ end }}
 
-<!-- CONTACT / CTA -->
-<section class="cta-section" id="iletisim">
-    <div class="cta-box">
-        <div class="section-label">İletişim</div>
-        <h2>Projeniz İçin Doğru Çözümü Bulalım</h2>
-        <p>Eklentiler hakkında bilgi almak, demo talep etmek veya özel geliştirme için iletişime geçin.</p>
-
-        <form class="contact-form" action="https://formspree.io/f/abdulbakiatakan@gmail.com" method="POST">
-            <div class="form-row">
-                <input type="text" name="name" placeholder="Adınız" required>
-                <input type="email" name="email" placeholder="E-posta" required>
-            </div>
-            <input type="text" name="company" placeholder="Firma (opsiyonel)">
-            <textarea name="message" placeholder="Mesajınız..." rows="4" required></textarea>
-            <button type="submit" class="btn-primary">Mesaj Gönder →</button>
-        </form>
-
-        <div class="contact-channels">
-            <a href="https://api.whatsapp.com/send?phone=905455636867&text=Merhaba,%20AltyapıCode%20eklentileri%20hakkında%20bilgi%20almak%20istiyorum." class="contact-channel whatsapp-channel" target="_blank" rel="noopener noreferrer">
-                <div class="channel-icon">💬</div>
-                <div>
-                    <strong>WhatsApp</strong>
-                    <p>Hızlı yanıt için yazın</p>
-                </div>
-            </a>
-            <a href="mailto:abdulbakiatakan@gmail.com" class="contact-channel email-channel" target="_blank" rel="noopener noreferrer">
-                <div class="channel-icon">✉️</div>
-                <div>
-                    <strong>E-posta</strong>
-                    <p>abdulbakiatakan@gmail.com</p>
-                </div>
-            </a>
-        </div>
+{{/* ═══════════════════════════════════════════════════════════ ÇEKİRDEK ══ */}}
+<section class="kesim">
+  <div class="sinir">
+    <div class="kesim-bas ac">
+      <p class="komut">Bağımsızlık</p>
+      <h2>Bağımsız platform</h2>
+      <p>ATA CAD kendi başına çalışır; ücretli hiçbir ek yazılıma ihtiyaç duymaz.</p>
     </div>
+
+    {{/* Burada eskiden paket adlarını sayan bir tablo vardı. Kaldırıldı:
+         müşterinin sorusu "hangi kütüphane" değil, "AutoCAD gerekiyor mu,
+         verimi geri alabilir miyim, bir daha para öder miyim". Kartlar onu
+         yanıtlıyor; lisans iddiası kanıtsız kalmıyor. */}}
+    <div class="iddialar" data-kademe=".07">
+      <div class="iddia">
+        <p class="iddia-bas">Tek kurulum</p>
+        <p>Windows üzerinde tek kurulumla kullanıma hazırdır; ek yazılım veya
+           yapılandırma gerekmez.</p>
+      </div>
+      <div class="iddia">
+        <p class="iddia-bas">Uçtan uca iş akışı</p>
+        <p>Ölçüm noktasından yüzeye, güzergâhtan profile, koridordan kübaja tüm
+           adımlar tek programda tamamlanır.</p>
+      </div>
+      <div class="iddia">
+        <p class="iddia-bas">Verileriniz size ait</p>
+        <p>Projeleriniz DXF, LandXML, Excel ve PDF olarak dışarı aktarılır;
+           verileriniz tek bir programa kilitli kalmaz.</p>
+      </div>
+      <div class="iddia">
+        <p class="iddia-bas">İkinci bir fatura yok</p>
+        <p>ATA CAD ücretli hiçbir üçüncü parti yazılıma bağımlı değildir; ürün
+           bedelinin üstüne ek lisans maliyeti çıkmaz.</p>
+      </div>
+    </div>
+  </div>
 </section>
+
+{{/* ══════════════════════════════════════════════════════════ STANDART ══ */}}
+<section class="kesim vurgulu">
+  <div class="sinir">
+    <div class="kesim-bas ac">
+      <p class="komut">Kurum Standartları</p>
+      <h2>Çıktı, idarenin kabul ettiği formatta</h2>
+      <p>Kurum profili tek bir kuruma sabitlenmez; ayrı ayrı sürümlenmiş paketlerdir.
+         Kaynağı ve madde numarası doğrulanmayan bir değer üretim hesabında etkinleştirilmez.</p>
+    </div>
+
+    <div class="kurumlar" data-kademe=".09">
+      <div class="kurum">
+        <span class="kurum-kutu"><img src="/images/logo-iller-bankasi.png" alt="İller Bankası" width="180" height="120"></span>
+        <span>Altyapı proje standartları</span>
+      </div>
+      <div class="kurum">
+        <span class="kurum-kutu"><img src="/images/logo-iski.png" alt="İSKİ" width="180" height="120"></span>
+        <span>Teknik esaslar</span>
+      </div>
+      <div class="kurum">
+        <span class="kurum-kutu"><img src="/images/logo-dsi.png" alt="DSİ" width="180" height="120"></span>
+        <span>Yönetmelik ve standartlar</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 {{ end }}

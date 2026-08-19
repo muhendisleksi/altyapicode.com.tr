@@ -1,28 +1,37 @@
 ---
 title: "İletişim"
-description: "Abdulbaki Atakan ile iletişime geçin"
-layout: "single"
+description: "ATA CAD erken erişim listesi ve doğrudan iletişim."
 ---
 
-## İletişime Geçin
+## Erken erişim listesi
 
-Eklentiler hakkında bilgi almak, demo talep etmek veya özel geliştirme için bize ulaşın.
+ATA CAD geliştirme aşamasındadır. İlk sürüm hazır olduğunda pilot kullanıcı
+olmak isterseniz yazın — erken erişim **ücretsizdir.**
 
-### 💬 WhatsApp
-En hızlı iletişim yolu. Mesaj atın, en kısa sürede dönüş yapalım.
+Karşılığında beklenen tek şey geri bildirim: ürünü gerçek bir projenizde deneyip
+karşılaştığınız sorunları paylaşmanız.
 
-[WhatsApp ile Yazın →](https://api.whatsapp.com/send?phone=905455636867&text=Merhaba,%20AltyapiCode%20eklentileri%20hakkında%20bilgi%20almak%20istiyorum.)
+**[WhatsApp'tan yazın →](https://wa.me/905455636867?text=Merhaba%2C%20ATA%20CAD%20erken%20eri%C5%9Fim%20listesi%20i%C3%A7in%20yaz%C4%B1yorum.)**
+· +90 545 563 68 67
 
-### ✉️ E-posta
-Detaylı talepler ve proje bilgileri için:
+**[abdulbakiatakan@gmail.com](mailto:abdulbakiatakan@gmail.com)**
 
-**abdulbakiatakan@gmail.com**
+## Başvuruda yardımcı olacak bilgiler
 
-### 💼 Fiverr
-Uluslararası müşteriler için:
+Aşağıdaki bilgileri paylaşmanız değerlendirmeyi hızlandırır (zorunlu değildir):
 
-[Fiverr Profilimiz →](https://www.fiverr.com/KULLANICI_ADIN)
+- Çalışma alanınız — kanalizasyon, içmesuyu, istinat duvarı vb.
+- Çalıştığınız kurum ve istenen format — İller Bankası, İSKİ, DSİ, belediye
+- Kullandığınız CAD yazılımı
+- Ekip büyüklüğünüz
 
----
+## AutoCAD eklentileri
 
-*Genellikle aynı iş günü içinde dönüş yapıyoruz.*
+Eklentiler bugün satın alınabilir durumdadır. Fiyat ve kapsam için
+[eklentiler sayfasına](/eklentiler/) bakabilir veya doğrudan iletişime
+geçebilirsiniz.
+
+## Yanıt süresi ve fatura
+
+Taleplere genellikle aynı iş günü içinde dönüş yapılır. Satışlar şahıs firması
+üzerinden faturalandırılır.

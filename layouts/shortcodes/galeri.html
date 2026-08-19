@@ -1,0 +1,12 @@
+{{- /* Ekran görüntüsü ızgarası.  İçine {{< g … >}} kısa kodları konur.
+       {{< galeri baslik="Arayüz" >}} … {{< /galeri >}}
+
+       genis="1" → blok metin sütununu aşar ve hücreler büyür; CAD ekranı
+                   198 px'lik hücrede okunmuyordu.                            */ -}}
+{{- $genis := .Get "genis" -}}
+<section class="galeri-blok{{ if $genis }} genis{{ end }}">
+  {{- with .Get "baslik" }}<p class="etiket"><b>Ekran</b> {{ . }}</p>{{ end }}
+  <div class="galeri{{ if $genis }} genis{{ end }}">
+    {{ .Inner }}
+  </div>
+</section>

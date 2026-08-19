@@ -1,0 +1,21 @@
+{{- /* Galeri hücresi. Küçük boy gösterir, tıklanınca tam boy açılır.
+       {{< g ad="excel-3" not="İller Bankası formatında metraj tablosu" >}}
+
+       set="ata" → ATA CAD'in kendi ekran görüntüleri (/images/ata-cad/…);
+                   varsayılan set AutoCAD eklentisinin kareleridir.
+       sig="1"   → kırpma yerine sığdır; pencere ve şerit kareleri 16/10
+                   değildir, kırpılınca anlamlı kısım kadraj dışında kalıyor. */ -}}
+{{- $ad  := .Get "ad" -}}
+{{- $set := .Get "set" | default "eklenti" -}}
+{{- $kucuk := printf "/images/kucuk/%s.jpg" $ad -}}
+{{- $tam   := printf "/images/product-screenshots/%s.jpg" $ad -}}
+{{- if eq $set "ata" -}}
+  {{- $kucuk = printf "/images/ata-cad/kucuk/%s.jpg" $ad -}}
+  {{- $tam   = printf "/images/ata-cad/%s.jpg" $ad -}}
+{{- end -}}
+<figure class="galeri-hucre">
+  <a href="{{ $tam }}" data-buyut>
+    <img src="{{ $kucuk }}" alt="{{ .Get "not" }}"{{ if .Get "sig" }} class="sigdir"{{ end }} loading="lazy" decoding="async">
+  </a>
+  <figcaption>{{ .Get "not" }}</figcaption>
+</figure>

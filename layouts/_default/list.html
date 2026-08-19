@@ -1,32 +1,39 @@
 {{ define "main" }}
-<section class="page-content container">
-    <div class="back-nav">
-        <a href="/" class="back-link">← Ana Sayfa</a>
-    </div>
-    <div class="content-card">
-        <div class="page-header">
-            <div class="section-label">{{ .Section }}</div>
-            <h1>{{ .Title }}</h1>
-            {{ with .Description }}<p class="page-desc">{{ . }}</p>{{ end }}
-        </div>
+<header class="sayfa-bas">
+  <div class="sinir">
+    <p class="iz"><a href="/">Anasayfa</a> / {{ .Title }}</p>
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}<p class="giris">{{ . }}</p>{{ end }}
+  </div>
+</header>
 
-        {{ if .Content }}
-        <div class="page-body">
-            {{ .Content }}
-        </div>
-        {{ end }}
-    </div>
+<section class="kesim">
+  <div class="sinir">
+    {{- with .Content }}
+    <div class="icerik ac" style="margin-bottom:38px;">{{ . }}</div>
+    {{- end }}
 
-    {{ if .Pages }}
-    <div class="blog-grid" style="margin-top: 2rem;">
-        {{ range .Pages }}
-        <a href="{{ .Permalink }}" class="blog-card">
-            <div class="blog-date">{{ .Date.Format "2 January 2006" }}</div>
-            <h4>{{ .Title }}</h4>
-            <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | truncate 150 }}{{ end }}</p>
-        </a>
-        {{ end }}
+    {{- $sayfalar := .Pages }}
+    {{- if $sayfalar }}
+    <div class="paneller ac" style="--g:.06s">
+      {{- range $sayfalar }}
+      <a class="pnl" href="{{ .RelPermalink }}">
+        <div class="pnl-bas">
+          {{ with .Params.tur }}{{ upper . }}{{ else }}KAYIT{{ end }}
+          {{- with .Params.rozet }}<span class="rozetcik durum-var">{{ . }}</span>{{ end }}
+        </div>
+        <div class="pnl-ic">
+          <h3>{{ .Title }}</h3>
+          <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 150 }}{{ end }}</p>
+          <div class="pnl-alt">
+            <span class="fiyat">{{ with .Params.fiyat }}{{ . }}{{ else }}&nbsp;{{ end }}</span>
+            <span class="git">Aç →</span>
+          </div>
+        </div>
+      </a>
+      {{- end }}
     </div>
-    {{ end }}
+    {{- end }}
+  </div>
 </section>
 {{ end }}

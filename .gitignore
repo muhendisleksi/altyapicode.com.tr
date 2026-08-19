@@ -13,3 +13,7 @@ Thumbs.db
 
 # Hugo
 .hugo_build.lock
+
+# Ham ekran kayıtları — siteye sıkıştırılmış hâlleri (static/video/) girer,
+# yüzlerce megabaytlık kaynak dosya depoda tutulmaz.
+ham-video/

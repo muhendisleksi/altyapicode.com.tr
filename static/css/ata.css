@@ -1,0 +1,1025 @@
+/* ============================================================================
+   ATA CAD — SİTE TASARIM SİSTEMİ
+
+   Düzen: klasik ürün/mağaza iskeleti (referans: sektördeki emsal siteler).
+     · üst şerit      = telefon · e-posta · WhatsApp · erken erişim
+     · başlık         = logo + yatay menü
+     · hero           = ürün vaadi + görsel dönüşüm
+     · ürün ızgarası  = fiyatlı kartlar, ATA CAD önde
+     · çağrı şeridi   = "arayın" bandı
+     · altbilgi       = dört sütun + telif
+
+   Görsel dil bize özel: renkler ATA CAD'in kendi `Themes/Tema.xaml`
+   dosyasından alındı. Üç tema da programın üç teması: Koyu · Açık · Gri.
+   ========================================================================== */
+
+/* ------------------------------------------------------- TEMA: KOYU (vars.) */
+:root,
+:root[data-tema="koyu"]{
+  --zemin:     #1A1D23;   /* sayfa zemini — programın çizim zemini */
+  --panel:     #20242B;   /* bölüm zemini, kart */
+  --panel-2:   #2E333C;   /* başlık, kart başlığı */
+  --yuzey:     #353B45;   /* kabartı */
+  --cizgi:     #3D4450;
+  --cizgi-2:   #2E333C;
+  --yazi:      #E8EBEF;
+  --yazi-2:    #AAB1BC;
+  --yazi-3:    #7C8390;
+  --vurgu:     #4C8DFF;
+  --vurgu-2:   #BCD3FF;
+  --vurgu-zem: #1E2A44;
+  --yesil:     #3FCB6E;
+  --amber:     #F5A623;
+  --kirmizi:   #FF5C57;
+  --izgara:    #232830;   /* hero ızgarası */
+  --golge:     0 12px 32px -18px rgba(0,0,0,.8);
+  --golge-2:   0 20px 48px -24px rgba(0,0,0,.9);
+  color-scheme: dark;
+}
+
+:root[data-tema="acik"]{
+  --zemin:     #FFFFFF;
+  --panel:     #F4F5F7;
+  --panel-2:   #FFFFFF;
+  --yuzey:     #FFFFFF;
+  --cizgi:     #D9DDE3;
+  --cizgi-2:   #E7EAEF;
+  --yazi:      #14171C;
+  --yazi-2:    #4A5260;
+  --yazi-3:    #79808C;
+  --vurgu:     #1F62D6;
+  --vurgu-2:   #16479E;
+  --vurgu-zem: #E7EFFC;
+  --yesil:     #148146;
+  --amber:     #9E6608;
+  --kirmizi:   #C4322C;
+  --izgara:    #E9ECF0;
+  --golge:     0 12px 30px -20px rgba(20,23,28,.35);
+  --golge-2:   0 20px 44px -26px rgba(20,23,28,.4);
+  color-scheme: light;
+}
+
+:root[data-tema="gri"]{
+  --zemin:     #D2D6DC;
+  --panel:     #C2C7CF;
+  --panel-2:   #E4E7EA;
+  --yuzey:     #EFF1F3;
+  --cizgi:     #A6ADB8;
+  --cizgi-2:   #B7BEC7;
+  --yazi:      #14171C;
+  --yazi-2:    #414855;
+  --yazi-3:    #666D79;
+  --vurgu:     #1B55B4;
+  --vurgu-2:   #123E86;
+  --vurgu-zem: #C6D6EF;
+  --yesil:     #14713A;
+  --amber:     #8C5B08;
+  --kirmizi:   #A82D27;
+  --izgara:    #C8CDD4;
+  --golge:     0 12px 30px -20px rgba(20,23,28,.4);
+  --golge-2:   0 20px 44px -26px rgba(20,23,28,.45);
+  color-scheme: light;
+}
+
+/* Kullanıcı hiç seçim yapmadıysa işletim sistemi tercihine uy. */
+@media (prefers-color-scheme: light){
+  :root:not([data-tema]){
+    --zemin:#FFFFFF; --panel:#F4F5F7; --panel-2:#FFFFFF; --yuzey:#FFFFFF;
+    --cizgi:#D9DDE3; --cizgi-2:#E7EAEF; --yazi:#14171C; --yazi-2:#4A5260;
+    --yazi-3:#79808C; --vurgu:#1F62D6; --vurgu-2:#16479E; --vurgu-zem:#E7EFFC;
+    --yesil:#148146; --amber:#9E6608; --kirmizi:#C4322C; --izgara:#E9ECF0;
+    color-scheme: light;
+  }
+}
+
+/* ------------------------------------------------------------------ ÖLÇÜ */
+:root{
+  --sinir:   1240px;   /* içerik genişliği */
+  --dolgu-x: clamp(16px,4vw,32px);
+  --f-ui:    "Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-bas:   "Segoe UI Variable Display","Segoe UI Semibold","Segoe UI",system-ui,sans-serif;
+  --f-veri:  Consolas,"Cascadia Mono",ui-monospace,"Courier New",monospace;
+}
+
+/* ------------------------------------------------------------------ TEMEL */
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } }
+
+/* Sayfa zemini BODY'de değil HTML'de duruyor. Sebebi tel kafes katmanı:
+   `z-index:-1` verilen bir katman kendi kapsayıcısının arka planının
+   ARKASINA düşer — zemin body'de kalsaydı katman hiç görünmezdi. */
+html{ background:var(--zemin); }
+body{
+  margin:0; background:transparent; color:var(--yazi);
+  font-family:var(--f-ui); font-size:16px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------------------------------------------------- TEL KAFES KATMANI */
+/* Perspektifte ufka uzanan sanal arazi yüzeyi; sayfa boyunca sabit durur,
+   içerik onun üzerinden akar. Betik yoksa hiç eklenmez, zemin düz kalır.
+   Çizim ölçüleri ve gerekçeleri static/js/telkafes.js içinde.
+
+   Tuvalin ARKASINDAKİ ışıma canvas'ın kendi arka planında: ufuk hizasında
+   (ekranın %38'i, betikteki değerle aynı) çok soluk bir vurgu bulutu.
+   Derinliği o taşıyor — çizgiler tek başına soldukça yüzey ufka değil
+   boşluğa gidiyormuş gibi duruyordu. Bedeli sıfır, tek bir gradyan. */
+.telkafes-katman{
+  position:fixed; inset:0; z-index:-1; pointer-events:none;
+  width:100%; height:100%;
+  background:
+    radial-gradient(88% 52% at 50% 34%,
+      color-mix(in srgb, var(--vurgu) 11%, transparent) 0%,
+      transparent 64%);
+}
+img,svg{ max-width:100%; display:block; }
+img{ height:auto; }
+a{ color:var(--vurgu); text-underline-offset:3px; }
+:focus-visible{ outline:2px solid var(--vurgu); outline-offset:2px; }
+::selection{ background:var(--vurgu); color:#fff; }
+
+.sinir{ width:100%; max-width:var(--sinir); margin:0 auto; padding:0 var(--dolgu-x); }
+
+.gizli{ position:absolute; width:1px; height:1px; overflow:hidden;
+  clip:rect(0 0 0 0); white-space:nowrap; }
+.atla{
+  position:absolute; left:12px; top:-60px; z-index:300;
+  background:var(--vurgu); color:#fff; padding:9px 16px;
+  font-family:var(--f-veri); font-size:12px; text-decoration:none;
+}
+.atla:focus{ top:8px; }
+
+/* ============================================================== ÜST ŞERİT */
+.ust-serit{
+  background:var(--panel-2); border-bottom:1px solid var(--cizgi);
+  font-size:13px;
+}
+.ust-serit-ic{ display:flex; align-items:center; gap:22px; min-height:38px; flex-wrap:wrap; }
+.us-oge{
+  display:inline-flex; align-items:center; gap:7px;
+  color:var(--yazi-2); text-decoration:none; padding:6px 0;
+}
+.us-oge:hover{ color:var(--vurgu); }
+.us-oge svg{ width:15px; height:15px; fill:currentColor; flex-shrink:0; }
+.us-bosluk{ flex:1; }
+.us-dugme{
+  font-size:12px; font-weight:600; letter-spacing:.02em;
+  padding:5px 13px; border-radius:2px; text-decoration:none;
+  border:1px solid var(--cizgi); color:var(--yazi-2); background:var(--yuzey);
+  transition:background .16s, color .16s, border-color .16s;
+}
+.us-dugme:hover{ border-color:var(--vurgu); color:var(--vurgu); }
+.us-dugme.birincil{ background:var(--vurgu); border-color:var(--vurgu); color:#fff; }
+.us-dugme.birincil:hover{ background:var(--vurgu-2); border-color:var(--vurgu-2); color:#fff; }
+
+/* ================================================================= BAŞLIK */
+.baslik{
+  position:sticky; top:0; z-index:100;
+  background:var(--panel-2); border-bottom:1px solid var(--cizgi);
+  box-shadow:var(--golge);
+}
+.baslik-ic{ display:flex; align-items:center; gap:20px; min-height:74px; }
+
+.marka{ display:flex; align-items:center; gap:11px; text-decoration:none; color:var(--yazi); flex-shrink:0; }
+.marka-rozet{
+  width:38px; height:38px; display:grid; place-items:center;
+  background:var(--vurgu); color:#fff; font-family:var(--f-bas);
+  font-size:19px; font-weight:700; border-radius:3px; flex-shrink:0;
+}
+.marka-yazi{ display:flex; flex-direction:column; line-height:1.15; }
+.marka-ad{ font-family:var(--f-bas); font-size:21px; font-weight:700; letter-spacing:-.02em; }
+.marka-ad i{ font-style:normal; color:var(--vurgu); }
+.marka-alt{ font-size:11px; color:var(--yazi-3); letter-spacing:.02em; }
+
+.menu{ display:flex; align-items:center; gap:2px; margin-left:auto; flex-wrap:wrap; }
+.menu a{
+  padding:9px 14px; border-radius:2px;
+  font-size:14.5px; font-weight:600; color:var(--yazi-2); text-decoration:none;
+  white-space:nowrap; transition:color .14s, background .14s;
+}
+.menu a:hover{ color:var(--yazi); background:var(--yuzey); }
+/* Bulunulan sayfa: renk + zemin tek başına soluk kalıyordu (açık temada
+   --vurgu-zem neredeyse beyaz). Alt çubuk işareti sekme hissini kuruyor. */
+.menu a[aria-current]{
+  color:var(--vurgu); background:var(--vurgu-zem);
+  box-shadow:inset 0 -2px 0 var(--vurgu);
+}
+
+.baslik-sag{ display:flex; align-items:center; gap:10px; flex-shrink:0; }
+
+.tema-grup{ display:flex; border:1px solid var(--cizgi); border-radius:2px; overflow:hidden; }
+.tema-dugme{
+  width:28px; height:26px; display:grid; place-items:center; cursor:pointer;
+  background:none; border:0; border-right:1px solid var(--cizgi); color:var(--yazi-3);
+  font-size:11px; line-height:1; padding:0;
+}
+.tema-dugme:last-child{ border-right:0; }
+.tema-dugme:hover{ background:var(--yuzey); color:var(--yazi); }
+.tema-dugme[aria-pressed="true"]{ background:var(--vurgu); color:#fff; }
+
+/* Seçicinin iki kopyası var (başlık ve açılır menü); geniş ekranda menüdeki,
+   dar ekranda başlıktaki gizlenir. İkisi asla birlikte görünmez. */
+.tema-grup-menu{ display:none; }
+
+/* Başlıktaki CTA yalnız telefonda çıkar — geniş ekranda aynı düğme üst
+   şeritte zaten duruyor, ikisi birden gösterilirse tekrar olur. */
+.baslik-cta{
+  display:none; align-items:center; white-space:nowrap;
+  font-size:13px; font-weight:600; letter-spacing:.01em;
+  padding:8px 13px; border-radius:2px; text-decoration:none;
+  background:var(--vurgu); border:1px solid var(--vurgu); color:#fff;
+}
+
+.menu-dugme{
+  display:none; width:38px; height:34px; padding:0 8px; cursor:pointer;
+  background:var(--yuzey); border:1px solid var(--cizgi); border-radius:2px;
+  flex-direction:column; justify-content:center; gap:4px;
+}
+.menu-dugme span{ display:block; height:2px; background:var(--yazi-2); border-radius:1px; }
+
+/* =================================================================== HERO */
+/* Hero'nun kendi zemini yok: altındaki tel kafes katmanı görünsün diye.
+   Eskiden burada ayrıca düz bir CAD ızgarası (38/190 px) ve kenarları
+   söndüren bir radyal maske vardı; ikisi de kaldırıldı. Perspektif ızgara
+   ölçeği zaten kendi veriyor, düz ızgara onun üstünde ikinci bir ızgara
+   olarak okunuyordu; radyal maske ise tel kafesin en yoğun yeri olan alt
+   kenarı zemin rengiyle kapatıyordu. Yerine metnin arkasına, yalnız metin
+   kadar geniş bir okunabilirlik yumuşatması kondu (.hero-ic::before). */
+.hero{
+  position:relative; overflow:hidden;
+  border-bottom:1px solid var(--cizgi);
+}
+.hero-ic{
+  position:relative; z-index:1;
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
+  gap:clamp(28px,4vw,60px); align-items:center;
+  padding:clamp(40px,5.5vw,76px) var(--dolgu-x);
+}
+/* Başlığın arkasında, yalnız onun bulunduğu yerde zemin rengine yumuşak bir
+   dönüş. Tel kafes sol sütunda metnin altından geçiyor ve H1'in ters
+   eğimli çizgileriyle yarışıyordu; maske dar ve elips olduğu için sağdaki
+   slaytın çevresinde arazi açıkta kalır. */
+.hero-ic::before{
+  content:""; position:absolute; inset:-6% -4%; z-index:-1; pointer-events:none;
+  background:radial-gradient(38% 58% at 20% 48%,
+    color-mix(in srgb, var(--zemin) 55%, transparent) 0%,
+    color-mix(in srgb, var(--zemin) 20%, transparent) 48%,
+    transparent 76%);
+}
+/* Geniş ekranda slayda daha çok yer. İki kademe:
+   ① 1200px'ten itibaren sağ sütunun payı artar — metin sütunu 56ch'de zaten
+     doyuyor, artan genişliğin metne faydası yok, görsele var.
+   ② 1520px'ten itibaren hero sayfanın 1240px'lik sınırını aşar. Fazladan sol
+     dolgu (1520−1240)/2 = 140px olduğu için SOL kenar yerinde kalır: H1
+     hâlâ logoyla aynı çizgiden başlar, genişleyen yalnız sağdaki slayttır.
+     Sabit 140px güvenli, çünkü bu genişlikte --dolgu-x zaten 32px'e sabitli. */
+@media (min-width:1200px){
+  .hero-ic{ grid-template-columns:minmax(0,1fr) minmax(0,1.22fr); }
+}
+@media (min-width:1520px){
+  .hero-ic{
+    --sinir:1520px;
+    padding-left:calc(var(--dolgu-x) + 140px);
+    grid-template-columns:minmax(0,1fr) minmax(0,1.32fr);
+  }
+}
+
+.hero-etiket{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--f-veri); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--amber); border:1px solid currentColor; border-radius:2px;
+  padding:4px 11px; margin-bottom:20px;
+}
+.hero h1{ font-size:clamp(30px,4.2vw,52px); line-height:1.05; margin:0 0 18px; }
+.hero h1 em{ font-style:normal; color:var(--vurgu); }
+.hero-giris{ font-size:clamp(15.5px,1.4vw,18.5px); color:var(--yazi-2); max-width:56ch; margin:0 0 26px; }
+
+/* hero görsel dönüşümü */
+.hero-gorsel{ position:relative; }
+.hero-cerceve{
+  position:relative; border:1px solid var(--cizgi); border-radius:4px;
+  background:var(--panel); box-shadow:var(--golge-2); overflow:hidden;
+}
+.hero-cerceve-bas{
+  display:flex; align-items:center; gap:7px; padding:9px 12px;
+  background:var(--panel-2); border-bottom:1px solid var(--cizgi);
+  font-family:var(--f-veri); font-size:10.5px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--yazi-3);
+}
+.hero-cerceve-bas .nokta{ width:9px; height:9px; border-radius:50%; background:var(--cizgi); }
+.hero-cerceve-bas .nokta:first-child{ background:var(--kirmizi); }
+.hero-kareler{ position:relative; aspect-ratio:16/10; background:var(--zemin); }
+.hero-kare{
+  /* Kare bir <figure>; tarayıcının varsayılan figure margin'i (16px/40px)
+     inset:0'dan DÜŞÜLÜYORDU, yani kare çerçeveyi doldurmuyor, her yanında
+     bant bırakıyordu — 390px'te 341×213 yerine 261×181. Yazı görselin
+     üstünde yüzerken bu fark görünmüyordu; altına alınca ortaya çıktı. */
+  margin:0;
+  position:absolute; inset:0; opacity:0; overflow:hidden;
+  transition:opacity .85s cubic-bezier(.4,0,.2,1);
+}
+.hero-kare.etkin{ opacity:1; }
+.hero-kare img,.hero-kare video{ width:100%; height:100%; object-fit:cover; display:block; }
+/* Videoya Ken Burns uygulanmaz — kayıt zaten hareketli, ikisi üst üste
+   binince kamera sarhoş gibi geziyor. Aşağıdaki animasyon yalnız img'ye. */
+
+/* ── Ken Burns ───────────────────────────────────────────────────────────
+   Kare hareketsiz bir JPEG; yavaş yaklaşma onu "çekim" hâline getirir.
+   Animasyon `alternate infinite` ve etkin olmayan karede DURDURULUR — iptal
+   edilmez. İptal edilseydi transform başa dönerdi ve sönerken görünür bir
+   sıçrama olurdu; durdurulunca kare olduğu yerde bekler, sırası gelince
+   kaldığı yerden devam eder. Yönler `data-yon` ile dönüşümlü: ardışık iki
+   kare aynı yöne kayarsa dönüş tek bir sürekli kaydırma gibi görünüyor. */
+.hero-kare img{
+  animation:kb1 14s linear infinite alternate;
+  animation-play-state:paused; will-change:transform;
+}
+.hero-kare.etkin img{ animation-play-state:running; }
+.hero-kare[data-yon="2"] img{ animation-name:kb2; }
+.hero-kare[data-yon="3"] img{ animation-name:kb3; }
+.hero-kare[data-yon="4"] img{ animation-name:kb4; }
+
+/* Ölçek payı taşmayı karşılar: en küçük ölçekte bile kenar boşluğu
+   kaymadan büyüktür, yoksa kenarda zemin görünür. */
+@keyframes kb1{ from{ transform:scale(1.06) translate(-1%,-.5%); } to{ transform:scale(1.12) translate(1%,.5%); } }
+@keyframes kb2{ from{ transform:scale(1.12) translate(1%,-.5%); }  to{ transform:scale(1.06) translate(-1%,.5%); } }
+@keyframes kb3{ from{ transform:scale(1.06) translate(1%,.6%); }   to{ transform:scale(1.12) translate(-1%,-.6%); } }
+@keyframes kb4{ from{ transform:scale(1.11) translate(0,-.8%); }   to{ transform:scale(1.05) translate(0,.8%); } }
+
+/* Alt yazı görselden sonra gelir — önce ne görüldüğü, sonra ne olduğu. */
+.hero-kare figcaption{
+  position:absolute; left:0; right:0; bottom:0;
+  padding:20px 14px 11px; font-size:12.5px; color:#E8EBEF;
+  background:linear-gradient(transparent, rgba(10,12,16,.88));
+  opacity:0; transform:translateY(9px); transition:opacity .3s, transform .3s;
+}
+.hero-kare.etkin figcaption{
+  opacity:1; transform:none;
+  transition:opacity .55s cubic-bezier(.2,.7,.3,1) .25s,
+             transform .55s cubic-bezier(.2,.7,.3,1) .25s;
+}
+
+/* ── kalan süre şeridi ─────────────────────────────────────────────────
+   Nokta göstergesi "kaçıncı karedeyiz", bu şerit "ne kadar kaldı" der.
+   Süre JS'ten değil CSS'ten gelir; ikisi tek yerde tutulsun diye değişken. */
+.hero-sure{ height:2px; background:var(--cizgi-2); overflow:hidden; }
+.hero-sure-dolgu{
+  display:block; height:100%; width:100%; background:var(--vurgu);
+  transform:scaleX(0); transform-origin:left center;
+}
+.hero-sure-dolgu.calisiyor{ animation:sureDol var(--slayt-sure,5s) linear forwards; }
+.hero-sure-dolgu.durdu{ animation-play-state:paused; }
+@keyframes sureDol{ from{ transform:scaleX(0); } to{ transform:scaleX(1); } }
+
+.hero-noktalar{ display:flex; gap:7px; justify-content:center; padding:11px; background:var(--panel-2);
+  border-top:1px solid var(--cizgi); }
+.hero-nokta{
+  width:9px; height:9px; padding:0; border-radius:50%; cursor:pointer;
+  background:var(--cizgi); border:0; transition:background .18s, transform .18s;
+}
+.hero-nokta[aria-selected="true"]{ background:var(--vurgu); transform:scale(1.25); }
+
+@media (prefers-reduced-motion:reduce){
+  .hero-kare{ transition:none; }
+  .hero-kare img{ animation:none; }
+  .hero-kare figcaption,.hero-kare.etkin figcaption{ opacity:1; transform:none; transition:none; }
+  .hero-sure{ display:none; }
+}
+
+/* iş zinciri — hero'nun ana iddiası: noktadan kübaja tek program.
+   Maliyet kutusunun yerini aldı; gerekçe layouts/index.html'deki notta. */
+.zincir{
+  border:1px solid var(--cizgi); border-left:3px solid var(--vurgu);
+  background:var(--panel); border-radius:3px; padding:17px 20px 19px; margin:0 0 26px;
+}
+.zincir-bas{
+  font-family:var(--f-veri); font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--yazi-3); margin:0 0 13px;
+}
+/* Halkalar akış değil ızgara. Ok'lu tek satır hiçbir gerçek genişlikte
+   sığmıyordu: yedi halka sarınca ikinci satır "→ Koridor" diye okla başlıyor,
+   kutular farklı genişlikte olduğu için satır sonu tırtıklı kalıyordu. Izgarada
+   her halka eşit genişlikte ve satır sonları hizalı; sıra bilgisini ok yerine
+   numara taşıyor (01…07). Son halka iki sütuna yayılır — satır tam dolar ve
+   zincirin bittiği yer belli olur. Sütun sayısı genişliğe göre değişir. */
+.zincir-adimlar{
+  list-style:none; margin:0; padding:0;
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px;
+  counter-reset:adim;
+}
+.zincir-adimlar li{ display:flex; align-items:center; counter-increment:adim; }
+.zincir-adimlar li:last-child{ grid-column:span 2; }
+.zincir-adimlar li span{
+  flex:1; display:flex; align-items:center; gap:8px;
+  font-family:var(--f-bas); font-size:14.5px; font-weight:600; letter-spacing:-.01em;
+  color:var(--yazi); background:var(--panel-2); border:1px solid var(--cizgi);
+  border-radius:3px; padding:7px 11px; white-space:nowrap;
+  transition:background .45s ease, border-color .45s ease, color .45s ease, opacity .45s ease;
+}
+.zincir-adimlar li span::before{
+  content:counter(adim,decimal-leading-zero); flex:none;
+  font-family:var(--f-veri); font-size:10px; font-weight:400; letter-spacing:.06em;
+  color:var(--yazi-3); transition:color .45s ease;
+}
+/* Sağdaki kare hangi halkayı gösteriyorsa o halka yanar. `baglandi` sınıfını
+   betik ekler: betik çalışmazsa zincir bugünkü gibi eşit ağırlıkta durur,
+   yarısı sönük kalmaz. */
+.zincir.baglandi .zincir-adimlar li:not(.etkin) span{ opacity:.5; }
+.zincir.baglandi .zincir-adimlar li.etkin span{
+  border-color:var(--vurgu); background:var(--vurgu-zem); color:var(--yazi);
+}
+.zincir.baglandi .zincir-adimlar li.etkin span::before{ color:var(--vurgu); }
+@media (prefers-reduced-motion:reduce){
+  .zincir.baglandi .zincir-adimlar li:not(.etkin) span{ opacity:.7; }
+  .zincir-adimlar li span,.zincir-adimlar li span::before{ transition:none; }
+}
+.zincir-not{ font-size:13px; line-height:1.6; color:var(--yazi-2); margin:14px 0 0; }
+.zincir-not a{ color:var(--yazi); border-bottom:1px solid var(--vurgu); }
+.zincir-not a:hover{ color:var(--vurgu); }
+
+/* güven şeridi — hero altı */
+/* Şeritler ve vurgulu bölümler yarı saydam: altlarındaki kontur katmanı
+   sezilsin ama metin okunaklı kalsın. Kartlar opak bırakıldı — okuma
+   yüzeyinin arkasında hareket olmamalı. */
+.kanit-serit{
+  border-top:1px solid var(--cizgi-2);
+  background:color-mix(in srgb, var(--panel) 80%, transparent);
+  border-bottom:1px solid var(--cizgi);
+}
+.kanit-ic{ display:flex; flex-wrap:wrap; gap:clamp(18px,4vw,48px); justify-content:space-between;
+  padding:18px var(--dolgu-x); }
+.kanit{ display:flex; align-items:baseline; gap:9px; font-size:13.5px; color:var(--yazi-2); }
+/* Sayarken rakam genişliği değişmemeli — tabular olmazsa satır oynuyor. */
+.kanit b{ font-family:var(--f-bas); font-size:19px; font-weight:700; color:var(--yazi);
+  letter-spacing:-.02em; font-variant-numeric:tabular-nums; }
+
+/* ================================================================ BÖLÜMLER */
+.kesim{ padding:clamp(44px,6vw,84px) 0; }
+.kesim.vurgulu{ background:color-mix(in srgb, var(--panel) 80%, transparent);
+  border-top:1px solid var(--cizgi-2); border-bottom:1px solid var(--cizgi-2); }
+
+.kesim-bas{ text-align:center; max-width:70ch; margin:0 auto clamp(28px,3.5vw,46px); }
+.kesim-bas .komut{ justify-content:center; }
+.kesim-bas h2{ margin:0; }
+.kesim-bas p{ color:var(--yazi-2); margin:13px 0 0; }
+.kesim-bas::after{
+  content:""; display:block; width:64px; height:2px; background:var(--vurgu);
+  margin:20px auto 0; border-radius:1px;
+}
+.kesim-bas.sol{ text-align:left; margin-left:0; }
+.kesim-bas.sol .komut{ justify-content:flex-start; }
+.kesim-bas.sol::after{ margin-left:0; }
+
+/* komut satırı etiketi — programın komut istemi gibi */
+.komut{
+  font-family:var(--f-veri); font-size:11.5px; letter-spacing:.08em;
+  color:var(--yesil); margin:0 0 13px; display:flex; align-items:center; gap:8px;
+  text-transform:uppercase;
+}
+.komut::before{ content:"›"; color:var(--yazi-3); font-size:14px; }
+
+/* ============================================================ ÜRÜN KARTLARI */
+/* İki sütuna sabit: öne çıkan kart tüm satırı kaplar, eklentiler yan yana durur.
+   auto-fit ile denendi — öne çıkan kart 1/-1 olduğu için ızgara 4 sütuna açılıyor
+   ve iki eklenti kartı sola sıkışıp sağda boşluk bırakıyordu. */
+.urun-izgara{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+@media (max-width:760px){ .urun-izgara{ grid-template-columns:1fr; } }
+
+.urun{
+  display:flex; flex-direction:column; overflow:hidden;
+  background:var(--panel-2); border:1px solid var(--cizgi); border-radius:4px;
+  text-decoration:none; color:inherit;
+  transition:border-color .18s, transform .18s, box-shadow .18s;
+}
+.urun:hover{ border-color:var(--vurgu); transform:translateY(-3px); box-shadow:var(--golge-2); }
+.urun-gorsel{ position:relative; aspect-ratio:16/10; overflow:hidden; background:var(--zemin);
+  border-bottom:1px solid var(--cizgi); }
+.urun-gorsel img{ width:100%; height:100%; object-fit:cover; transition:transform .4s ease; }
+.urun:hover .urun-gorsel img{ transform:scale(1.04); }
+.urun-rozet{
+  position:absolute; top:11px; left:11px; z-index:2;
+  font-family:var(--f-veri); font-size:10px; letter-spacing:.12em; text-transform:uppercase;
+  padding:4px 9px; border-radius:2px; background:var(--panel-2); border:1px solid var(--cizgi);
+  color:var(--yazi-2);
+}
+.urun-rozet.satista{ color:var(--yesil); border-color:currentColor; }
+.urun-rozet.yakinda{ color:var(--amber); border-color:currentColor; }
+.urun-ic{ padding:20px; display:flex; flex-direction:column; gap:10px; flex:1; }
+.urun-ic h3{ font-size:20px; margin:0; }
+.urun-ic p{ font-size:14px; color:var(--yazi-2); margin:0; }
+.urun-liste{ list-style:none; margin:2px 0 0; padding:0; font-size:13.5px; color:var(--yazi-2); }
+.urun-liste li{ padding-left:16px; position:relative; margin-bottom:5px; }
+.urun-liste li::before{ content:""; position:absolute; left:0; top:.65em;
+  width:7px; height:1px; background:var(--vurgu); }
+.urun-alt{
+  margin-top:auto; padding-top:15px; border-top:1px solid var(--cizgi-2);
+  display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+}
+.urun-fiyat{ font-family:var(--f-bas); font-size:20px; font-weight:700; letter-spacing:-.02em;
+  color:var(--yazi); font-variant-numeric:tabular-nums; }
+.urun-fiyat i{ font-style:normal; font-family:var(--f-ui); font-size:12.5px;
+  font-weight:400; color:var(--yazi-3); letter-spacing:0; }
+.urun-fiyat.yok{ font-size:14px; font-weight:600; color:var(--amber); }
+
+/* ATA CAD — öne çıkan geniş kart */
+.urun.one-cikan{ grid-column:1/-1; display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);
+  border-color:var(--vurgu); }
+.urun.one-cikan .urun-gorsel{ aspect-ratio:auto; height:100%; min-height:260px;
+  border-bottom:0; border-right:1px solid var(--cizgi); }
+.urun.one-cikan .urun-ic{ padding:clamp(22px,3vw,34px); }
+.urun.one-cikan .urun-ic h3{ font-size:clamp(22px,2.4vw,29px); }
+@media (max-width:860px){
+  .urun.one-cikan{ grid-template-columns:1fr; }
+  .urun.one-cikan .urun-gorsel{ aspect-ratio:16/10; min-height:0;
+    border-right:0; border-bottom:1px solid var(--cizgi); }
+}
+
+/* --------------------------------------------------------------- PANELLER */
+/* Modül/standart kartları — ürün kartından daha sade, "palet" gibi. */
+.paneller{ display:grid; grid-template-columns:repeat(auto-fit,minmax(258px,1fr)); gap:14px; }
+.pnl{
+  background:var(--panel-2); border:1px solid var(--cizgi); border-radius:3px;
+  display:flex; flex-direction:column; overflow:hidden;
+  transition:border-color .18s, transform .18s;
+}
+a.pnl{ text-decoration:none; color:inherit; }
+a.pnl:hover{ border-color:var(--vurgu); transform:translateY(-2px); }
+.pnl-bas{
+  display:flex; align-items:center; gap:8px; padding:9px 13px;
+  background:var(--panel); border-bottom:1px solid var(--cizgi);
+  font-family:var(--f-veri); font-size:10.5px; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--yazi-3);
+}
+.pnl-bas .rozetcik{ margin-left:auto; font-size:9.5px; padding:1px 6px; border-radius:2px; letter-spacing:.08em; }
+.pnl-ic{ padding:18px; display:flex; flex-direction:column; gap:9px; flex:1; }
+.pnl-ic h3{ font-size:18px; }
+.pnl-ic p{ font-size:14px; color:var(--yazi-2); margin:0; }
+.pnl-ic ul{ margin:2px 0 0; padding:0; list-style:none; font-size:13.5px; color:var(--yazi-2); }
+.pnl-ic ul li{ padding-left:15px; position:relative; margin-bottom:4px; }
+.pnl-ic ul li::before{ content:""; position:absolute; left:0; top:.6em;
+  width:6px; height:1px; background:var(--vurgu); }
+.pnl-alt{ margin-top:auto; padding-top:13px; border-top:1px solid var(--cizgi-2);
+  display:flex; align-items:baseline; justify-content:space-between; gap:10px; }
+.pnl-alt .fiyat{ font-family:var(--f-veri); font-size:13px; color:var(--yazi); }
+.pnl-alt .fiyat i{ font-style:normal; color:var(--yazi-3); font-size:11px; }
+.pnl-alt .git{ font-family:var(--f-veri); font-size:11px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--vurgu); }
+
+.durum-var{ color:var(--yesil); background:color-mix(in srgb,var(--yesil) 16%,transparent); }
+.durum-yapiliyor{ color:var(--amber); background:color-mix(in srgb,var(--amber) 16%,transparent); }
+.durum-planli{ color:var(--yazi-3); background:color-mix(in srgb,var(--yazi-3) 16%,transparent); }
+
+/* ------------------------------------------------------------ KURUM LOGOLARI */
+.kurumlar{ display:flex; flex-wrap:wrap; align-items:stretch; justify-content:center;
+  gap:clamp(16px,3vw,32px); }
+.kurum{ display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center; }
+/* Kurum logoları beyaz zemin için üretilmiş; koyu temada doğrudan konunca
+   kayboluyorlardı. Bu yüzden her biri kendi açık kutusunda duruyor. */
+.kurum-kutu{
+  display:grid; place-items:center; min-width:172px; min-height:96px;
+  padding:16px 24px; background:#FFFFFF;
+  border:1px solid var(--cizgi); border-radius:3px;
+}
+.kurum img{ height:56px; width:auto; object-fit:contain; }
+.kurum span{ font-family:var(--f-veri); font-size:11px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--yazi-3); }
+
+/* --------------------------------------------------------------- DÜĞMELER */
+.dugmeler{ display:flex; flex-wrap:wrap; gap:11px; }
+.dugme{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--f-ui); font-size:14.5px; font-weight:600;
+  padding:12px 22px; border:1px solid transparent; border-radius:2px;
+  text-decoration:none; cursor:pointer; line-height:1.3;
+  transition:background .16s, border-color .16s, color .16s, transform .16s;
+}
+.dugme.dolu{ background:var(--vurgu); color:#fff; }
+.dugme.dolu:hover{ background:var(--vurgu-2); transform:translateY(-1px); }
+.dugme.bos{ background:var(--yuzey); color:var(--yazi); border-color:var(--cizgi); }
+.dugme.bos:hover{ border-color:var(--vurgu); color:var(--vurgu); transform:translateY(-1px); }
+.dugme.kucuk{ font-size:13px; padding:8px 15px; }
+
+/* ============================================================ ÇAĞRI ŞERİDİ */
+.cagri-serit{ background:var(--vurgu); color:#fff; }
+.cagri-ic{ display:flex; align-items:center; justify-content:center; gap:clamp(12px,2.5vw,26px);
+  flex-wrap:wrap; padding:22px var(--dolgu-x); text-align:center; }
+.cagri-ikon{ width:26px; height:26px; fill:#fff; flex-shrink:0; }
+.cagri-yazi{ margin:0; font-size:clamp(15px,1.5vw,18px); color:#fff; opacity:.94; }
+.cagri-numara{
+  font-family:var(--f-bas); font-size:clamp(20px,2.4vw,27px); font-weight:700;
+  letter-spacing:-.01em; color:#fff; text-decoration:none; white-space:nowrap;
+  border-bottom:2px solid rgba(255,255,255,.45); padding-bottom:1px;
+}
+.cagri-numara:hover{ border-bottom-color:#fff; }
+
+/* ================================================================ ALTBİLGİ */
+.altbilgi{ background:var(--panel-2); border-top:1px solid var(--cizgi); color:var(--yazi-2); }
+.alt-izgara{
+  display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:clamp(24px,3.5vw,44px);
+  padding:clamp(36px,4.5vw,56px) var(--dolgu-x);
+}
+.alt-sutun h4{
+  font-family:var(--f-bas); font-size:14px; font-weight:700; color:var(--yazi);
+  letter-spacing:.02em; margin:0 0 15px; text-transform:uppercase;
+}
+.alt-marka .marka{ margin-bottom:15px; }
+.alt-marka p{ font-size:13.5px; margin:0 0 10px; max-width:44ch; }
+.alt-asama{ font-family:var(--f-veri); font-size:11px; color:var(--yazi-3); letter-spacing:.06em; }
+.alt-liste{ list-style:none; margin:0; padding:0; }
+.alt-liste li{ margin-bottom:9px; }
+.alt-liste a{ font-size:13.5px; color:var(--yazi-2); text-decoration:none; }
+.alt-liste a:hover{ color:var(--vurgu); }
+
+.telif{ border-top:1px solid var(--cizgi-2); background:var(--panel); }
+.telif-ic{ display:flex; align-items:center; justify-content:space-between; gap:16px;
+  flex-wrap:wrap; padding:14px var(--dolgu-x);
+  font-family:var(--f-veri); font-size:11px; letter-spacing:.06em; color:var(--yazi-3); }
+
+/* ================================================================ TİPOGRAFİ */
+h1,h2,h3,h4{ font-family:var(--f-bas); font-weight:700; color:var(--yazi);
+  margin:0; line-height:1.15; letter-spacing:-.022em; text-wrap:balance; }
+h1{ font-size:clamp(28px,3.6vw,44px); line-height:1.08; }
+h2{ font-size:clamp(22px,2.7vw,33px); }
+h3{ font-size:clamp(17px,1.8vw,21px); }
+h4{ font-size:16px; }
+p{ margin:0 0 1em; }
+p:last-child{ margin-bottom:0; }
+.giris{ font-size:clamp(15.5px,1.35vw,18px); color:var(--yazi-2); max-width:62ch; }
+
+/* --------------------------------------------------------- İÇ SAYFA BAŞLIK */
+/* İç sayfa başlığı hero ile aynı zemini kullanır: kendi düz ızgarası yoktu
+   sayılır — hero'daki ızgara kalkınca buradaki de kalktı, ikisi aynı
+   desendi. Yarı saydam panel arkasından tel kafes süzülür; opaklığı biraz
+   düşürüldü ki arazi başlığın arkasında görünür kalsın. */
+.sayfa-bas{
+  position:relative; overflow:hidden;
+  background:color-mix(in srgb, var(--panel) 62%, transparent);
+  border-bottom:1px solid var(--cizgi);
+  padding:clamp(30px,4vw,52px) 0;
+}
+.sayfa-bas .sinir{ position:relative; z-index:1; }
+.iz{ font-family:var(--f-veri); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--yazi-3); margin-bottom:12px; }
+.iz a{ color:var(--yazi-3); text-decoration:none; }
+.iz a:hover{ color:var(--vurgu); }
+.sayfa-bas .giris{ margin-top:14px; }
+
+/* -------------------------------------------------------------- İÇERİK GÖVDE */
+.icerik{ max-width:74ch; }
+.icerik h2{ margin:1.9em 0 .55em; }
+.icerik h3{ margin:1.6em 0 .45em; }
+.icerik h2:first-child,.icerik h3:first-child{ margin-top:0; }
+.icerik ul,.icerik ol{ margin:0 0 1.1em; padding-left:1.3em; color:var(--yazi-2); }
+.icerik li{ margin-bottom:.4em; }
+.icerik li::marker{ color:var(--vurgu); }
+.icerik strong{ color:var(--yazi); font-weight:600; }
+.icerik blockquote{ margin:1.5em 0; padding:14px 18px; border-left:2px solid var(--vurgu);
+  background:var(--panel); color:var(--yazi-2); }
+.icerik blockquote p:last-child{ margin-bottom:0; }
+.icerik hr{ border:0; border-top:1px solid var(--cizgi); margin:2.2em 0; }
+.icerik code{ font-family:var(--f-veri); font-size:.88em; background:var(--panel);
+  border:1px solid var(--cizgi-2); padding:1px 5px; border-radius:2px; }
+.icerik img{ border:1px solid var(--cizgi); border-radius:3px; margin:1.5em 0; }
+
+.tablo-sar{ overflow-x:auto; margin:1.5em 0; border:1px solid var(--cizgi); border-radius:3px; }
+.icerik table, table.veri{ border-collapse:collapse; width:100%; min-width:520px; font-size:14px; }
+.icerik th,.icerik td, table.veri th, table.veri td{
+  padding:10px 14px; text-align:left; border-bottom:1px solid var(--cizgi-2); vertical-align:top;
+}
+.icerik thead th, table.veri thead th{
+  font-family:var(--f-veri); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--yazi-3); background:var(--panel); font-weight:400;
+  border-bottom:1px solid var(--cizgi);
+}
+.icerik tbody td, table.veri tbody td{ color:var(--yazi-2); }
+.icerik tbody tr:last-child td{ border-bottom:0; }
+table.veri{ background:var(--panel-2); }
+table.veri tbody tr:hover{ background:var(--panel); }
+.evet{ color:var(--yesil); } .hayir{ color:var(--kirmizi); } .kismi{ color:var(--amber); }
+
+/* ================================================== GALERİ / ŞEKİL (kısa kod) */
+/* İçerik sayfalarındaki ekran görüntüsü ızgarası. Küçük boy gösterilir,
+   tıklanınca tam boy büyüteçte açılır — 28 görselin hepsini tam boy
+   yüklemek sayfayı gereksiz ağırlaştırıyordu. */
+.galeri-blok{ margin:2em 0; }
+.galeri-blok .etiket{
+  font-family:var(--f-veri); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--yazi-3); margin:0 0 12px; display:flex; align-items:center; gap:8px;
+}
+.galeri-blok .etiket b{ color:var(--vurgu); font-weight:400; }
+.galeri-blok .etiket::after{ content:""; flex:1; height:1px; background:var(--cizgi-2); }
+
+.galeri{ display:grid; grid-template-columns:repeat(auto-fill,minmax(198px,1fr)); gap:12px; }
+/* Anasayfadaki ekran şeridi: 198 px hücrede CAD ekranı okunmuyor, üç sütun yeter. */
+.galeri.genis{ grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:16px; }
+.galeri-hucre{ margin:0; }
+.galeri-hucre a{
+  display:block; border:1px solid var(--cizgi); border-radius:3px; overflow:hidden;
+  background:var(--panel); position:relative; transition:border-color .18s, transform .18s;
+}
+.galeri-hucre a:hover{ border-color:var(--vurgu); transform:translateY(-2px); }
+.galeri-hucre img{ width:100%; aspect-ratio:16/10; object-fit:cover; margin:0; border:0; border-radius:0; }
+/* Pencere, panel ve şerit kareleri 16/10 değil; kırpınca anlamlı kısım kadraj
+   dışında kalıyordu. `sig` verilen hücre kırpmaz, sığdırır. */
+.galeri-hucre img.sigdir{ object-fit:contain; background:#EEF1F5; }
+.galeri-hucre figcaption{ font-size:12.5px; color:var(--yazi-3); margin-top:7px; line-height:1.45; }
+
+/* ====================================== EKLENTİ KART KAPAKLARI (satır içi SVG) */
+/* Stok 3B render yerine teknik kesit: ürünün ürettiği şeyin ta kendisi.
+   Satır içi olduğu için tema değişkenlerini okur — üç temada da doğru. */
+.urun-gorsel .kapak{ display:block; width:100%; height:100%; }
+.k-zemin{ fill:var(--panel-2); }
+.k-izgara{ stroke:var(--cizgi-2); stroke-width:1; }
+.k-tarama{ stroke:var(--yazi-3); stroke-width:1; opacity:.42; }
+.k-nokta{ fill:var(--yazi-3); opacity:.42; }
+.k-ana{ fill:none; stroke:var(--yazi); stroke-width:3; stroke-linejoin:round; stroke-linecap:round; }
+.k-ince{ fill:none; stroke:var(--yazi-2); stroke-width:1.6; }
+.k-uzatma{ fill:none; stroke:var(--yazi-3); stroke-width:1; opacity:.55; }
+.k-kaplama{ fill:var(--yazi); opacity:.8; }
+.k-beton{ fill:var(--yuzey); }
+.k-boru{ fill:var(--zemin); stroke:var(--yazi); stroke-width:3; }
+.k-eksen{ fill:none; stroke:var(--kirmizi); stroke-width:1.6; stroke-dasharray:18 6 4 6; }
+.k-olcu{ fill:none; stroke:var(--vurgu); stroke-width:1.6; }
+.k-okucu{ fill:var(--vurgu); }
+/* Toprak basıncı üçgeni — istinat kapağının tek anlamlı iddiası. */
+.k-basinc{ fill:var(--kirmizi); opacity:.14; stroke:var(--kirmizi); stroke-width:1.4; }
+.k-kuvvet{ fill:none; stroke:var(--kirmizi); stroke-width:2.2; }
+.k-kuvvet-uc{ fill:var(--kirmizi); }
+.k-kuvvet-yazi{ font-family:var(--f-veri); font-size:20px; fill:var(--kirmizi); }
+.kapak text{ font-family:var(--f-veri); }
+.k-baslik{ font-size:21px; letter-spacing:.17em; fill:var(--yazi-2); }
+.k-alt{ font-size:14px; letter-spacing:.11em; fill:var(--yazi-3); }
+.k-etiket{ font-size:20px; letter-spacing:.05em; fill:var(--vurgu); }
+
+/* ================================================= İDDİA KARTLARI (anasayfa) */
+/* Paket adı sayan teknoloji tablosunun yerini aldı. Her kart müşterinin bir
+   sorusuna cevap verir; sol kenar çizgisi kartları liste değil iddia yapar. */
+.iddialar{ display:grid; grid-template-columns:repeat(auto-fit,minmax(238px,1fr)); gap:14px; }
+.iddia{
+  border:1px solid var(--cizgi); border-left:3px solid var(--vurgu);
+  background:var(--panel); border-radius:3px; padding:18px 20px;
+}
+.iddia-bas{
+  font-family:var(--f-bas); font-size:16.5px; font-weight:600; letter-spacing:-.01em;
+  color:var(--yazi); margin:0 0 8px;
+}
+.iddia p:last-child{ font-size:13.5px; line-height:1.62; color:var(--yazi-2); margin:0; }
+
+/* ============================================ KATMAN ŞEMASI (kısa kod) */
+/* Üç katmanlı mimari. Bilgi hiyerarşisi: katman adı > içerik > bağımlılık oku.
+   Renkler tema değişkenlerinden gelir; şema üç temada da kendi zeminindedir. */
+.katman-diyagram{
+  margin:2em 0; display:grid; gap:0 14px;
+  grid-template-columns:auto minmax(0,1fr);
+  grid-template-areas:"ok govde" ". kural";
+}
+.katman-diyagram .kd-govde{ grid-area:govde; display:flex; flex-direction:column; gap:6px; }
+
+.katman-diyagram .kd-kat{
+  border:1px solid var(--cizgi); border-left:3px solid var(--cizgi);
+  background:var(--panel); border-radius:3px; padding:13px 16px;
+}
+.katman-diyagram .kd-ad{
+  font-family:var(--f-veri); font-size:10.5px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--yazi); margin:0;
+}
+.katman-diyagram .kd-not{
+  font-size:13px; line-height:1.6; color:var(--yazi-2); margin:6px 0 0;
+}
+/* Kabuk en dışta durur, çekirdek en altta taşır — ikisi de vurgulu. */
+.katman-diyagram .kd-kabuk{ border-left-color:var(--yazi-3); }
+.katman-diyagram .kd-modul{ border-left-color:var(--vurgu); background:var(--panel-2); }
+.katman-diyagram .kd-muhendislik{ border-left-color:var(--yazi-3); }
+.katman-diyagram .kd-cekirdek{ border-left-color:var(--vurgu); background:var(--panel-2); }
+
+.katman-diyagram .kd-kutular{ display:flex; flex-wrap:wrap; gap:6px; margin-top:9px; }
+.katman-diyagram .kd-kutu{
+  font-size:12.5px; padding:4px 10px; border-radius:2px;
+  border:1px solid var(--cizgi); background:var(--zemin); color:var(--yazi-2);
+}
+.katman-diyagram .kd-kutu.var{
+  color:var(--yesil); border-color:color-mix(in srgb,var(--yesil) 45%,transparent);
+  background:color-mix(in srgb,var(--yesil) 10%,transparent);
+}
+.katman-diyagram .kd-kutu.planli{ color:var(--yazi-3); border-style:dashed; }
+
+.katman-diyagram .kd-lejant{
+  display:flex; gap:14px; margin:9px 0 0;
+  font-family:var(--f-veri); font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+}
+.katman-diyagram .kd-lejant b{ font-weight:400; display:flex; align-items:center; gap:5px; }
+.katman-diyagram .kd-lejant b::before{
+  content:""; width:9px; height:9px; border-radius:2px; border:1px solid currentColor;
+}
+.katman-diyagram .kd-lejant .var{ color:var(--yesil); }
+.katman-diyagram .kd-lejant .planli{ color:var(--yazi-3); }
+.katman-diyagram .kd-lejant .planli::before{ border-style:dashed; }
+
+/* Sol sütundaki dikey ok — şemanın asıl iddiası bu: bağımlılık tek yönlü. */
+.katman-diyagram .kd-ok{
+  grid-area:ok; position:relative; width:26px;
+  display:flex; align-items:center; justify-content:center;
+}
+.katman-diyagram .kd-ok::before{               /* gövde */
+  content:""; position:absolute; top:10px; bottom:16px; left:50%;
+  width:1px; background:var(--vurgu); transform:translateX(-50%);
+}
+.katman-diyagram .kd-ok::after{                /* uç */
+  content:""; position:absolute; bottom:6px; left:50%; transform:translateX(-50%);
+  border:5px solid transparent; border-top:8px solid var(--vurgu);
+}
+.katman-diyagram .kd-ok span{
+  writing-mode:vertical-rl; font-family:var(--f-veri); font-size:9.5px;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--vurgu);
+  background:var(--zemin); padding:8px 0; position:relative;
+}
+
+.katman-diyagram .kd-kural{
+  grid-area:kural; display:flex; gap:9px; align-items:flex-start;
+  margin-top:12px; font-size:12.5px; line-height:1.55; color:var(--yazi-3);
+}
+.katman-diyagram .kd-kural b{ color:var(--yazi-2); font-family:var(--f-veri);
+  font-size:.92em; font-weight:400; }
+.katman-diyagram .kd-yasak{ color:var(--kirmizi); font-size:14px; line-height:1.3; }
+
+/* Dar ekranda ok sütunu yer kaplıyor; yazıyı yatay bir başlığa indir. */
+@media (max-width:620px){
+  .katman-diyagram{ grid-template-columns:minmax(0,1fr); grid-template-areas:"ok" "govde" "kural"; }
+  .katman-diyagram .kd-ok{ width:auto; height:24px; justify-content:flex-start; margin-bottom:6px; }
+  .katman-diyagram .kd-ok::before,
+  .katman-diyagram .kd-ok::after{ display:none; }
+  .katman-diyagram .kd-ok span{ writing-mode:horizontal-tb; padding:0; }
+  .katman-diyagram .kd-ok span::after{ content:" ↓"; }
+}
+
+.sekil-blok{ margin:2em 0; }
+/* Şerit ve pencere kareleri 74ch'lik okuma sütununa sığmıyor — panel etiketleri
+   okunmaz hâle geliyordu. `genis` verilen şekil/galeri metin sütununu aşıp
+   `.sinir` genişliğine kadar açılır; taşma sağa doğrudur, sayfa yatay kaymaz. */
+.icerik .sekil-blok.genis,
+.icerik .galeri-blok.genis{
+  max-width:calc(100vw - 2 * var(--dolgu-x));
+  width:calc(min(var(--sinir), 100vw) - 2 * var(--dolgu-x));
+}
+.sekil-blok a{ display:block; border:1px solid var(--cizgi); border-radius:3px;
+  overflow:hidden; background:var(--panel); }
+.sekil-blok a:hover{ border-color:var(--vurgu); }
+.sekil-blok img{ width:100%; margin:0; border:0; border-radius:0; }
+.sekil-blok figcaption{
+  font-family:var(--f-veri); font-size:12px; color:var(--yazi-3);
+  margin-top:9px; padding-left:12px; border-left:2px solid var(--vurgu); line-height:1.5;
+}
+
+/* büyüteç — tam boy görsel katmanı */
+.buyutec{
+  position:fixed; inset:0; z-index:400; display:grid; place-items:center;
+  background:rgba(10,12,16,.92); padding:clamp(16px,4vw,48px); cursor:zoom-out;
+}
+.buyutec img{ max-width:100%; max-height:88vh; object-fit:contain;
+  border:1px solid var(--cizgi); border-radius:3px; }
+.buyutec figcaption{
+  margin-top:12px; text-align:center; font-size:13px; color:#C9CFD8;
+  font-family:var(--f-veri);
+}
+.buyutec-kapat{
+  position:absolute; top:16px; right:18px; width:38px; height:38px;
+  display:grid; place-items:center; cursor:pointer;
+  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.25);
+  border-radius:3px; color:#fff; font-size:19px; line-height:1;
+}
+.buyutec-kapat:hover{ background:rgba(255,255,255,.2); }
+
+/* ---------------------------------------------------------------- HAREKET */
+.js .ac{ opacity:0; transform:translateY(14px); }
+.js .ac.gor{ opacity:1; transform:none;
+  transition:opacity .5s cubic-bezier(.2,.7,.3,1) var(--g,0s),
+             transform .5s cubic-bezier(.2,.7,.3,1) var(--g,0s); }
+
+/* Kademeli giriş: `data-kademe` verilen kabın çocukları sırayla açılır.
+   Gecikmeyi betik dağıtır (bkz. ata.js). Kartlar tek blok hâlinde belirince
+   ızgara "yüklendi" gibi duruyordu; dalga hâlinde gelince göz sırayı takip
+   ediyor. Yükseklik farkı yaratmasın diye yalnız opaklık ve kayma oynar. */
+.js [data-kademe] > .ac{ transform:translateY(18px); }
+
+/* ---------------------------------------------------- SAYFA GEÇİŞİ (VT) */
+/* Hugo çok sayfalı; her tıklamada sayfanın beyaz/siyah çakması hareketi
+   kesiyordu. Destekleyen tarayıcıda kısa bir çapraz geçiş olur, desteklemeyen
+   tarayıcı bu kuralları görmezden gelir — yedek gerekmez.
+   Sabit duran başlık kendi adını alır, böylece geçişte o solmaz. */
+@view-transition{ navigation:auto; }
+.baslik{ view-transition-name:baslik; }
+::view-transition-old(root){ animation:vtCik .18s ease both; }
+::view-transition-new(root){ animation:vtGir .32s cubic-bezier(.2,.7,.3,1) both; }
+@keyframes vtCik{ to{ opacity:0; } }
+@keyframes vtGir{ from{ opacity:0; transform:translateY(10px); } }
+
+@media (prefers-reduced-motion:reduce){
+  .js .ac,.js .ac.gor{ opacity:1 !important; transform:none !important; transition:none !important; }
+  .dugme:hover, a.pnl:hover, .urun:hover{ transform:none; }
+  .urun:hover .urun-gorsel img{ transform:none; }
+  @view-transition{ navigation:none; }
+}
+
+/* ------------------------------------------------------------- DAR EKRAN */
+@media (max-width:1080px){
+  /* Tek sütunda sıra: etiket → başlık → giriş → SLAYT → zincir → düğmeler.
+     Masaüstünde slayt metnin yanında duruyor; tek sütuna düşünce olduğu yerde
+     bırakılırsa zincirin ve düğmelerin ALTINA iniyor, yani ürünün kendisi
+     ancak uzun bir metin bloğu geçildikten sonra görünüyordu.
+
+     .hero-metin kutusunun kendi stili yok — yalnız gruplayıcı. display:contents
+     onu ızgaradan kaldırıp çocuklarını doğrudan ızgara öğesi yapıyor, böylece
+     slayt order ile aralarına giriyor. Öğelerin --g gecikmeleri (.05 giriş,
+     .08 slayt, .1 zincir, .14 düğme) zaten bu sırayla artıyor, açılış animasyonu
+     yukarıdan aşağı akmaya devam ediyor.
+
+     row-gap sıfırlanıyor: 28–60px'lik ızgara boşluğu iki öğe arasında doğruydu,
+     altı öğe arasında sayfayı dağıtırdı. Aralar öğelerin kendi margin'inden. */
+  .hero-ic{ grid-template-columns:1fr; row-gap:0; }
+  .hero-metin{ display:contents; }
+  .hero-etiket,.hero h1,.hero-giris{ order:0; }
+  .hero-gorsel{ order:1; margin:2px 0 26px; }
+  .zincir{ order:2; }
+  .dugmeler{ order:3; }
+
+  .alt-izgara{ grid-template-columns:1fr 1fr; }
+
+  /* Hero tek sütuna düşünce zincir sayfa genişliğine yayılır — dört sütun
+     rahat sığar, iki satırda biter (4 + 2 + son halka iki sütun). */
+  .zincir-adimlar{ grid-template-columns:repeat(4,minmax(0,1fr)); }
+}
+
+@media (max-width:900px){
+  .marka-alt{ display:none; }
+  .menu-dugme{ display:flex; }
+  .menu{
+    display:none; position:absolute; left:0; right:0; top:100%;
+    flex-direction:column; align-items:stretch; gap:0;
+    background:var(--panel-2); border-bottom:1px solid var(--cizgi);
+    box-shadow:var(--golge); padding:8px var(--dolgu-x) 14px;
+  }
+  .menu.acik{ display:flex; }
+  .menu a{ padding:12px 10px; border-bottom:1px solid var(--cizgi-2); border-radius:0; }
+  .menu a:last-child{ border-bottom:0; }
+  .baslik-ic{ position:relative; min-height:64px; }
+  .baslik-sag{ margin-left:auto; }
+
+  /* Hamburger belirdiği an tema seçici menünün içine iner: başlıkta kalan
+     yer logo, CTA ve hamburger için. Menüde tam satır kaplar, düğmeler
+     dokunulacak kadar büyür. */
+  .tema-grup-baslik{ display:none; }
+  .tema-grup-menu{ display:flex; margin-top:10px; align-self:flex-start; }
+  .tema-grup-menu .tema-dugme{ width:44px; height:36px; font-size:12px; }
+}
+
+@media (max-width:640px){
+  /* Telefonda dört sütun okunmuyor: kutular daralıp "Güzergâh" kırılıyor. */
+  .zincir{ padding:15px 16px 17px; }
+  .zincir-adimlar{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .zincir-not{ font-size:12.5px; }
+
+  /* ÜST ŞERİT — telefonda iki öğe, sarma yok.
+     Üç öğe (numara + WhatsApp + Erken Erişim) 390px'te Chrome'da kıl payı
+     sığıyor, iOS Safari'de sığmıyordu: metin ölçümü tarayıcıya göre değişince
+     şerit ikinci satıra taşıyor, taşan düğme sola yapışıyor ve hizalama
+     dağılıyordu. Sarmayı düzeltmek yerine sarma İHTİMALİNİ kaldırdım —
+     "Erken Erişim" yapışkan başlığa taşındı (bkz. .baslik-cta), şeritte
+     numara solda / WhatsApp sağda kaldı. nowrap ile ikinci satır artık
+     mümkün değil; hangi tarayıcı ne ölçerse ölçsün şerit tek satır. */
+  .ust-serit{ font-size:12px; }
+  .ust-serit-ic{ gap:10px; row-gap:0; flex-wrap:nowrap; min-height:36px; }
+  .us-oge:nth-child(2){ display:none; }   /* dar ekranda e-posta gizli, telefon kalır */
+  .us-oge{ min-width:0; }
+  .us-dugme.birincil{ display:none; }     /* karşılığı başlıkta */
+  .us-dugme{ flex:none; }
+
+  .baslik-cta{ display:inline-flex; }
+  .baslik-ic{ gap:10px; }
+  .baslik-sag{ gap:8px; }
+  .marka-rozet{ width:34px; height:34px; font-size:17px; }
+  .marka-ad{ font-size:19px; }
+
+  /* SLAYT YAZISI — görselin üstünden altına.
+     Yazı görselin üzerinde yüzen bir katmandı; telefonda üç satıra çıkınca
+     karenin %30-34'ünü örtüyor, yani gösterdiği şeyin üçte birini kapatıyordu.
+     Artık kareyi paylaşıyor: görsel kalan yüksekliği alıyor (zaten
+     object-fit:cover, kırpılıyor), yazı altta kendi şeridinde duruyor.
+     min-height iki satır: kareler arası geçişte görsel yüksekliği oynamasın.
+
+     Izgara, flex değil: flex'te görselin `height:100%` kuralı `flex:1` ile
+     çelişip kareyi içeriğine büzüyordu (inset:0'a rağmen 213px yerine 181px)
+     ve çerçevenin altında boşluk kalıyordu. `1fr auto` bu çelişkiyi doğuran
+     yüzde hesabını hiç kurmuyor: üst satır kalanı alır, alt satır yazı kadar. */
+  .hero-kare{ display:grid; grid-template-rows:minmax(0,1fr) auto; }
+  .hero-kare figcaption,.hero-kare.etkin figcaption{
+    position:static; opacity:1; transform:none; transition:none;
+    background:var(--panel-2); border-top:1px solid var(--cizgi);
+    color:var(--yazi-2); font-size:11.5px; line-height:1.35;
+    padding:8px 11px; min-height:calc(2 * 1.35em + 16px);
+  }
+  .alt-izgara{ grid-template-columns:1fr; }
+  .kanit-ic{ gap:14px; }
+  .cagri-ic{ flex-direction:column; gap:10px; }
+}

@@ -1,0 +1,64 @@
+{{- /* İstinat Duvarı Asistanı kart kapağı — konsol duvar kesiti.
+
+       Kapağın taşıdığı asıl bilgi sağdaki KIRMIZI ÜÇGEN: aktif toprak basıncı.
+       Bu eklentinin varlık nedeni o üçgenin hesabıdır (Rankine/Coulomb, üstüne
+       TBDY-2018 deprem ek yükü), duvarın kendisi değil. Desen kimlikleri `id-`
+       önekli — aynı sayfada hendek kapağı da var. */ -}}
+<svg class="kapak" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice"
+     role="img" aria-label="İstinat duvarı kesiti teknik çizimi: temel, gövde, dolgu ve toprak basıncı diyagramı">
+  <defs>
+    <pattern id="id-izgara" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" class="k-izgara" fill="none"/>
+    </pattern>
+    <pattern id="id-dolgu" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="12" class="k-tarama"/>
+    </pattern>
+    <pattern id="id-kum" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r="1.7" class="k-nokta"/><circle cx="12" cy="11" r="1.7" class="k-nokta"/>
+    </pattern>
+    <marker id="id-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8"
+            orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="k-okucu"/></marker>
+    <marker id="id-kok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7"
+            orient="auto"><path d="M0 0 10 5 0 10z" class="k-kuvvet-uc"/></marker>
+  </defs>
+
+  <rect class="k-zemin" width="800" height="500"/>
+  <rect width="800" height="500" fill="url(#id-izgara)"/>
+
+  {{/* dolgu ve arkasındaki drenaj kolonu */}}
+  <path d="M452 140h308v250H452z" fill="url(#id-dolgu)"/>
+  <path d="M452 168h44v222h-44z" fill="url(#id-kum)"/>
+
+  {{/* gövde ve temel — beton kütle */}}
+  <path class="k-beton" d="M352 390 406 140h46v250z"/>
+  <rect class="k-beton" x="250" y="390" width="310" height="42"/>
+
+  {{/* zemin çizgileri: alçak taraf ve dolgu üstü */}}
+  <path class="k-ana" d="M40 390h210M452 140h308"/>
+  <path class="k-ana" d="M352 390 406 140h46v250zM250 390h310v42H250z"/>
+
+  {{/* drenaj borusu */}}
+  <circle class="k-boru" cx="474" cy="366" r="13"/>
+
+  {{/* Aktif toprak basıncı — derinlikle doğrusal büyüyen üçgen.
+       Oklar AYRI path'ler: tek path'te `marker-end` yalnız son köşeye uygulanır,
+       ara alt-yolların ucu başsız kalıyordu. */}}
+  <path class="k-basinc" d="M452 140 546 390H452z"/>
+  <path class="k-kuvvet" d="M470 190h-18" marker-end="url(#id-kok)"/>
+  <path class="k-kuvvet" d="M489 240h-37" marker-end="url(#id-kok)"/>
+  <path class="k-kuvvet" d="M508 290h-56" marker-end="url(#id-kok)"/>
+  <path class="k-kuvvet" d="M527 340h-75" marker-end="url(#id-kok)"/>
+  <path class="k-kuvvet" d="M541 378h-89" marker-end="url(#id-kok)"/>
+  <text class="k-kuvvet-yazi" x="558" y="292">Pa</text>
+
+  {{/* ölçüler: duvar yüksekliği ve temel genişliği */}}
+  <path class="k-uzatma" d="M406 140h-198M250 432h-42M250 432v34M560 432v34"/>
+  <path class="k-olcu" d="M218 140v292" marker-start="url(#id-ok)" marker-end="url(#id-ok)"/>
+  {{/* Ölçü yazısı DÖNDÜRÜLMÜYOR: tek harf 90° çevrilince "H" okunmuyor. */}}
+  <text class="k-etiket" x="198" y="292" text-anchor="middle">H</text>
+  <path class="k-olcu" d="M250 454h310" marker-start="url(#id-ok)" marker-end="url(#id-ok)"/>
+  <text class="k-etiket" x="405" y="444" text-anchor="middle">B</text>
+
+  <text class="k-baslik" x="760" y="56" text-anchor="end">İSTİNAT DUVARI KESİTİ</text>
+  <text class="k-alt"    x="760" y="82" text-anchor="end">TBDY-2018 · RANKINE</text>
+</svg>

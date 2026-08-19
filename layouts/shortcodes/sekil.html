@@ -1,0 +1,14 @@
+{{- /* Tek görsel + pafta usulü altyazı.  {{< sekil src="…" alt="…" not="…" >}}
+       genis="1" → metin sütununu aşar, tam içerik genişliğine açılır;
+                   şerit ve pencere kareleri okuma ölçüsünde okunmuyor.       */ -}}
+{{- $src := .Get "src" -}}
+{{- $tam := .Get "tam" | default $src -}}
+{{- $no  := .Get "no" -}}
+<figure class="sekil-blok{{ if .Get "genis" }} genis{{ end }}">
+  <a href="{{ $tam }}" class="buyut" data-buyut>
+    <img src="{{ $src }}" alt="{{ .Get "alt" }}" loading="lazy" decoding="async">
+  </a>
+  {{- with .Get "not" }}
+  <figcaption>{{ with $no }}Şek. {{ . }} — {{ end }}{{ . }}</figcaption>
+  {{- end }}
+</figure>
