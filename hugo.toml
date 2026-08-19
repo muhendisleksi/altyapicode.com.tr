@@ -16,7 +16,7 @@ disableKinds = ["taxonomy", "term"]
   eposta         = "abdulbakiatakan@gmail.com"
   telefonGorunen = "+90 545 563 68 67"
   whatsapp       = "https://wa.me/905455636867?text=Merhaba%2C%20ATA%20CAD%20erken%20eri%C5%9Fim%20listesi%20i%C3%A7in%20yaz%C4%B1yorum."
-  description    = "ATA CAD, altyapı projeleri için geliştirilmiş bağımsız ve modüler bir 3B CAD platformudur. Arazi, güzergâh, profil, koridor, kübaj, altyapı, havza ve istinat duvarı modülleriyle İller Bankası, İSKİ ve DSİ standartlarında proje ve metraj — Autodesk aboneliği gerekmeden."
+  description    = "ATA CAD, altyapı projeleri için geliştirilmiş bağımsız ve modüler bir 3B CAD platformudur. Arazi, güzergâh, profil, koridor, kübaj, altyapı, havza ve istinat duvarı modülleriyle İller Bankası, İSKİ ve DSİ standartlarında proje ve metraj."
 
   # Araç alanı ağacı ve modül panelleri bu listeden üretilir — tek kaynak.
   # durum: var | yapiliyor | planli
