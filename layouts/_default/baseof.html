@@ -12,7 +12,11 @@
 <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
 <meta property="og:url" content="{{ .Permalink }}">
 <meta property="og:locale" content="tr_TR">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+{{/* Sürüm parçası, simge değiştiğinde tarayıcının eskisini göstermesini
+     engeller — favicon'lar agresif önbelleklenir ve normal yenileme onları
+     tazelemez. */}}
+<link rel="icon" href="/favicon.svg?s=2" type="image/svg+xml">
+<meta name="theme-color" content="#1B55B4">
 <script>
 /* Boyamadan önce: tema tercihi + `js` sınıfı.
    `js` olmadan açılış animasyonlarının gizleme kuralları geçersizdir —

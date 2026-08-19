@@ -183,10 +183,15 @@ a{ color:var(--vurgu); text-underline-offset:3px; }
 .baslik-ic{ display:flex; align-items:center; gap:20px; min-height:74px; }
 
 .marka{ display:flex; align-items:center; gap:11px; text-decoration:none; color:var(--yazi); flex-shrink:0; }
+/* Rozet ile favicon aynı şeyi göstermeli: sekmeden başlığa geçen okuyucu
+   iki farklı simge görmemeli. Gradyan yönü ve renkleri favicon.svg ile
+   birebir aynı; oradaki köşe yarıçapı (12/64) burada 7px'e denk gelir. */
 .marka-rozet{
-  width:38px; height:38px; display:grid; place-items:center;
-  background:var(--vurgu); color:#fff; font-family:var(--f-bas);
-  font-size:19px; font-weight:700; border-radius:3px; flex-shrink:0;
+  width:40px; height:40px; display:grid; place-items:center;
+  background:linear-gradient(135deg, #4C8DFF, #1B55B4);
+  color:#fff; font-family:var(--f-bas);
+  font-size:21px; font-weight:700; border-radius:7px; flex-shrink:0;
+  letter-spacing:.01em;
 }
 .marka-yazi{ display:flex; flex-direction:column; line-height:1.15; }
 .marka-ad{ font-family:var(--f-bas); font-size:21px; font-weight:700; letter-spacing:-.02em; }
@@ -998,7 +1003,7 @@ table.veri tbody tr:hover{ background:var(--panel); }
   .baslik-cta{ display:inline-flex; }
   .baslik-ic{ gap:10px; }
   .baslik-sag{ gap:8px; }
-  .marka-rozet{ width:34px; height:34px; font-size:17px; }
+  .marka-rozet{ width:36px; height:36px; font-size:19px; border-radius:6px; }
   .marka-ad{ font-size:19px; }
 
   /* SLAYT YAZISI — görselin üstünden altına.
