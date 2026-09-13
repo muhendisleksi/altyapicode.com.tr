@@ -107,8 +107,8 @@ Ağırlıklı olarak altyapı projesi üreten bir ofis, ödediği kapsamın kü�
 bölümünü kullanır. ATA CAD bağımsız bir platformdur ve bu yıllık yükü ortadan
 kaldırır; fiyatı satışa çıktığında bu sayfada duyurulacaktır.
 
-Eklentiler mevcut kurulumunuzun içinde çalışır; kendi yıllık bedelleri
-[eklenti sayfalarındadır](/eklentiler/).
+Eklentiler mevcut kurulumunuzun içinde çalışır; yıllık ya da süresiz lisansla
+alınır, bedelleri [eklenti sayfalarındadır](/eklentiler/).
 
 ## Hangisi size uygun
 

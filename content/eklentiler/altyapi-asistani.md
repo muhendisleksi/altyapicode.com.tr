@@ -2,7 +2,7 @@
 title: "Altyapı Asistanı"
 description: "Kanalizasyon, yağmursuyu ve içmesuyu projeleri için otomatik hendek kesiti, İller Bankası formatında metraj tablosu ve hacim hesabı."
 tur: "Eklenti"
-fiyat: "250 $ / yıl"
+fiyat: "100 $ / yıl · 250 $ süresiz"
 weight: 10
 ozellikler:
   - "İller Bankası / İSKİ formatında metraj"
@@ -98,11 +98,10 @@ Büyütmek için tıklayın.
 
 ## Fiyat
 
-| Paket | Kapsam | Yıllık |
+| Lisans | Kapsam | Bedel |
 |---|---|---|
-| Tek Ürün | 1 makine, güncelleme, e-posta destek | 250 $ |
-| Profesyonel | Her iki eklenti, öncelikli destek | 400 $ |
-| Ofis | 5 makine havuz lisans | 1.000 $ |
+| Yıllık | 1 makine, güncelleme ve e-posta destek dahil | 100 $ |
+| Süresiz | 1 makine, tek seferlik ödeme, süre sınırı yok | 250 $ |
 
 > **ATA CAD geçişi:** Eklenti lisansı sahipleri, ATA CAD'in ilk sürümüne
 > öncelikli erken erişim alır. Geçiş koşulları ürün satışa çıktığında

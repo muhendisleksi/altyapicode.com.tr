@@ -2,7 +2,7 @@
 title: "İstinat Duvarı Asistanı"
 description: "Konsol ve ağırlık tipi istinat duvarlarının stabilite kontrolü, TBDY-2018 deprem hesabı, kesit çizimi ve metrajı."
 tur: "Eklenti"
-fiyat: "250 $ / yıl"
+fiyat: "100 $ / yıl · 250 $ süresiz"
 weight: 20
 ozellikler:
   - "Devrilme, kayma, taşıma gücü kontrolü"
@@ -49,11 +49,10 @@ hem de kontrol edilebilir bir rapor olarak verir.
 
 ## Fiyat
 
-| Paket | Kapsam | Yıllık |
+| Lisans | Kapsam | Bedel |
 |---|---|---|
-| Tek Ürün | 1 makine, güncelleme, e-posta destek | 250 $ |
-| Profesyonel | Her iki eklenti, öncelikli destek | 400 $ |
-| Ofis | 5 makine havuz lisans | 1.000 $ |
+| Yıllık | 1 makine, güncelleme ve e-posta destek dahil | 100 $ |
+| Süresiz | 1 makine, tek seferlik ödeme, süre sınırı yok | 250 $ |
 
 > **ATA CAD geçişi:** Eklenti lisansı sahipleri, ATA CAD'in ilk sürümüne
 > öncelikli erken erişim alır. Geçiş koşulları ürün satışa çıktığında
