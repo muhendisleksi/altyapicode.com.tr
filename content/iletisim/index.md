@@ -11,7 +11,7 @@ olmak isterseniz yazın — erken erişim **ücretsizdir.**
 Karşılığında beklenen tek şey geri bildirim: ürünü gerçek bir projenizde deneyip
 karşılaştığınız sorunları paylaşmanız.
 
-**[WhatsApp'tan yazın →](https://wa.me/905455636867?text=Merhaba%2C%20ATA%20CAD%20erken%20eri%C5%9Fim%20listesi%20i%C3%A7in%20yaz%C4%B1yorum.)**
+**[WhatsApp grubuna katılın →](https://chat.whatsapp.com/EM3peGrWC6C9jVYvpz0qZU)**
 · +90 545 563 68 67
 
 **[abdulbakiatakan@gmail.com](mailto:abdulbakiatakan@gmail.com)**
