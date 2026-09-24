@@ -3,15 +3,16 @@
 
    Sayfanın arkasında bir arazi var ve okuyucu aşağı indikçe o arazide bir
    yol projesi baştan sona yapılıyor. Zemin süs değil, sayfanın anlattığı iş
-   akışının kendisi:
+   akışının kendisi. Olaylar bölümlerin arasındaki metinsiz sahne
+   aralarında olur (a değerleri ▸ SAHNE):
 
-     hero            ölçüm noktaları araziye düşer, aralarından TIN örülür
-     kimler için     yüzeye eşyükselti eğrileri serilir (su seviyesi gibi yükselir)
-     sorunlar        güzergâh araziye kendini çizer, km işaretleriyle
-     nasıl çalışır   profil bölümündeki imleç, 3B güzergâhta da gezer
-     ürünler→modül.  koridor araziye oyulur; öndeki en kesit canlı kübaj okur
-     ekranda→çıktı.  kamera yana döner, en kesitler dikilir (alanlarıyla)
-     karşılaştırma→  kamera yükselir, sahne kuşbakışı plana döner, pafta çıkar
+     hero                   ölçüm noktaları araziye düşer, TIN örülür (açılışta)
+     ara 1  → kimler için   yüzeye eşyükselti eğrileri serilir (su seviyesi gibi)
+     ara 2  → nasıl çalışır güzergâh araziye kendini çizer, km işaretleriyle
+     nasıl çalışır          profil bölümündeki imleç, 3B güzergâhta da gezer
+     ara 3  → ürünler       koridor araziye oyulur; öndeki kesit canlı kübaj okur
+     ara 4  → ekranda       kamera yana döner, en kesitler dikilir (alanlarıyla)
+     ara 5  → karşılaştırma kamera yükselir, sahne kuşbakışı plana döner, pafta
 
    Profil bölümündeki kotlar (profil.html ▸ data-arazi / data-proje) bu
    arazinin gerçekten boyuna kesitidir: güzergâh ekseni boyunca arazi o
@@ -38,6 +39,7 @@
   if (!window.requestAnimationFrame || !window.Float32Array) { return; }
 
   function yedegeDon() {
+    document.documentElement.classList.remove('zemin-oynar');
     var s = document.createElement('script');
     s.src = '/js/telkafes.js';
     document.body.appendChild(s);
@@ -783,36 +785,47 @@
   }
 
   /* ============================================================== SAHNE */
-  /* Sayfa kaydırması tek bir sayıya iner: `a`. Tamsayılar anasayfa
-     bölümlerinin üst kenarıdır (ekranın ortasından geçtiği an): 1 = kimler
-     için, 2 = sorunlar, 3 = nasıl çalışır … 10 = başvuru. Sahnedeki her şey
-     `a`nın fonksiyonudur, zamana değil: yukarı kaydıran okuyucu projenin
-     geri sarıldığını görür, ileri-geri arasında tutarsızlık olmaz. */
-  var BOLUMLER = ['kimler-icin', 'sorunlar', 'nasil-calisir', 'urunler', 'moduller',
-                  'ekranda', 'ciktilar', 'karsilastirma', 'sss', 'basvuru'];
-  var bolumUst = null;     /* anasayfa değilse null: "gezinti" kipi */
+  /* Sayfa kaydırması tek bir sayıya iner: `a`. Sahnedeki her şey `a`nın
+     fonksiyonudur, zamana değil: yukarı kaydıran okuyucu projenin geri
+     sarıldığını görür, ileri-geri arasında tutarsızlık olmaz.
+
+     SAHNE ARALARI. Eskiden `a` bölüm sınırlarına bağlıydı ve sahnenin büyük
+     olayları bölüm metni ekrandayken oluyordu: okumak için kaydıran okuyucu
+     hikâyeyi de ilerletiyor, gözü yazı ile zemin arasında bölünüyordu.
+     Şimdi anasayfada bölümlerin arasında metinsiz aralar var
+     (index.html ▸ .sahne-arasi, data-sahne="a0,a1"). `a` yalnız bir aranın
+     içinde ilerler; metin ekrandayken sahne son aranın sonunda bekler.
+     Okuyucu ya okur ya izler, ikisi aynı anda istenmez.
+
+     Aranın yolu: üst kenarı ekranın %40'ına geldiğinde başlar, alt kenarı
+     %60'a çıktığında biter. Bu arada ekranın en az %60'ı metinsizdir. */
+  var aralar = null;       /* anasayfa değilse null: "gezinti" kipi */
 
   function bolumleriOlc() {
-    var y = window.pageYOffset || 0, ust = [];
-    for (var i = 0; i < BOLUMLER.length; i++) {
-      var el = document.getElementById(BOLUMLER[i]);
-      if (!el) { bolumUst = null; return; }
-      ust.push(el.getBoundingClientRect().top + y);
+    var y = window.pageYOffset || 0, liste = [];
+    var el = document.querySelectorAll('.sahne-arasi[data-sahne]');
+    for (var i = 0; i < el.length; i++) {
+      var r = el[i].getBoundingClientRect(), a = el[i].getAttribute('data-sahne').split(',');
+      if (!r.height) { continue; }        /* ara gizli: zemin oynamıyor */
+      liste.push({ ust: r.top + y, boy: r.height, a0: +a[0], a1: +a[1] });
     }
-    bolumUst = ust;
+    aralar = liste.length ? liste : null;
+    kirli = true;
   }
 
   function aHesapla() {
     var sy = window.pageYOffset || 0, vh = h || 800;
-    var boy = Math.max(1, document.documentElement.scrollHeight - vh);
-    if (!bolumUst) { return sy / boy; }          /* gezinti: 0..1 */
-    var y = sy + vh * 0.5, u = bolumUst;
-    if (y < u[0]) { return y / u[0]; }
-    for (var i = 0; i < u.length - 1; i++) {
-      if (y < u[i + 1]) { return i + 1 + (y - u[i]) / (u[i + 1] - u[i]); }
+    if (!aralar) {                                  /* gezinti: 0..1 */
+      return sy / Math.max(1, document.documentElement.scrollHeight - vh);
     }
-    var son = u.length - 1, kalan = document.documentElement.scrollHeight - u[son];
-    return u.length + Math.min(1, (y - u[son]) / Math.max(1, kalan));
+    var a = aralar[0].a0;
+    for (var i = 0; i < aralar.length; i++) {
+      var r = aralar[i];
+      var t = (vh * 0.4 - (r.ust - sy)) / Math.max(1, r.boy - vh * 0.2);
+      if (t <= 0) { break; }
+      a = r.a0 + (r.a1 - r.a0) * Math.min(1, t);
+    }
+    return a;
   }
 
   // a → sahne durumu. Her aşama bir aralığa bağlı; aralıklar örtüşmez ki
@@ -860,7 +873,7 @@
 
   function durumHesapla(a, zaman) {
     var d = {};
-    if (!bolumUst) {
+    if (!aralar) {
       // Gezinti kipi (anasayfa dışı ve duran zemin): bitmiş projenin
       // üzerinde, kaydırmayla ilerleyen alçak bir uçuş.
       d.kontur = 1; d.guzergah = UZUNLUK; d.yapim = UZUNLUK; d.kesit = 0;
@@ -919,7 +932,6 @@
   }
 
   /* -------------------------------------------------------------- kamera */
-  var fx = 0, fy = 0, hedefFx = 0, hedefFy = 0;
   var VP = null, GOZ = [0, 0, 0], SIS = [120, 560], PLANR = [1e4, 2e4], KAM_SAG = [1, 0, 0];
 
   function yuzeyY(s, d) {
@@ -927,19 +939,15 @@
     return (g - TABAN) * ABARTMA;
   }
 
-  function kameraKur(d, zaman) {
+  function kameraKur(d) {
     var k = d.kam, asp = w / Math.max(1, h);
-    // Boşta sallantı: kamera birkaç metre salınır, zemin canlı kalsın;
-    // fare kamerayı yana ve yukarı kaydırır. Planda ikisi de söner.
-    var sal = duragan ? 0 : 1 - d.plan;
-    var es = k[1] + Math.sin(zaman * 0.05) * 6 * sal;
-    var ed = k[2] + Math.sin(zaman * 0.08) * 3 * sal;
-    var gp = konum(es, ed), hp = konum(k[4], k[5]);
+    // Kamera yalnız kaydırmayla oynar. Eskiden boşta salınıyor ve fareyi
+    // izliyordu; okumak için duran okuyucunun gözünün kenarında hep bir
+    // kıpırtı kalıyor, fareyi satır boyunca gezdiren okuyucuda sahne tam
+    // okunan yerin arkasında kayıyordu. Okuyucunun kendi elinden gelen
+    // hareket göz ardı edilebiliyor, kendiliğinden olan edilemiyor.
+    var gp = konum(k[1], k[2]), hp = konum(k[4], k[5]);
     var goz = [gp[0], k[3], gp[1]], hedef = [hp[0], 0, hp[1]];
-    var ileri = birim([hedef[0] - goz[0], 0, hedef[2] - goz[2]]);
-    var sag = [ileri[2], 0, -ileri[0]];
-    goz[0] += (sag[0] * fx * 7) * sal; goz[2] += (sag[2] * fx * 7) * sal;
-    goz[1] += -fy * 4 * sal;
 
     // Plan: projenin ortasının tam üstü. Ekranın yukarısı yan görünümün
     // bakış yönü olur, böylece dönüş saf bir eğilme hareketidir, dönme yok;
@@ -1340,34 +1348,42 @@
 
   function ciz(zaman) {
     var d = durumHesapla(aSahne, zaman);
-    kameraKur(d, zaman);
+    kameraKur(d);
     glCiz(d);
     yaziCiz(d);
     gostergeYaz(d);
   }
 
+  // Sahne yalnız bir şey değiştiğinde çizilir: kaydırma, profil imleci,
+  // boyut ya da tema. Okuyucu dururken kare kare aynı resmi çizmek pil
+  // harcamaktan başka bir şey yapmıyordu.
+  var kirli = true, sonA = null;
   function kare(an) {
     if (!basAn) { basAn = an; }
     var dt = oncekiAn ? Math.min((an - oncekiAn) / 1000, 0.5) : 0;
     oncekiAn = an;
-    // Kaydırma ve fare atalete bağlı: tekerlek adım adım sıçratsa da sahne
-    // yumuşak akar. Tarayıcı kareleri seyreltirse (düşük güç, arka pencere)
-    // takip geçen süreyle ölçeklendiği için sahne geride kalmaz.
+    // Kaydırma atalete bağlı: tekerlek adım adım sıçratsa da sahne yumuşak
+    // akar. Tarayıcı kareleri seyreltirse (düşük güç, arka pencere) takip
+    // geçen süreyle ölçeklendiği için sahne geride kalmaz.
     var y = 1 - Math.pow(1 - 0.075, dt * 60);
-    aSahne += (aHesapla() - aSahne) * y;
-    fx += (hedefFx - fx) * y * 0.8;
-    fy += (hedefFy - fy) * y * 0.8;
-    ciz((an - basAn) / 1000);
+    var hedef = aHesapla();
+    aSahne += (hedef - aSahne) * y;
+    if (Math.abs(hedef - aSahne) < 1e-4) { aSahne = hedef; }
+    var zaman = (an - basAn) / 1000;
+    if (kirli || aSahne !== sonA || zaman < 4) {
+      kirli = false; sonA = aSahne;
+      ciz(zaman);
+    }
     requestAnimationFrame(kare);
   }
 
   function durganCiz() {
     // Duran zemin: bitmiş proje, gezinti kipinde, tek kare.
-    var yedek = bolumUst;
-    bolumUst = null;
+    var yedek = aralar;
+    aralar = null;
     aSahne = 0.3;
     ciz(10);
-    bolumUst = yedek;
+    aralar = yedek;
   }
 
   renkleriOku();
@@ -1375,20 +1391,18 @@
   bolumleriOlc();
   aSahne = aHesapla();
 
+  // Tuval boyutlanınca ya da renkler değişince resim yeniden çizilmeli.
+  function tazele() { if (duragan) { durganCiz(); } else { kirli = true; } }
+
   if (duragan) {
     durganCiz();
   } else {
-    window.addEventListener('mousemove', function (e) {
-      hedefFx = (e.clientX / w - 0.5) * 2;
-      hedefFy = (e.clientY / h - 0.5) * 2;
-    }, { passive: true });
-    document.addEventListener('mouseleave', function () { hedefFx = 0; hedefFy = 0; });
     requestAnimationFrame(kare);
   }
 
   // Profil bölümü imlecinin istasyonu (ata.js ▸ profil).
   document.addEventListener('ata:profil', function (e) {
-    if (e.detail && typeof e.detail.km === 'number') { pinKm = e.detail.km; }
+    if (e.detail && typeof e.detail.km === 'number') { pinKm = e.detail.km; kirli = true; }
   });
 
   // Bölüm konumları görseller ve videolar yüklendikçe değişir.
@@ -1399,21 +1413,19 @@
   window.addEventListener('resize', function () {
     clearTimeout(boyutSayac);
     boyutSayac = setTimeout(function () {
-      olcule(); bolumleriOlc();
-      if (duragan) { durganCiz(); }
+      olcule(); bolumleriOlc(); tazele();
     }, 180);
   });
 
   if (window.MutationObserver) {
     new MutationObserver(function () {
-      renkleriOku();
-      if (duragan) { durganCiz(); }
+      renkleriOku(); tazele();
     }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-tema'] });
   }
 
   // Bağlam kaybı (sürücü sıfırlaması, çok sekme): kaynakları yeniden kur.
   tuval.addEventListener('webglcontextlost', function (e) { e.preventDefault(); });
   tuval.addEventListener('webglcontextrestored', function () {
-    try { kur(); olcule(); if (duragan) { durganCiz(); } } catch (e) { /* zemin boş kalır */ }
+    try { kur(); olcule(); tazele(); } catch (e) { /* zemin boş kalır */ }
   });
 })();

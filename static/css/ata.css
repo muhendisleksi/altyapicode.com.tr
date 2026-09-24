@@ -1460,6 +1460,28 @@ table.veri tbody tr:hover{ background:var(--panel); }
   transform:scaleX(0); transform-origin:left; }
 @media (max-width:760px){ .zemin-durum{ display:none; } }
 
+/* Sahne araları (partials/sahne-arasi.html): bölümler arasında metinsiz
+   boşluk; zeminin olayları yalnız burada oynar. Zemin oynamıyorsa hiç yer
+   tutmaz. Alt yazı aranın başında durur ve ara geçene dek başlığın altında
+   asılı kalır; okuyucu ne izlediğini bilsin, sahnenin önüne geçmesin diye
+   küçük ve kenarda. Kübaj göstergesiyle aynı dili konuşur. */
+.sahne-arasi{ display:none; }
+.zemin-oynar .sahne-arasi{ display:block; height:90vh; }
+.zemin-oynar .sahne-arasi.uzun{ height:150vh; }
+.sahne-arasi .sinir{ height:100%; padding-top:28px; }
+.sahne-yazi{
+  position:sticky; top:98px; margin:0;
+  display:inline-grid; grid-template-columns:auto 1fr; column-gap:12px; row-gap:2px; text-align:left;
+  align-items:baseline; max-width:min(460px, 100%); padding:9px 14px 10px;
+  font-family:var(--f-veri); font-size:12px; line-height:1.55; color:var(--yazi-2);
+  background:color-mix(in srgb, var(--panel-2) 72%, transparent);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  border:1px solid var(--cizgi); border-left:2px solid var(--vurgu); border-radius:3px;
+}
+.sahne-yazi .sy-no{ color:var(--vurgu); letter-spacing:.08em; }
+.sahne-yazi b{ font-weight:600; color:var(--yazi); letter-spacing:.04em; }
+.sahne-yazi span:last-child{ grid-column:1 / -1; }
+
 /* Saydamlık istemeyen kullanıcıya eski opak yüzeyler. */
 @media (prefers-reduced-transparency:reduce){
   .hedef,.dert,.adimlar,.urun,.pnl,.iddia,.teslim-sar,.kiyas-sar{ background:var(--panel-2); }

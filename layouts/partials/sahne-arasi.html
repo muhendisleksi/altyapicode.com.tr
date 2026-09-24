@@ -1,0 +1,24 @@
+{{/* Sahne arası: bölümlerin arasında metinsiz bir boşluk. Zemin katmanının
+     (zemin.js) büyük olayları yalnız bu aralarda olur; bölüm metni
+     ekrandayken sahne bekler. Böylece okuyucu ya okur ya izler.
+
+     Parametreler:
+       a       "a0,a1" — ara boyunca zemin.js'deki sahne değeri a0'dan a1'e
+       no      aranın sırası (alt yazıda "2 / 5")
+       baslik  alt yazının başlığı
+       metin   alt yazının tek satırlık açıklaması
+       uzun    true ise ara daha uzun (koridor/kübaj gibi uzun süren olay)
+
+     Ara yalnız zemin oynarken görünür (html.zemin-oynar, baseof.html'deki
+     baş betiği ve zemin.js); hareket kısıtlıysa, ekran darsa ya da WebGL2
+     yoksa sayfada hiç yer tutmaz. Zemin gibi alt yazı da ekran okuyucuya
+     kapalı: anlattığı şey görsel. */}}
+<div class="sahne-arasi{{ if .uzun }} uzun{{ end }}" data-sahne="{{ .a }}" aria-hidden="true">
+  <div class="sinir">
+    <p class="sahne-yazi">
+      <span class="sy-no">{{ .no }} / 5</span>
+      <b>{{ .baslik }}</b>
+      <span>{{ .metin }}</span>
+    </p>
+  </div>
+</div>

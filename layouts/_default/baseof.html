@@ -20,10 +20,16 @@
 <script>
 /* Boyamadan önce: tema tercihi + `js` sınıfı.
    `js` olmadan açılış animasyonlarının gizleme kuralları geçersizdir —
-   betik çalışmazsa içerik gizlenmez. */
+   betik çalışmazsa içerik gizlenmez.
+   `zemin-oynar`: zemin katmanı hareketli çalışacak (geniş ekran, hareket
+   kısıtı yok, WebGL2 var). Sahne araları yalnız o zaman yer tutar; sınıf
+   burada konur ki sayfa sonradan uzayıp kaymasın. WebGL2 bağlamı yine de
+   alınamazsa zemin.js sınıfı geri alır. */
 (function(){var k=document.documentElement;k.className+=' js';var t=null;
 try{t=localStorage.getItem('tema');}catch(e){}
-k.setAttribute('data-tema',t||'koyu');})();
+k.setAttribute('data-tema',t||'koyu');
+try{if(window.WebGL2RenderingContext&&matchMedia('(min-width: 760px)').matches&&
+!matchMedia('(prefers-reduced-motion: reduce)').matches){k.className+=' zemin-oynar';}}catch(e){}})();
 </script>
 {{/* Sürüm eki dosya içeriğinin özetidir: CSS/JS değişince adres değişir ve
      tarayıcı önbellekteki eski dosyayı kullanmaz; değişmeyince önbellek işler. */}}
