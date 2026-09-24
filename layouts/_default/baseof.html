@@ -25,7 +25,9 @@
 try{t=localStorage.getItem('tema');}catch(e){}
 k.setAttribute('data-tema',t||'koyu');})();
 </script>
-<link rel="stylesheet" href="/css/ata.css">
+{{/* Sürüm eki dosya içeriğinin özetidir: CSS/JS değişince adres değişir ve
+     tarayıcı önbellekteki eski dosyayı kullanmaz; değişmeyince önbellek işler. */}}
+<link rel="stylesheet" href="/css/ata.css?s={{ readFile "static/css/ata.css" | md5 | truncate 8 "" }}">
 </head>
 <body>
 <a class="atla" href="#govde">İçeriğe atla</a>
@@ -127,7 +129,7 @@ k.setAttribute('data-tema',t||'koyu');})();
         <span class="marka-rozet">A</span>
         <span class="marka-yazi"><span class="marka-ad">ATA<i>CAD</i></span></span>
       </a>
-      <p>{{ .Site.Params.altbaslik }}. İller Bankası, İSKİ ve DSİ standartlarında
+      <p>{{ .Site.Params.altbaslik }}. İller Bankası, İSKİ, DSİ ve KGM standartlarında
          altyapı projesi ve metraj üreten bağımsız 3B CAD platformu.</p>
       <p class="alt-asama">{{ .Site.Params.marka }} {{ .Site.Params.surum }} · {{ .Site.Params.asama }}</p>
     </div>
@@ -167,12 +169,12 @@ k.setAttribute('data-tema',t||'koyu');})();
   <div class="telif">
     <div class="sinir telif-ic">
       <span>&copy; {{ now.Year }} {{ .Site.Params.sahis }}</span>
-      <span class="telif-sag">İller Bankası · İSKİ · DSİ standartlarında çıktı</span>
+      <span class="telif-sag">İller Bankası · İSKİ · DSİ · KGM standartlarında çıktı</span>
     </div>
   </div>
 </footer>
 
-<script src="/js/ata.js" defer></script>
+<script src="/js/ata.js?s={{ readFile "static/js/ata.js" | md5 | truncate 8 "" }}" defer></script>
 {{/* Zemin katmanı. Eski eşyükselti eğrisi katmanı static/js/kontur.js olarak
      duruyor; geri dönmek istenirse aşağıdaki satırı onunla değiştirmek ve
      ata.css'teki .telkafes-katman kuralını .kontur-katman yapmak yeterli. */}}

@@ -1,0 +1,92 @@
+{{/* Erken erişim / iletişim formu. Anasayfanın son bölümünde ve İletişim
+     sayfasında ({{< basvuru >}} kısa koduyla) aynı form kullanılır.
+
+     Site statik; formu alıp saklayan bir sunucu yok. Form bu yüzden bir
+     MESAJ HAZIRLAR: seçilen düğmeye göre WhatsApp'ı (wa.me) ya da e-posta
+     programını dolu metinle açar, gönderme kararı kullanıcıda kalır.
+     Betik çalışmazsa `action="mailto:"` devreye girer — kaba ama çalışır.
+
+     Telefon numarası `telefonGorunen`'den türetilir; numara tek yerde durur. */}}
+{{- $tel := replaceRE "[^0-9]" "" .Site.Params.telefonGorunen }}
+<form class="basvuru" id="basvuru-form" action="mailto:{{ .Site.Params.eposta }}" method="post" enctype="text/plain"
+      data-tel="{{ $tel }}" data-eposta="{{ .Site.Params.eposta }}">
+
+  <div class="bf-satir bf-iki">
+    <div class="bf-alan">
+      <label for="bf-ad">Adınız</label>
+      <input id="bf-ad" name="Ad" type="text" autocomplete="name" required>
+    </div>
+    <div class="bf-alan">
+      <label for="bf-firma">Firma veya kurum <span class="bf-istege">isteğe bağlı</span></label>
+      <input id="bf-firma" name="Firma" type="text" autocomplete="organization">
+    </div>
+  </div>
+
+  <fieldset class="bf-alan">
+    <legend>Ne için yazıyorsunuz?</legend>
+    <div class="bf-cipler">
+      <label class="bf-cip"><input type="radio" name="Konu" value="ATA CAD erken erişim" checked><span>ATA CAD erken erişim</span></label>
+      <label class="bf-cip"><input type="radio" name="Konu" value="Altyapı Asistanı"><span>Altyapı Asistanı</span></label>
+      <label class="bf-cip"><input type="radio" name="Konu" value="İstinat Duvarı Asistanı"><span>İstinat Duvarı Asistanı</span></label>
+    </div>
+  </fieldset>
+
+  <fieldset class="bf-alan">
+    <legend>Çalışma alanınız <span class="bf-istege">birden çok seçebilirsiniz</span></legend>
+    <div class="bf-cipler">
+      {{- range slice "Kanalizasyon" "Yağmursuyu" "İçmesuyu" "Yol" "İstinat duvarı" "Kazı ve arazi düzenleme" }}
+      <label class="bf-cip"><input type="checkbox" name="Alan" value="{{ . }}"><span>{{ . }}</span></label>
+      {{- end }}
+    </div>
+  </fieldset>
+
+  <fieldset class="bf-alan">
+    <legend>Çalıştığınız idare</legend>
+    <div class="bf-cipler">
+      {{- range slice "İller Bankası" "İSKİ" "DSİ" "KGM" "Belediye" "Özel sektör" }}
+      <label class="bf-cip"><input type="checkbox" name="İdare" value="{{ . }}"><span>{{ . }}</span></label>
+      {{- end }}
+    </div>
+  </fieldset>
+
+  <div class="bf-satir bf-iki">
+    <div class="bf-alan">
+      <label for="bf-cad">Kullandığınız CAD programı</label>
+      <select id="bf-cad" name="CAD">
+        <option value="">Seçin</option>
+        <option>AutoCAD</option>
+        <option>Civil 3D</option>
+        <option>NetCAD</option>
+        <option>Başka bir program</option>
+        <option>Kullanmıyorum</option>
+      </select>
+    </div>
+    <div class="bf-alan">
+      <label for="bf-ekip">Ekip büyüklüğü</label>
+      <select id="bf-ekip" name="Ekip">
+        <option value="">Seçin</option>
+        <option>Tek kişi</option>
+        <option>2–5 kişi</option>
+        <option>6–15 kişi</option>
+        <option>16 kişi ve üstü</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="bf-alan">
+    <label for="bf-not">Notunuz <span class="bf-istege">isteğe bağlı</span></label>
+    <textarea id="bf-not" name="Not" rows="3" placeholder="Örneğin şu an üzerinde çalıştığınız proje türü"></textarea>
+  </div>
+
+  <div class="bf-dugmeler">
+    <button type="submit" class="dugme dolu" data-kanal="whatsapp">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 8.6c.2-.4.5-.4.8-.4h.4c.2 0 .3.1.4.3l.6 1.5c.1.2 0 .4-.1.5l-.5.6c-.1.1-.1.3 0 .4.3.6 1.2 1.7 2.4 2.2.2.1.3.1.4-.1l.6-.7c.1-.2.3-.2.5-.1l1.4.7c.2.1.3.2.3.4 0 .5-.2 1.1-.7 1.4-.6.4-1.4.5-2.6 0-1.5-.6-3.1-2.1-3.8-3.5-.5-1-.5-1.9-.1-2.6Z" fill="currentColor"/></svg>
+      WhatsApp'ta gönder
+    </button>
+    <button type="submit" class="dugme bos" data-kanal="eposta">E-postayla gönder</button>
+  </div>
+
+  <p class="bf-not">Form bu sitede saklanmaz. Mesajınız WhatsApp'ta ya da e-posta
+     programınızda hazır açılır; göndermek için son tuşa siz basarsınız.</p>
+  <p class="bf-durum" role="status" aria-live="polite"></p>
+</form>

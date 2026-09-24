@@ -11,19 +11,14 @@ olmak isterseniz yazın — erken erişim **ücretsizdir.**
 Karşılığında beklenen tek şey geri bildirim: ürünü gerçek bir projenizde deneyip
 karşılaştığınız sorunları paylaşmanız.
 
+{{< basvuru >}}
+
+Formu kullanmadan doğrudan da ulaşabilirsiniz:
+
 **[WhatsApp grubuna katılın →](https://chat.whatsapp.com/EM3peGrWC6C9jVYvpz0qZU)**
 · +90 545 563 68 67
 
 **[abdulbakiatakan@gmail.com](mailto:abdulbakiatakan@gmail.com)**
-
-## Başvuruda yardımcı olacak bilgiler
-
-Aşağıdaki bilgileri paylaşmanız değerlendirmeyi hızlandırır (zorunlu değildir):
-
-- Çalışma alanınız — kanalizasyon, içmesuyu, istinat duvarı vb.
-- Çalıştığınız kurum ve istenen format — İller Bankası, İSKİ, DSİ, belediye
-- Kullandığınız CAD yazılımı
-- Ekip büyüklüğünüz
 
 ## AutoCAD eklentileri
 

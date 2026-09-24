@@ -4,152 +4,312 @@
 <section class="hero">
   <div class="hero-ic sinir">
 
-    <div class="hero-metin">
-      <p class="hero-etiket">{{ .Site.Params.asama }} · {{ .Site.Params.surum }}</p>
-      {{/* Başlık eskiden "Yıllık CAD lisansı ödemeden altyapı projesi" idi.
+    {{/* Düzen: üstte metin (solda başlık, sağda tanıtım ve düğmeler), altında
+         sayfa genişliğinde ürün turu, turun hemen altında zincir. Eskiden
+         metin ve zincir solda, tur sağda yarım genişlikteydi; ürünün kendisi
+         küçük kalıyordu. Zincir artık turun bölüm çubuğu: çerçeveye yapışık,
+         sekiz aşama tek satırda, oynayan aşama yanık. */}}
+    <div class="hero-ust">
+      <div class="hero-bas">
+        <p class="hero-etiket">{{ .Site.Params.asama }} · {{ .Site.Params.surum }}</p>
+        {{/* Başlık eskiden "Yıllık CAD lisansı ödemeden altyapı projesi" idi.
            Değiştirildi: ATA CAD de yıllık lisanslanacak — o cümle tutulamayacak
            bir söz veriyordu ve faturayı gören ilk kullanıcıda sitenin bütün
            dürüstlük tonunu çürütürdü. Kaçınılan bedel Autodesk'in bedelidir;
            ürünün kendi bedeli ayrı bir kalemdir ve fiyatı henüz belli değil. */}}
-      <h1 class="ac">Türk kurum standartlarıyla <em>bağımsız altyapı CAD'i</em></h1>
-      <p class="hero-giris ac" style="--g:.05s">
-        ATA CAD, altyapı projeleri için geliştirilmiş bağımsız bir 3B CAD
-        platformudur. Çizim, yüzey, güzergâh, profil, kesit, koridor ve kübaj
-        tek programda; altyapı, istinat duvarı ve havza modül olarak eklenir.
-      </p>
-
-      {{/* Burada eskiden bir maliyet kutusu vardı (≈2.500 $ → 0 $). Kaldırıldı:
-           ① "0 $" ürünün fiyatı DEĞİL, henüz fiyat yok — hero'da bedava sözü
-           veriyordu; ② sayfanın en büyük rakamı rakibin fiyatıydı; ③ maliyet
-           iddiası H1'de duruyor, /karsilastirma/ ▸ "Abonelik yükü" de anlatıyor.
-           Fiyat kapanış argümanıdır; açılışta sorulan soru "bu gerçek mi".
-           Zincir o soruyu yanıtlıyor ve sağdaki ekran dönüşümüyle eşleşiyor. */}}
-      {{/* Adımların `data-adim` değerleri sağdaki hero karelerinin aynı
-           özniteliğiyle eşleşir: hangi kare açıksa zincirin o halkası yanar.
-           Görsel ile iddia böylece aynı şeyi söyler — süsleme değil, işaret. */}}
-      <div class="zincir ac" style="--g:.1s">
-        <p class="zincir-bas">Tek programda</p>
-        <ol class="zincir-adimlar">
-          <li data-adim="nokta"><span>Nokta</span></li>
-          <li data-adim="yuzey"><span>Yüzey</span></li>
-          <li data-adim="guzergah"><span>Güzergâh</span></li>
-          <li data-adim="profil"><span>Profil</span></li>
-          <li data-adim="tipkesit"><span>Tip kesit</span></li>
-          <li data-adim="koridor"><span>Koridor</span></li>
-          <li data-adim="kubaj"><span>Kübaj</span></li>
-        </ol>
-        <p class="zincir-not">Ölçüm noktasından kütle dağılımına kadar tüm iş akışı
-           ATA CAD içinde tamamlanır; araya başka bir program girmez.
-           <a href="/karsilastirma/">Yetenek karşılaştırması →</a></p>
+        <h1 class="ac">Türk kurum standartlarıyla <em>bağımsız altyapı CAD'i</em></h1>
       </div>
-
-      <div class="dugmeler ac" style="--g:.14s">
-        <a href="/iletisim/" class="dugme dolu">Erken erişim listesine katıl</a>
-        <a href="/ekran-goruntuleri/" class="dugme bos">Ekran görüntüleri →</a>
+      <div class="hero-yan">
+        <p class="hero-giris ac" style="--g:.05s">
+          ATA CAD, altyapı projeleri için geliştirilmiş bağımsız bir 3B CAD
+          platformudur. Çizim, yüzey, güzergâh, profil, kesit, koridor ve kübaj
+          tek programda; altyapı, istinat duvarı ve havza modül olarak eklenir.
+        </p>
+        <div class="dugmeler ac" style="--g:.1s">
+          <a href="#basvuru" class="dugme dolu">Erken erişim listesine katıl</a>
+          <a href="/ekran-goruntuleri/" class="dugme bos">Ekran görüntüleri →</a>
+        </div>
       </div>
     </div>
 
-    {{/* Görsel dönüşümü. Kareler ATA CAD'in KENDİ geliştirme sürümünden;
-         hepsi tek bir gerçek örnek projenin (vadi yolu) ekranlarıdır.
-         Tamamı /ekran-goruntuleri/ sayfasında. */}}
-    <div class="hero-gorsel ac" style="--g:.08s">
+    {{/* Ürün turu. Kareler ATA CAD'in KENDİ ekran kayıtlarıdır; tek bir örnek
+         yol projesi, projenin sırasıyla. Her kare kaydı bitene kadar açık
+         kalır, bitince bir sonrakine geçilir; süre şeridi kaydın ilerlemesini
+         gösterir. Başlık çubuğundaki düğme turu durdurur.
+
+         Kayıtlar 1,5–1,75× hızlandırıldı ve `static/video/tur-<ad>.mp4`
+         olarak duruyor; `-kucuk` (960 px) dar ekranın hafif sürümü. Poster
+         JPEG her durumda ilk boyamayı yapar: video oynamadan önce, hareket
+         kısıtlıyken ve veri tasarrufunda görünen odur. Ham kayıtlar
+         Videolar ▸ Ekran Kayıtları'nda (0922.mp4 ve 2026-08-11 210730).
+
+         `adim` = alttaki zincirin hangi halkalarını yakacağı. Kare eklemek
+         ya da çıkarmak için aşağıdaki diziye dokunmak yeterli. */}}
+    {{ $kareler := slice
+      (dict "ad" "yuzey"     "adim" "nokta yuzey guzergah"
+            "alt" "ATA CAD'de arazi yüzeyi ve güzergâh çizimi"
+            "yazi" "Arazi yüzeyi ve güzergâh — ölçüm noktalarından kurulan TIN yüzeyin üzerinde yatay geometri")
+      (dict "ad" "profil"    "adim" "profil"
+            "alt" "ATA CAD'de boyuna profil ve kırmızı hat tasarımı"
+            "yazi" "Boyuna profil — profil görünümü kurulur, kırmızı hat PVI'larla tasarlanır")
+      (dict "ad" "tip-kesit" "adim" "tipkesit"
+            "alt" "ATA CAD'de tip kesit tanımlama penceresi"
+            "yazi" "Tip kesit — KGM kütüphanesinden seçilen kesit, katmanları ve ölçüleriyle")
+      (dict "ad" "koridor"   "adim" "koridor"
+            "alt" "ATA CAD'de koridorun 3B görünümü"
+            "yazi" "Koridor 3B — arazi üzerinde kazı (kırmızı) ve dolgu (yeşil) şevleri, istinat duvarları")
+      (dict "ad" "en-kesit"  "adim" "enkesit"
+            "alt" "ATA CAD'de en kesit paftaları"
+            "yazi" "En kesitler — örnek hatları boyunca üretilen kesit paftaları")
+      (dict "ad" "kubaj"     "adim" "kubaj"
+            "alt" "ATA CAD'de kübaj penceresi ve metraj"
+            "yazi" "Kübaj — güzergâh boyunca kazı ve dolgu hacmi, üstyapı metrajıyla birlikte")
+    }}
+    {{ $halkalar := slice
+      (dict "id" "nokta" "ad" "Nokta") (dict "id" "yuzey" "ad" "Yüzey")
+      (dict "id" "guzergah" "ad" "Güzergâh") (dict "id" "profil" "ad" "Profil")
+      (dict "id" "tipkesit" "ad" "Tip kesit") (dict "id" "koridor" "ad" "Koridor")
+      (dict "id" "enkesit" "ad" "En kesit") (dict "id" "kubaj" "ad" "Kübaj")
+    }}
+    <div class="hero-sahne ac" style="--g:.12s">
       <div class="hero-cerceve">
         <div class="hero-cerceve-bas">
           <span class="nokta"></span><span class="nokta"></span><span class="nokta"></span>
           <span style="margin-left:6px">ATA CAD · {{ .Site.Params.surum }}</span>
+          <button type="button" class="cerceve-dugme" id="hero-dugme" hidden>Durdur</button>
         </div>
-
-        {{/* Kareler tek listeden üretilir; kare eklemek/çıkarmak için aşağıdaki
-             diziye dokunmak yeterli — nokta göstergeleri de aynı listeden gelir,
-             sayıları elle tutulmuyor.
-
-             `yon` = Ken Burns yönü. Ardışık kareler aynı yöne kaymasın diye
-             dönüşümlü verildi, yoksa dönüş tek bir sürekli kaydırma gibi
-             görünüyor. `adim` = soldaki zincirin hangi halkasını yakacağı.
-
-             VİDEO: bir karenin `static/video/hero-<ad>.webm` dosyası varsa o
-             kare donmuş JPEG yerine ekran kaydını oynatır; yoksa bugünkü
-             görsel durur. Böylece kayıtlar teker teker eklenebilir, hepsi
-             birden hazır olmak zorunda değil. JPEG her hâlükârda `poster`
-             olarak kalır: video oynamadan önce, hareket kısıtlıyken ve dar
-             ekranda görünen şey odur. */}}
-        {{ $kareler := slice
-          (dict "ad" "yuzey-tin"          "adim" "nokta yuzey"     "yon" "1"
-                "alt" "ATA CAD'de TIN yüzey ve eşyükselti eğrileri"
-                "yazi" "TIN yüzey ve eşyükselti eğrileri — ölçüm noktalarından kurulmuş arazi yüzeyi")
-          (dict "ad" "boy-profil"         "adim" "guzergah profil" "yon" "2"
-                "alt" "ATA CAD'de boyuna profil görünümü"
-                "yazi" "Boyuna profil — siyah kot, kırmızı hat, yatay ve düşey geometri şeritleri")
-          (dict "ad" "tip-kesit"          "adim" "tipkesit"        "yon" "3"
-                "alt" "ATA CAD'de tip kesit tanımlama penceresi"
-                "yazi" "Tip kesit tanımı — KGM TİP3F, 25,30 m; her ölçü paftadaki adıyla")
-          (dict "ad" "koridor-3b-yakin"   "adim" "koridor"         "yon" "4"
-                "alt" "ATA CAD'de koridorun 3B görünümü"
-                "yazi" "Koridor 3B — arazi yüzeyi üzerinde kazı (kırmızı) ve dolgu (yeşil) şevleri")
-          (dict "ad" "kazi-hacim-yuzeyi"  "adim" "kubaj"           "yon" "1"
-                "alt" "ATA CAD'de kazı tasarımı ve hacim yüzeyi"
-                "yazi" "Kazı tasarımı — ortofoto altlık üzerinde şevli hacim yüzeyi")
-        }}
 
         <div class="hero-kareler" id="hero-kareler">
           {{- range $i, $k := $kareler }}
-          {{- $gorsel := printf "/images/ata-cad/hero-%s.jpg" $k.ad }}
-          {{- $webm   := printf "static/video/hero-%s.webm" $k.ad }}
-          {{- $mp4    := printf "static/video/hero-%s.mp4"  $k.ad }}
-          {{- $kwebm  := printf "static/video/hero-%s-kucuk.webm" $k.ad }}
-          {{- $kmp4   := printf "static/video/hero-%s-kucuk.mp4"  $k.ad }}
-          <figure class="hero-kare{{ if eq $i 0 }} etkin{{ end }}" data-adim="{{ $k.adim }}" data-yon="{{ $k.yon }}">
-            {{- if os.FileExists $webm }}
-            {{/* `preload=none`: dosyayı betik indirir. Hero'nun ilk boyaması
-                 poster ile yapılır, video onu sonradan devralır.
-
-                 `data-kucuk-*` dar ekranın hafif sürümüdür (960×600). Kaynağı
-                 betik seçer; `<source media="...">` bu iş için güvenilmez,
-                 tarayıcılar video kaynağı seçerken onu dikkate almıyor. */}}
-            <video class="hero-video" poster="{{ $gorsel }}" width="1600" height="1000"
-                   muted loop playsinline preload="none" aria-label="{{ $k.alt }}"
-                   {{- if os.FileExists $kwebm }} data-kucuk-webm="/video/hero-{{ $k.ad }}-kucuk.webm"{{ end }}
-                   {{- if os.FileExists $kmp4 }} data-kucuk-mp4="/video/hero-{{ $k.ad }}-kucuk.mp4"{{ end }}>
-              <source src="/video/hero-{{ $k.ad }}.webm" type="video/webm">
-              {{- if os.FileExists $mp4 }}
-              <source src="/video/hero-{{ $k.ad }}.mp4" type="video/mp4">
-              {{- end }}
+          <figure class="hero-kare{{ if eq $i 0 }} etkin{{ end }}" data-adim="{{ $k.adim }}">
+            {{/* `preload=none`: dosyayı betik indirir; hero'nun ilk boyaması
+                 poster ile yapılır. `loop` yok — kaydın bitişi bir sonraki
+                 kareye geçişin işaretidir. Kaynağı dar ekranda betik değiştirir;
+                 `<source media>` tarayıcılarca dikkate alınmıyor. */}}
+            <video class="hero-video" poster="/images/ata-cad/tur-{{ $k.ad }}.jpg" width="1600" height="952"
+                   muted playsinline preload="none" aria-label="{{ $k.alt }}"
+                   data-kucuk-mp4="/video/tur-{{ $k.ad }}-kucuk.mp4">
+              <source src="/video/tur-{{ $k.ad }}.mp4" type="video/mp4">
             </video>
-            {{- else }}
-            <img src="{{ $gorsel }}" alt="{{ $k.alt }}" width="1600" height="1000"
-                 {{ if eq $i 0 }}fetchpriority="high" {{ end }}decoding="async">
-            {{- end }}
             <figcaption>{{ $k.yazi }}</figcaption>
           </figure>
           {{- end }}
         </div>
 
-        {{/* Kalan süreyi gösteren şerit. Nokta göstergelerinin yerine değil,
-             üstüne konuldu: nokta "kaçıncı karedeyiz", şerit "ne kadar kaldı"
-             sorusunu yanıtlar. Süslemedir, ekran okuyucudan gizli. */}}
+        {{/* Kaydın ne kadarının oynadığını gösteren şerit. Süslemedir,
+             ekran okuyucudan gizli. */}}
         <div class="hero-sure" aria-hidden="true"><span class="hero-sure-dolgu" id="hero-sure-dolgu"></span></div>
+      </div>
 
-        <div class="hero-noktalar" role="tablist" aria-label="Ürün görselleri">
-          {{- range $i, $k := $kareler }}
-          <button class="hero-nokta" role="tab" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}"
-                  aria-label="{{ add $i 1 }}. görsel"></button>
+      {{/* Halkaların `data-adim` değerleri karelerin aynı özniteliğiyle
+           eşleşir: hangi kare açıksa o halkalar yanar. Halkalar düğmedir,
+           tıklanan halka onu gösteren kaydı açar. */}}
+      <div class="zincir">
+        <ol class="zincir-adimlar" aria-label="Tur bölümleri">
+          {{- range $halkalar }}
+          <li data-adim="{{ .id }}"><button type="button" aria-controls="hero-kareler"><span>{{ .ad }}</span></button></li>
           {{- end }}
-        </div>
+        </ol>
       </div>
     </div>
+
+    <p class="zincir-not ac" style="--g:.16s"><b>Tek programda:</b> ölçüm noktasından
+       kütle dağılımına kadar tüm iş akışı ATA CAD içinde tamamlanır; araya başka
+       bir program girmez. <a href="/karsilastirma/">Yetenek karşılaştırması →</a></p>
 
   </div>
 </section>
 
-{{/* ═══════════════════════════════════════════════════════════ ÜRÜNLER ══ */}}
-<section class="kesim">
+{{/* ══════════════════════════════════════════════════════ KURUM ŞERİDİ ══ */}}
+{{/* Hero'nun hemen altında güven şeridi. Eskiden sayfanın en sonunda ayrı bir
+     "Kurum standartları" bölümüydü; okuyucunun oraya inmesi gerekmesin diye
+     yukarı taşındı ve inceltildi. Logolar beyaz zemin için üretilmiş, bu
+     yüzden her biri kendi açık kutusunda. */}}
+<section class="kurum-serit" aria-label="Desteklenen kurum standartları">
+  <div class="sinir kurum-serit-ic">
+    <p>Projeler ve metrajlar idarenin kabul ettiği formatta:
+       İller Bankası, İSKİ, DSİ ve KGM standartları.</p>
+    <ul class="kurum-serit-logolar">
+      <li><img src="/images/logo-iller-bankasi.png" alt="İller Bankası" width="180" height="120"></li>
+      <li><img src="/images/logo-iski.png" alt="İSKİ" width="180" height="120"></li>
+      <li><img src="/images/logo-dsi.png" alt="DSİ" width="180" height="120"></li>
+      <li><img src="/images/logo-kgm.png" alt="KGM — Karayolları Genel Müdürlüğü" width="180" height="180"></li>
+    </ul>
+  </div>
+</section>
+
+{{/* ════════════════════════════════════════════════════════ KİMLER İÇİN ══ */}}
+<section class="kesim" id="kimler-icin">
   <div class="sinir">
-    <div class="kesim-bas ac">
-      <p class="komut">Ürünler</p>
+    <header class="bolum-bas ac">
+      <h2>Altyapı projesi üreten ekipler için</h2>
+      <p>Masa başında proje çizen de, şantiyede kübaj hesaplayan da, projeyi
+         kontrol eden idare de aynı işin farklı ucunda duruyor. ATA CAD bu
+         işin kendisi için yapıldı.</p>
+    </header>
+
+    {{/* Kartlar ayrı kutular değil, ortak çizgili bir ızgara: pafta anteti
+         gibi. Simgeler de o dünyadan — pafta, kazı çukuru, kurum binası,
+         total station sehpası. */}}
+    <div class="hedef ac">
+      <article class="hedef-oge">
+        <svg class="hedef-ikon" viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="6" width="24" height="20" rx="1"/><path d="M17 26v-7h11M17 22.5h11M22 19v7"/><path d="M8 20l5-8 4 5"/></svg>
+        <h3>Proje büroları</h3>
+        <p>Kanalizasyon, içmesuyu, yağmursuyu ve yol projesi hazırlayan
+           mühendislik ofisleri.</p>
+        <p class="hedef-kazanc">Arazi yüzeyinden kübaja kadar projenin tamamı
+           tek programda; veri bir programdan ötekine taşınmaz.</p>
+      </article>
+      <article class="hedef-oge">
+        <svg class="hedef-ikon" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 11h7l4 11h4l4-11h7"/><path d="M14 22h4" /><path d="M6 11l2-3M24 11l2-3M10 11l1-3M21 11l1-3" opacity=".6"/></svg>
+        <h3>Müteahhit teknik ofisleri</h3>
+        <p>Uygulama projesi, kübaj ve hakediş hesabı hazırlayan saha ve ofis
+           ekipleri.</p>
+        <p class="hedef-kazanc">Kazı ve dolgu hacmi, zemin sınıfı ayrımı ve
+           kütle dağılımı aynı güzergâh ve profilden çıkar.</p>
+      </article>
+      <article class="hedef-oge">
+        <svg class="hedef-ikon" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 27h24M6 13h20M16 5 5 11h22z"/><path d="M8 13v11M13 13v11M19 13v11M24 13v11M6 24h20"/></svg>
+        <h3>İdare ve belediye birimleri</h3>
+        <p>Fen işleri, altyapı ve etüt-proje birimlerinde projeyi inceleyen
+           ve onaylayan teknik ekipler.</p>
+        <p class="hedef-kazanc">Gelen projenin kesitini ve kübajını kendi
+           ekranınızda yeniden üretip kontrol edersiniz.</p>
+      </article>
+      <article class="hedef-oge">
+        <svg class="hedef-ikon" viewBox="0 0 32 32" aria-hidden="true"><rect x="12" y="3" width="8" height="6" rx="1"/><path d="M16 9v4M16 13 8 28M16 13l8 15M16 13v15"/><circle cx="16" cy="6" r="1.2"/></svg>
+        <h3>Serbest çalışan mühendisler</h3>
+        <p>Kendi hesabına proje, aplikasyon ve kübaj işi alan harita ve inşaat
+           mühendisleri.</p>
+        <p class="hedef-kazanc">Yalnızca altyapıya odaklanan bir program;
+           kullanmadığınız kapsamın bedelini ödemezsiniz.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{{/* ═══════════════════════════════════════════════════════════ SORUNLAR ══ */}}
+<section class="kesim vurgulu" id="sorunlar">
+  <div class="sinir">
+    <header class="bolum-bas ac">
+      <h2>Bugünkü düzenin yorduğu yerler</h2>
+      <p>Altyapı projesi çoğu ofiste birkaç program ve birkaç Excel dosyası
+         arasında gidip gelir. Sol sütun bu gidip gelmenin bedeli, sağ sütun
+         ATA CAD'deki karşılığı.</p>
+    </header>
+
+    {{/* İki sütunlu defter: sol "bugün", sağ "ATA CAD ile". Sağ sütunun hafif
+         vurgu zemini karşılaştırma tablosundaki öne çıkan sütun gibi okunur.
+         Dar ekranda satırlar alt alta iner, sütun başlığı her satıra girer. */}}
+    <div class="dert ac" role="list">
+      <div class="dert-bas" aria-hidden="true"><span>Bugün</span><span>ATA CAD ile</span></div>
+
+      <div class="dert-satir" role="listitem">
+        <div class="dert-sol">
+          <h3>İş birkaç programa dağılır</h3>
+          <p>Noktalar bir programda, profil ötekinde, metraj Excel'de. Her
+             aktarımda veri elden geçer, hata araya girer.</p>
+        </div>
+        <div class="dert-sag">
+          <p>Ölçüm noktasından yüzeye, güzergâhtan profile, koridordan kübaja
+             tüm adımlar tek programda tamamlanır.</p>
+        </div>
+      </div>
+
+      <div class="dert-satir" role="listitem">
+        <div class="dert-sol">
+          <h3>Kurum formatı her projede elle kurulur</h3>
+          <p>Tip enkesit, metraj cetveli ve kontroller idarenin istediği biçime
+             her seferinde yeniden uydurulur.</p>
+        </div>
+        <div class="dert-sag">
+          <p>KGM tip kesit kütüphanesi hazır gelir. İller Bankası, İSKİ ve DSİ
+             formatındaki kesit ve metraj bugün eklentilerle alınır; ATA CAD'e
+             altyapı modülüyle eklenecek.</p>
+        </div>
+      </div>
+
+      <div class="dert-satir" role="listitem">
+        <div class="dert-sol">
+          <h3>Kübaj ayrı bir iş olarak yapılır</h3>
+          <p>Kesitler çizildikten sonra alanlar okunur, hacimler tabloda
+             toplanır; kırmızı hat değişince tablo yeniden hazırlanır.</p>
+        </div>
+        <div class="dert-sag">
+          <p>Kesit, koridor ve kübaj aynı güzergâh ve profilin üzerine kurulur;
+             zemin sınıfı ayrımı ve kütle dağılımı aynı modelden çıkar.</p>
+        </div>
+      </div>
+
+      <div class="dert-satir" role="listitem">
+        <div class="dert-sol">
+          <h3>Her yıl tekrarlanan lisans yükü</h3>
+          <p>Ağırlıklı olarak altyapı projesi üreten bir ofis, ödediği kapsamın
+             küçük bir bölümünü kullanır.</p>
+        </div>
+        <div class="dert-sag">
+          <p>ATA CAD yalnızca altyapıya odaklanır ve ücretli hiçbir üçüncü parti
+             yazılıma bağımlı değildir; ürün bedelinin üstüne ek lisans çıkmaz.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{/* ═════════════════════════════════════════════════════ NASIL ÇALIŞIR ══ */}}
+{{/* Sayfanın tek gösteri öğesi. Süreç bir güzergâhın boyuna profili olarak
+     çizildi: dört adım dört istasyon. Kaydırdıkça istasyon imleci soldan
+     sağa ilerler, geçtiği yerde proje hattı ve kazı/dolgu alanları belirir,
+     bulunduğu adımın sütunu yanar. Fare ya da parmakla profilin üzerinde
+     gezinince imleç o noktanın kotlarını okur. Hareket kısıtlıysa çizim baştan
+     tamdır; imleç yalnız fareyle çıkar. */}}
+<section class="kesim" id="nasil-calisir">
+  <div class="sinir">
+    <header class="bolum-bas ac">
+      <h2>Araziden kübaja, bir güzergâh boyunca</h2>
+      <p>Proje programda nasıl ilerliyorsa burada da öyle: soldan sağa,
+         istasyon istasyon. Her adım bir öncekinin üzerine kurulur.</p>
+    </header>
+
+    {{ partial "profil.html" . }}
+
+    <ol class="adimlar">
+      <li data-bas="0" data-son="100">
+        <span class="adim-km">Km 0+000</span>
+        <h3>Arazi verisini alın</h3>
+        <p>Ölçüm noktalarını, DWG/DXF altlığı ve ortofotoyu açın. Nokta
+           gruplarından TIN yüzey ve eşyükselti eğrileri kurulur.</p>
+      </li>
+      <li data-bas="100" data-son="200">
+        <span class="adim-km">Km 0+100</span>
+        <h3>Güzergâhı ve profili çizin</h3>
+        <p>Yatay geometriyi yerleştirin, boyuna profilde kırmızı hattı
+           tasarlayın. Kilometraj ve arazi kotları yüzeyden okunur.</p>
+      </li>
+      <li data-bas="200" data-son="300">
+        <span class="adim-km">Km 0+200</span>
+        <h3>Kesiti ve koridoru kurun</h3>
+        <p>KGM kütüphanesinden tip kesiti seçip ölçüleriyle düzenleyin.
+           Koridor modeli proje yüzeyini üretir.</p>
+      </li>
+      <li data-bas="300" data-son="400">
+        <span class="adim-km">Km 0+300</span>
+        <h3>Kübajı ve paftaları alın</h3>
+        <p>Kazı ve dolgu hacmi, kütle dağılımı, en kesit paftaları. Excel,
+           PDF, DXF ve LandXML olarak teslim edin.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+{{/* ═══════════════════════════════════════════════════════════ ÜRÜNLER ══ */}}
+<section class="kesim vurgulu" id="urunler">
+  <div class="sinir">
+    <header class="bolum-bas ac">
       <h2>Platform ve eklentiler</h2>
       <p>ATA CAD geliştirme aşamasında; erken erişim listesi açık. AutoCAD kullanan
          firmalar için hendek kesiti ve istinat duvarı eklentileri bugün satışta.</p>
-    </div>
+    </header>
 
     {{/* `data-kademe` = kartlar arası gecikme (sn). Betik çocuklara sırayla
          gecikme dağıtır; ızgara tek blok hâlinde değil, dalga gibi açılır. */}}
@@ -159,7 +319,7 @@
       <a class="urun one-cikan" href="/urun/">
         <div class="urun-gorsel">
           <span class="urun-rozet yakinda">Yakında · Erken erişim</span>
-          <img src="/images/ata-cad/hero-koridor-3b-yakin.jpg" alt="ATA CAD'de koridorun 3B görünümü" width="1600" height="1000">
+          <img src="/images/ata-cad/hero-koridor-3b-yakin.jpg" alt="ATA CAD'de koridorun 3B görünümü" width="1600" height="1000" loading="lazy" decoding="async">
         </div>
         <div class="urun-ic">
           <h3>ATA CAD — Bağımsız 3B CAD Platformu</h3>
@@ -218,15 +378,14 @@
 </section>
 
 {{/* ═══════════════════════════════════════════════════════════ MODÜLLER ══ */}}
-<section class="kesim vurgulu">
+<section class="kesim" id="moduller">
   <div class="sinir">
-    <div class="kesim-bas ac">
-      <p class="komut">Modüller</p>
+    <header class="bolum-bas ac">
       <h2>Tek çekirdek, uzmanlık alanına göre modüller</h2>
       <p>Genel çizim ve düzenleme işlevlerini CAD çekirdeği sağlar; arazi, güzergâh,
          kübaj gibi mühendislik yetenekleri modül olarak eklenir. İhtiyacınız olan
          alan hazır olduğunda kullanmaya başlarsınız.</p>
-    </div>
+    </header>
 
     <div class="paneller" data-kademe=".05">
       {{- range .Site.Params.moduller }}
@@ -246,82 +405,140 @@
 </section>
 
 {{/* ═══════════════════════════════════════════════════════════ EKRANDAN ══ */}}
-{{/* Ürünün en zor iddiası "gerçekten çalışıyor" idi; bu bölüm onu göstermek
-     için var. Kareler geliştirme sürümünden, temsilî çizim değil. */}}
-<section class="kesim">
+{{/* Hareketli tur hero'da; burası durağan ekranlar, tıklayınca tam boy.
+     Vitrin düzeni: en çarpıcı kare (ortofoto üzerinde kazı tasarımı) iki
+     sütun × iki satır, kalanlar çevresinde. Eşit altı kutu hiyerarşi
+     kurmuyordu. */}}
+<section class="kesim vurgulu" id="ekranda">
   <div class="sinir">
-    <div class="kesim-bas ac">
-      <p class="komut">Ekrandan</p>
+    <header class="bolum-bas ac">
       <h2>ATA CAD ekranda</h2>
       <p>Arazi yüzeyinden boyuna profile, tip kesitten koridor ve kübaja —
-         programın başlıca ekranları.</p>
+         programın başlıca ekranları. Tıklayınca tam boy açılır.</p>
+    </header>
+
+    {{ $vitrin := slice
+      (dict "ad" "kazi-hacim-yuzeyi" "alt" "Ortofoto altlık üzerinde kazı hacim yüzeyi" "yazi" "Kazı tasarımı — ortofoto altlık üzerinde şevli hacim yüzeyi")
+      (dict "ad" "boy-profil" "alt" "Boyuna profil görünümü, kırmızı hat ve geometri şeritleri" "yazi" "Boyuna profil ve kırmızı hat")
+      (dict "ad" "tip-kesit" "alt" "Tip kesit tanımlama penceresi ve zincir tablosu" "yazi" "Tip kesit tanımı — KGM TİP3F")
+      (dict "ad" "yuzey-tin" "alt" "TIN yüzey, eşyükselti eğrileri ve araç alanı ağacı" "yazi" "TIN yüzey ve eşyükselti eğrileri")
+      (dict "ad" "koridor-3b" "alt" "Koridorun 3B görünümü ve nesne görüntüleyici" "yazi" "Koridor 3B — kazı ve dolgu şevleri")
+      (dict "ad" "kutle-dagilimi" "alt" "Kütle dağılımı diyagramı — depo fazlası ve ariyet" "yazi" "Kütle dağılımı (Brückner)")
+    }}
+    <div class="galeri vitrin" data-kademe=".06">
+      {{- range $i, $k := $vitrin }}
+      <figure class="galeri-hucre">
+        <a href="/images/ata-cad/{{ $k.ad }}.jpg" data-buyut>
+          <img src="/images/ata-cad/{{ if eq $i 0 }}{{ $k.ad }}{{ else }}kucuk/{{ $k.ad }}{{ end }}.jpg"
+               {{- if ne $i 0 }} class="sigdir"{{ end }} loading="lazy" decoding="async" alt="{{ $k.alt }}">
+        </a>
+        <figcaption>{{ $k.yazi }}</figcaption>
+      </figure>
+      {{- end }}
     </div>
 
-    <div class="galeri genis" data-kademe=".06">
-      <figure class="galeri-hucre">
-        <a href="/images/ata-cad/yuzey-tin.jpg" data-buyut>
-          <img src="/images/ata-cad/kucuk/yuzey-tin.jpg" class="sigdir" loading="lazy" decoding="async"
-               alt="TIN yüzey, eşyükselti eğrileri ve araç alanı ağacı">
-        </a>
-        <figcaption>TIN yüzey ve eşyükselti eğrileri</figcaption>
-      </figure>
-      <figure class="galeri-hucre">
-        <a href="/images/ata-cad/boy-profil.jpg" data-buyut>
-          <img src="/images/ata-cad/kucuk/boy-profil.jpg" class="sigdir" loading="lazy" decoding="async"
-               alt="Boyuna profil görünümü, kırmızı hat ve geometri şeritleri">
-        </a>
-        <figcaption>Boyuna profil ve kırmızı hat</figcaption>
-      </figure>
-      <figure class="galeri-hucre">
-        <a href="/images/ata-cad/tip-kesit.jpg" data-buyut>
-          <img src="/images/ata-cad/kucuk/tip-kesit.jpg" class="sigdir" loading="lazy" decoding="async"
-               alt="Tip kesit tanımlama penceresi ve zincir tablosu">
-        </a>
-        <figcaption>Tip kesit tanımı — KGM TİP3F</figcaption>
-      </figure>
-      <figure class="galeri-hucre">
-        <a href="/images/ata-cad/koridor-3b.jpg" data-buyut>
-          <img src="/images/ata-cad/kucuk/koridor-3b.jpg" class="sigdir" loading="lazy" decoding="async"
-               alt="Koridorun 3B görünümü ve nesne görüntüleyici">
-        </a>
-        <figcaption>Koridor 3B — kazı ve dolgu şevleri</figcaption>
-      </figure>
-      <figure class="galeri-hucre">
-        <a href="/images/ata-cad/kutle-dagilimi.jpg" data-buyut>
-          <img src="/images/ata-cad/kucuk/kutle-dagilimi.jpg" class="sigdir" loading="lazy" decoding="async"
-               alt="Kütle dağılımı diyagramı — depo fazlası ve ariyet">
-        </a>
-        <figcaption>Kütle dağılımı (Brückner)</figcaption>
-      </figure>
-      <figure class="galeri-hucre">
-        <a href="/images/ata-cad/kazi-hacim-yuzeyi.jpg" data-buyut>
-          <img src="/images/ata-cad/kucuk/kazi-hacim-yuzeyi.jpg" class="sigdir" loading="lazy" decoding="async"
-               alt="Ortofoto altlık üzerinde kazı hacim yüzeyi">
-        </a>
-        <figcaption>Kazı tasarımı — ortofoto altlıkla</figcaption>
-      </figure>
-    </div>
-
-    <p class="ac" style="--g:.1s; margin:24px 0 0; text-align:center">
-      <a href="/ekran-goruntuleri/" class="dugme bos">Ekran görüntülerinin tamamı →</a>
+    <p class="ac" style="--g:.1s; margin:24px 0 0">
+      <a href="/ekran-goruntuleri/" class="dugme bos">Ekran görüntülerinin tamamı</a>
     </p>
   </div>
 </section>
 
-{{/* ═══════════════════════════════════════════════════════════ ÇEKİRDEK ══ */}}
-<section class="kesim">
+{{/* ════════════════════════════════════════════════════════════ ÇIKTILAR ══ */}}
+{{/* Pafta listesi gibi: çıktının adı, içeriği, dosya biçimi. Biçim etiketleri
+     gerçek dosya uzantıları olduğu için eş aralıklı yazıyla duruyor. */}}
+<section class="kesim" id="ciktilar">
   <div class="sinir">
-    <div class="kesim-bas ac">
-      <p class="komut">Bağımsızlık</p>
-      <h2>Bağımsız platform</h2>
-      <p>ATA CAD kendi başına çalışan tam bir CAD platformudur.</p>
+    <header class="bolum-bas ac">
+      <h2>Teslim ettiğiniz dosyalar</h2>
+      <p>Projenin sonunda idareye, müşavire ya da şantiyeye giden çıktılar.
+         Hepsi aynı modelden, aynı güzergâh ve profilden üretilir.</p>
+    </header>
+
+    <div class="teslim-sar ac">
+      <table class="teslim">
+        <thead>
+          <tr><th scope="col">Çıktı</th><th scope="col">İçeriği</th><th scope="col">Biçim</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Boyuna profil paftası</th>
+            <td>Arazi ve proje hattı, yatay ve düşey geometri şeritleri, kilometraj tablosu</td>
+            <td><span class="bicim">DXF</span><span class="bicim">PDF</span></td>
+          </tr>
+          <tr>
+            <th scope="row">En kesit paftaları</th>
+            <td>Her örnek hattında arazi, tip kesit, kazı ve dolgu alanları</td>
+            <td><span class="bicim">DXF</span><span class="bicim">PDF</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Kübaj cetveli</th>
+            <td>İstasyon istasyon kazı ve dolgu hacimleri, zemin sınıfı ayrımı</td>
+            <td><span class="bicim">XLSX</span><span class="bicim">CSV</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Kütle dağılımı</th>
+            <td>Brückner diyagramı; depo fazlası ve ariyet miktarları</td>
+            <td><span class="bicim">DXF</span><span class="bicim">PDF</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Metraj raporu</th>
+            <td>Kalem kalem metraj, Excel'de düzenlenebilir biçimde</td>
+            <td><span class="bicim">XLSX</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Güzergâh ve yüzey verisi</th>
+            <td>Başka programlarla ve ekiplerle veri alışverişi için</td>
+            <td><span class="bicim">LandXML</span></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    {{/* Burada eskiden paket adlarını sayan bir tablo vardı. Kaldırıldı:
-         müşterinin sorusu "hangi kütüphane" değil, "AutoCAD gerekiyor mu,
-         verimi geri alabilir miyim, bir daha para öder miyim". Kartlar onu
-         yanıtlıyor; lisans iddiası kanıtsız kalmıyor. */}}
-    <div class="iddialar" data-kademe=".07">
+    <p class="teslim-ek ac">Bugün <a href="/eklentiler/">AutoCAD eklentileriyle</a>:
+       İller Bankası formatında metraj, hakediş hat cetveli ve istinat duvarı
+       stabilite raporu.</p>
+  </div>
+</section>
+
+{{/* ══════════════════════════════════════════════════════ KARŞILAŞTIRMA ══ */}}
+{{/* Karşılaştırma sayfasının özeti: yalnız altyapı işinde en çok sorulan
+     kalemler. Tam tablo /karsilastirma/'da. Altındaki dört kart eski
+     "Bağımsız platform" bölümüdür; ayrı bölüm olarak sayfayı uzatıyordu,
+     karşılaştırmanın hemen altında aynı soruyu yanıtlıyor. */}}
+<section class="kesim vurgulu" id="karsilastirma">
+  <div class="sinir">
+    <header class="bolum-bas ac">
+      <h2>Civil 3D ile yan yana</h2>
+      <p>Altyapı işinde en çok sorulan kalemler. Kalem kalem tam liste ve
+         eklentilerin karşılaştırması ayrı sayfada.</p>
+    </header>
+
+    <div class="kiyas-sar ac">
+      <table class="kiyas">
+        <thead>
+          <tr><th scope="col"><span class="gizli">Kalem</span></th><th scope="col" class="kiyas-biz">ATA CAD</th><th scope="col">Civil 3D</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Arazi, güzergâh, profil, koridor ve kübaj</th>
+              <td class="kiyas-biz"><span class="evet">✓</span></td><td><span class="evet">✓</span></td></tr>
+          <tr><th scope="row">Hazır KGM tip kesit kütüphanesi</th>
+              <td class="kiyas-biz"><span class="evet">✓</span></td><td><span class="kismi">elle kurulur</span></td></tr>
+          <tr><th scope="row">Zemin sınıfı ayrımı ve dönemsel kübaj</th>
+              <td class="kiyas-biz"><span class="evet">✓</span></td><td><span class="kismi">rapor kurulur</span></td></tr>
+          <tr><th scope="row">İller Bankası, İSKİ ve DSİ formatları</th>
+              <td class="kiyas-biz"><span class="kismi">bugün eklentide, modülle gelecek</span></td><td><span class="hayir">✗</span></td></tr>
+          <tr><th scope="row">İstinat duvarı stabilite ve deprem hesabı</th>
+              <td class="kiyas-biz"><span class="kismi">bugün eklentide, modülle gelecek</span></td><td><span class="hayir">✗</span></td></tr>
+          <tr><th scope="row">Türkçe arayüz ve Türkçe komut adları</th>
+              <td class="kiyas-biz"><span class="evet">✓</span></td><td><span class="hayir">✗</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="ac" style="margin:18px 0 0">
+      <a href="/karsilastirma/" class="dugme bos">Karşılaştırmanın tamamı</a>
+    </p>
+
+    <div class="iddialar" data-kademe=".07" style="margin-top:clamp(32px,4vw,52px)">
       <div class="iddia">
         <p class="iddia-bas">Tek kurulum</p>
         <p>Windows üzerinde tek kurulumla kullanıma hazırdır.</p>
@@ -345,29 +562,65 @@
   </div>
 </section>
 
-{{/* ══════════════════════════════════════════════════════════ STANDART ══ */}}
-<section class="kesim vurgulu">
-  <div class="sinir">
-    <div class="kesim-bas ac">
-      <p class="komut">Kurum Standartları</p>
-      <h2>Çıktı, idarenin kabul ettiği formatta</h2>
-      <p>Kurum profili tek bir kuruma sabitlenmez; ayrı ayrı sürümlenmiş paketlerdir.
-         Kaynağı ve madde numarası doğrulanmayan bir değer üretim hesabında etkinleştirilmez.</p>
+{{/* ════════════════════════════════════════════════════════════════ SSS ══ */}}
+{{/* Sorular data/sss.yaml'dan gelir; aynı liste aşağıda FAQPage işaretlemesi
+     olarak da basılır. `name` ortak olduğu için destekleyen tarayıcıda bir
+     soru açılınca öteki kapanır (açılır liste davranışı). */}}
+<section class="kesim" id="sss">
+  <div class="sinir sss-izgara">
+    <header class="sss-bas ac">
+      <h2>Sık sorulan sorular</h2>
+      <p>Cevabını burada bulamadığınız soruyu doğrudan sorun; genellikle aynı
+         iş günü içinde dönüş yapılır.</p>
+      <p class="sss-kanallar">
+        <a href="{{ .Site.Params.whatsapp }}" target="_blank" rel="noopener">WhatsApp grubu</a>
+        <a href="tel:{{ replace .Site.Params.telefonGorunen " " "" }}">{{ .Site.Params.telefonGorunen }}</a>
+        <a href="mailto:{{ .Site.Params.eposta }}">{{ .Site.Params.eposta }}</a>
+      </p>
+    </header>
+
+    <div class="sss-liste ac" style="--g:.06s">
+      {{- range .Site.Data.sss }}
+      <details class="sss" name="sss">
+        <summary>{{ .soru }}</summary>
+        <div class="sss-cevap">{{ .cevap | markdownify }}</div>
+      </details>
+      {{- end }}
+    </div>
+  </div>
+</section>
+
+{{- $sorular := slice }}
+{{- range .Site.Data.sss }}
+  {{- $sorular = $sorular | append (dict "@type" "Question" "name" .soru "acceptedAnswer" (dict "@type" "Answer" "text" (.cevap | markdownify | plainify))) }}
+{{- end }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@type" "FAQPage" "mainEntity" $sorular | jsonify | safeJS }}</script>
+
+{{/* ═══════════════════════════════════════════════════════════ BAŞVURU ══ */}}
+<section class="kesim vurgulu" id="basvuru">
+  <div class="sinir basvuru-izgara">
+    <div class="basvuru-sol ac">
+      <h2>İlk sürümü kendi projenizde deneyin</h2>
+      <p class="basvuru-giris">Erken erişim ücretsizdir. Karşılığında ürünü gerçek
+         bir projede deneyip gördüklerinizi paylaşmanız yeterli.</p>
+
+      {{/* Gerçek bir sıra olduğu için numaralı. */}}
+      <ol class="surec">
+        <li><h3>Listeye katılın</h3>
+            <p>Formu doldurun ya da WhatsApp grubuna katılın.</p></li>
+        <li><h3>Dönüş alın</h3>
+            <p>Çalışma alanınız ve idareniz konuşulur; genellikle aynı iş günü.</p></li>
+        <li><h3>Kurun ve deneyin</h3>
+            <p>İlk sürüm hazır olduğunda bilgisayarınıza kurulur; mevcut DWG,
+               DXF ve LandXML verinizle başlarsınız.</p></li>
+        <li><h3>Yol haritasını birlikte belirleyin</h3>
+            <p>Karşılaştığınız sorunlar doğrudan geliştiriciye ulaşır ve
+               önceliklere yansır.</p></li>
+      </ol>
     </div>
 
-    <div class="kurumlar" data-kademe=".09">
-      <div class="kurum">
-        <span class="kurum-kutu"><img src="/images/logo-iller-bankasi.png" alt="İller Bankası" width="180" height="120"></span>
-        <span>Altyapı proje standartları</span>
-      </div>
-      <div class="kurum">
-        <span class="kurum-kutu"><img src="/images/logo-iski.png" alt="İSKİ" width="180" height="120"></span>
-        <span>Teknik esaslar</span>
-      </div>
-      <div class="kurum">
-        <span class="kurum-kutu"><img src="/images/logo-dsi.png" alt="DSİ" width="180" height="120"></span>
-        <span>Yönetmelik ve standartlar</span>
-      </div>
+    <div class="basvuru-sag ac" style="--g:.08s">
+      {{ partial "basvuru.html" . }}
     </div>
   </div>
 </section>

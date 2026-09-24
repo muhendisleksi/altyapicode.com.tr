@@ -1,0 +1,53 @@
+# Anasayfadaki "Sık sorulan sorular" bölümü ve arama motorları için FAQPage
+# işaretlemesi bu tek listeden üretilir. Cevaplarda Markdown bağlantısı
+# kullanılabilir; işaretlemeye düz metin olarak geçer.
+
+- soru: "ATA CAD ne zaman satışa çıkacak?"
+  cevap: >-
+    Geliştirme sürüyor; takvim yerine öncelik sırası paylaşılıyor. Çekirdek,
+    arazi ve yüzey, güzergâh, profil ve en kesit, tip kesit ve koridor, kübaj
+    ve kazı tasarımı kullanıma hazır; altyapı, havza ve istinat modülleri
+    planlı. İlk sürümü erken erişim listesindekiler dener.
+
+- soru: "Erken erişim ücretli mi?"
+  cevap: >-
+    Hayır, ücretsizdir. Karşılığında beklenen, ürünü gerçek bir projenizde
+    deneyip karşılaştığınız sorunları paylaşmanızdır.
+
+- soru: "Fiyatı ne olacak?"
+  cevap: >-
+    Fiyat, ürün satışa çıktığında [karşılaştırma sayfasında](/karsilastirma/)
+    duyurulacak. ATA CAD ücretli hiçbir üçüncü parti yazılıma bağımlı
+    olmadığı için ürün bedelinin üstüne ek lisans maliyeti çıkmaz.
+
+- soru: "Mevcut DWG projelerimi kullanabilir miyim?"
+  cevap: >-
+    Evet. DWG ve DXF dosyaları altlık ve referans olarak okunur; güzergâh ve
+    yüzeyler LandXML ile aktarılır. Çıktılar DXF, PDF ve Excel olarak alınır.
+    Tam DWG yazma desteği yoktur.
+
+- soru: "Hangi kurum standartlarıyla çalışıyor?"
+  cevap: >-
+    Hazır KGM tip kesit kütüphanesiyle gelir. İller Bankası, İSKİ ve DSİ
+    profilleri altyapı modülüyle eklenecek; bu kurumların formatındaki
+    kesit ve metraj bugün [AutoCAD eklentileriyle](/eklentiler/) alınabilir.
+
+- soru: "Hangi işletim sisteminde çalışır?"
+  cevap: >-
+    Windows üzerinde çalışır ve tek kurulumla kullanıma hazırdır.
+
+- soru: "ATA CAD'i beklerken ne kullanabilirim?"
+  cevap: >-
+    AutoCAD veya Civil 3D kullanıyorsanız [Altyapı Asistanı](/eklentiler/altyapi-asistani/)
+    hendek kesiti ve metrajı, [İstinat Duvarı Asistanı](/eklentiler/istinat-duvari/)
+    stabilite hesabını ve kesit çizimini bugün otomatikleştirir. Her biri
+    yıllık 100 $ veya süresiz 250 $'dır.
+
+- soru: "Destek nasıl veriliyor?"
+  cevap: >-
+    Doğrudan geliştiriciye ulaşırsınız: telefon, WhatsApp veya e-posta.
+    Taleplere genellikle aynı iş günü içinde dönüş yapılır.
+
+- soru: "Fatura kesiliyor mu?"
+  cevap: >-
+    Evet. Satışlar şahıs firması üzerinden faturalandırılır.
