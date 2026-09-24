@@ -271,6 +271,14 @@
          istasyon istasyon. Her adım bir öncekinin üzerine kurulur.</p>
     </header>
 
+    {{/* Profil rayı: geniş ekranda profil + adımlar ekranda sabitlenir ve
+         okuyucu rayın boyunca kaydırdıkça imleç 0+000'dan 0+400'e yürür.
+         Sabitlenmeden imleç ekranın küçük bir kaydırmasında bitiyordu,
+         adımlar okunmadan geçiliyordu. Rayın boşluğu kaydırma yolunu verir;
+         sabitleme kapalıysa (dar/kısa ekran, hareket kısıtı) boşluk da
+         kapanır. Eşleme: ata.js ▸ profil ▸ kaydirmaOku. */}}
+    <div class="profil-ray" data-profil-ray>
+    <div class="profil-sahne">
     {{ partial "profil.html" . }}
 
     <ol class="adimlar">
@@ -299,6 +307,9 @@
            PDF, DXF ve LandXML olarak teslim edin.</p>
       </li>
     </ol>
+    </div>
+    <div class="profil-ray-bosluk" aria-hidden="true"></div>
+    </div>
   </div>
 </section>
 

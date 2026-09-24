@@ -401,13 +401,28 @@
         li.classList.toggle('etkin', km >= bas && (km < son || son >= pUzun));
         li.classList.toggle('ulasti', acilan >= bas);
       });
+
+      // Zemin katmanı (zemin.js) aynı istasyonu 3B güzergâhta işaretler.
+      document.dispatchEvent(new CustomEvent('ata:profil', { detail: { km: km } }));
     };
 
-    // Profil ekranın %85'ine girdiğinde imleç başta, %25'ine çıktığında sonda.
+    // Sabitlenmiş sahnede imleç rayın boyunca yürür: sahne yerine oturmadan
+    // ekranın %20'si kadar önce yola çıkar, ray bitince 0+400'e varır.
+    // Sabitleme kapalıysa (dar/kısa ekran, hareket kısıtı) eski eşleme:
+    // profil ekranın %85'ine girdiğinde imleç başta, %25'ine çıktığında sonda.
+    var ray = document.querySelector('[data-profil-ray]');
+    var sahne = ray ? ray.querySelector('.profil-sahne') : null;
     var kaydirmaOku = function () {
-      var r = cizim.getBoundingClientRect();
-      var vh = window.innerHeight || 800;
-      var o = (vh * 0.85 - r.top) / (vh * 0.6);
+      var vh = window.innerHeight || 800, o;
+      var ss = sahne ? getComputedStyle(sahne) : null;
+      if (ss && ss.position === 'sticky') {
+        var rr = ray.getBoundingClientRect(), ust = parseFloat(ss.top) || 0;
+        var yol = rr.height - sahne.offsetHeight;
+        o = (ust + vh * 0.2 - rr.top) / (yol + vh * 0.2);
+      } else {
+        var r = cizim.getBoundingClientRect();
+        o = (vh * 0.85 - r.top) / (vh * 0.6);
+      }
       kaydirmaKm = Math.max(0, Math.min(1, o)) * pUzun;
     };
     var cizimBekliyor = false;

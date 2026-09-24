@@ -175,9 +175,10 @@ k.setAttribute('data-tema',t||'koyu');})();
 </footer>
 
 <script src="/js/ata.js?s={{ readFile "static/js/ata.js" | md5 | truncate 8 "" }}" defer></script>
-{{/* Zemin katmanı. Eski eşyükselti eğrisi katmanı static/js/kontur.js olarak
-     duruyor; geri dönmek istenirse aşağıdaki satırı onunla değiştirmek ve
-     ata.css'teki .telkafes-katman kuralını .kontur-katman yapmak yeterli. */}}
-<script src="/js/telkafes.js" defer></script>
+{{/* Zemin katmanı: sayfa boyunca yapılan örnek proje (WebGL2). Tarayıcı
+     WebGL2 veremezse zemin.js kendisi eski tel kafes katmanını
+     (static/js/telkafes.js) yükler. Tel kafese kalıcı dönmek için bu satırı
+     /js/telkafes.js yapmak yeterli. */}}
+<script src="/js/zemin.js?s={{ readFile "static/js/zemin.js" | md5 | truncate 8 "" }}" defer></script>
 </body>
 </html>

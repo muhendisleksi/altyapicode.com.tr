@@ -134,6 +134,13 @@ body{
       color-mix(in srgb, var(--vurgu) 11%, transparent) 0%,
       transparent 64%);
 }
+/* Zemin katmanının yazıları (km, kesit alanları, pafta): GL tuvalinin hemen
+   üstünde, içeriğin altında. Işıma yalnız GL tuvalinde; burada tekrar
+   edilseydi iki kat parlardı. */
+.zemin-yazi{
+  position:fixed; inset:0; z-index:-1; pointer-events:none;
+  width:100%; height:100%;
+}
 img,svg{ max-width:100%; display:block; }
 img{ height:auto; }
 a{ color:var(--vurgu); text-underline-offset:3px; }
@@ -436,9 +443,9 @@ a{ color:var(--vurgu); text-underline-offset:3px; }
 .zincir-not a:hover{ color:var(--vurgu); }
 
 /* güven şeridi — hero altı */
-/* Şeritler ve vurgulu bölümler yarı saydam: altlarındaki kontur katmanı
-   sezilsin ama metin okunaklı kalsın. Kartlar opak bırakıldı — okuma
-   yüzeyinin arkasında hareket olmamalı. */
+/* Şeritler ve vurgulu bölümler yarı saydam: altlarındaki zemin katmanı
+   sezilsin ama metin okunaklı kalsın. Kartların buzlu camı ve yazı perdesi
+   dosyanın sonunda ("CAM YÜZEYLER · YAZI PERDESİ"). */
 .kanit-serit{
   border-top:1px solid var(--cizgi-2);
   background:color-mix(in srgb, var(--panel) 80%, transparent);
@@ -1147,6 +1154,16 @@ table.veri tbody tr:hover{ background:var(--panel); }
 .pi-fark.kazi b{ color:var(--kirmizi); }
 .pi-fark.dolgu b{ color:var(--yesil); }
 
+/* Profil rayı (index.html'deki açıklamaya bakın). Sabitleme yalnız sahnenin
+   ekrana sığdığı yerde: 720 px'ten kısa ekranda profil + adımlar başlığın
+   altına sığmıyor, alt kısmı hiç görünmeden ray bitiyordu. Başlık payı
+   (.baslik yüksekliği + boşluk) `top`ta; betik de oradan okur. */
+.profil-ray-bosluk{ display:none; }
+@media (min-width:900px) and (min-height:720px) and (prefers-reduced-motion:no-preference){
+  .profil-sahne{ position:sticky; top:92px; }
+  .profil-ray-bosluk{ display:block; height:130vh; }
+}
+
 /* adımlar — dört sütun, sol çizgileri profildeki istasyon dikeylerinin devamı */
 .adimlar{
   list-style:none; margin:0; padding:0;
@@ -1353,3 +1370,100 @@ table.veri tbody tr:hover{ background:var(--panel); }
 .bf-durum{ margin:0; font-size:13.5px; color:var(--yesil); }
 .bf-durum:empty{ display:none; }
 @media (max-width:560px){ .bf-iki{ grid-template-columns:1fr; } }
+
+/* ================================================ CAM YÜZEYLER · YAZI PERDESİ */
+/* Zemin katmanı (zemin.js) sayfa boyunca bir proje anlatıyor; kartlar opak
+   kalınca sahnenin çoğu kartların arkasında kayboluyordu. Kartlar, tablolar
+   ve vurgulu bölümler artık buzlu cam: dolgu kısık, arkadaki sahne bulanık
+   geçer. Bulanıklık okuma için — kartın arkasında keskin bir çizgi hareket
+   etmez, yalnız renk ve ışık sezilir.
+
+   Kartın dışında kalan serbest metnin (bölüm başlıkları, giriş paragrafları,
+   SSS) arkasına ise kenarı yumuşak, hafif bir perde iner: sahne orada da
+   görünür ama yazıyla yarışmaz.
+
+   Kurallar dosyanın sonunda, çünkü bileşenlerin kendi arka planlarını
+   ezmeleri gerekiyor. */
+:root{
+  --cam:     color-mix(in srgb, var(--panel-2) 68%, transparent);
+  --cam-bas: color-mix(in srgb, var(--panel) 50%, transparent);
+  --cam-sis: blur(10px) saturate(1.15);
+  --perde:   color-mix(in srgb, var(--zemin) 60%, transparent);
+}
+
+.kesim.vurgulu{ background:color-mix(in srgb, var(--panel) 46%, transparent); }
+.kurum-serit,.kanit-serit{ background:color-mix(in srgb, var(--panel) 66%, transparent); }
+.kurum-serit,.kanit-serit,.sayfa-bas{ -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); }
+
+.hedef,.dert,.adimlar,.urun,.pnl,.iddia,.teslim-sar,.kiyas-sar{
+  background:var(--cam);
+  -webkit-backdrop-filter:var(--cam-sis); backdrop-filter:var(--cam-sis);
+}
+/* "Kimler için" ızgarası çizgilerini kabın zemininden alıyordu; kap cam
+   olunca hücre aralarındaki 1 px çizgiyi hücrelerin gölgesi çizer. */
+.hedef-oge{ background:transparent; box-shadow:0 0 0 1px var(--cizgi); }
+.pnl-bas,.teslim thead th,.kiyas thead th{ background:var(--cam-bas); }
+.dert-bas span:last-child{ background:color-mix(in srgb, var(--vurgu-zem) 70%, transparent); }
+.dert-sag{ background:color-mix(in srgb, var(--vurgu-zem) 42%, transparent); }
+.adimlar li.etkin{ background:color-mix(in srgb, var(--vurgu-zem) 55%, transparent); }
+/* Form doldurulan yüzey: camın en koyusu. */
+.basvuru{
+  background:color-mix(in srgb, var(--panel-2) 86%, transparent);
+  -webkit-backdrop-filter:var(--cam-sis); backdrop-filter:var(--cam-sis);
+}
+
+/* Yazı perdesi. Kenarlar iki doğrusal maskenin kesişimiyle söner; perde
+   metin kutusundan taşar ki solma bölgesi yazının dışında kalsın. Yana
+   taşma sayfa kenar boşluğunu aşmaz — aşarsa telefonda yatay kaydırma
+   çıkıyor. */
+.hero-ust,.bolum-bas,.kesim-bas,.sss-liste,.basvuru-sol,.zincir-not,.teslim-ek,.icerik{
+  position:relative;
+}
+.hero-ust,.bolum-bas,.kesim-bas,.sss-bas,.sss-liste,.basvuru-sol,.zincir-not,.teslim-ek,.icerik{
+  isolation:isolate;
+}
+.hero-ust::before,.bolum-bas::before,.kesim-bas::before,.sss-bas::before,.sss-liste::before,
+.basvuru-sol::before,.zincir-not::before,.teslim-ek::before,.icerik::before{
+  content:""; position:absolute; z-index:-1; pointer-events:none;
+  --perde-x:var(--dolgu-x);
+  inset:-26px calc(-1 * var(--perde-x));
+  background:var(--perde);
+  -webkit-backdrop-filter:blur(2.5px); backdrop-filter:blur(2.5px);
+  -webkit-mask:linear-gradient(90deg, transparent, #000 var(--perde-x), #000 calc(100% - var(--perde-x)), transparent),
+               linear-gradient(180deg, transparent, #000 26px, #000 calc(100% - 26px), transparent);
+  -webkit-mask-composite:source-in;
+  mask:linear-gradient(90deg, transparent, #000 var(--perde-x), #000 calc(100% - var(--perde-x)), transparent),
+       linear-gradient(180deg, transparent, #000 26px, #000 calc(100% - 26px), transparent);
+  mask-composite:intersect;
+}
+/* Vurgulu bölümün zemini zaten yarı saydam; perde orada daha hafif. */
+.kesim.vurgulu{ --perde:color-mix(in srgb, var(--zemin) 38%, transparent); }
+
+/* Kübaj göstergesi (zemin.js): yapım boyunca sol altta, programın durum
+   çubuğu gibi. İçeriğin üstünde ama tıklamayı geçirir; görünürlüğünü betik
+   yönetir. Rakamlar tabular: sayarken satır oynamasın. */
+.zemin-durum{
+  position:fixed; left:16px; bottom:16px; z-index:90; pointer-events:none;
+  display:grid; gap:1px; min-width:268px; padding:9px 14px 11px;
+  font-family:var(--f-veri); font-size:12px; line-height:1.55; color:var(--yazi-2);
+  font-variant-numeric:tabular-nums; white-space:pre;
+  background:color-mix(in srgb, var(--panel-2) 84%, transparent);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  border:1px solid var(--cizgi); border-left:2px solid var(--vurgu); border-radius:3px;
+  box-shadow:var(--golge); opacity:0; visibility:hidden;
+}
+.zemin-durum .zd-bas{ display:flex; justify-content:space-between; gap:16px; margin-bottom:2px; }
+.zemin-durum .zd-bas b{ font-weight:600; letter-spacing:.12em; color:var(--yazi-3); font-size:10.5px; }
+.zemin-durum [data-zd="km"]{ color:var(--vurgu); }
+.zemin-durum .zd-cubuk{ display:block; height:2px; margin-top:7px; background:var(--cizgi-2); }
+.zemin-durum .zd-cubuk b{ display:block; height:100%; background:var(--vurgu);
+  transform:scaleX(0); transform-origin:left; }
+@media (max-width:760px){ .zemin-durum{ display:none; } }
+
+/* Saydamlık istemeyen kullanıcıya eski opak yüzeyler. */
+@media (prefers-reduced-transparency:reduce){
+  .hedef,.dert,.adimlar,.urun,.pnl,.iddia,.teslim-sar,.kiyas-sar{ background:var(--panel-2); }
+  .kesim.vurgulu{ background:var(--panel); }
+  .hero-ust::before,.bolum-bas::before,.kesim-bas::before,.sss-bas::before,.sss-liste::before,
+  .basvuru-sol::before,.zincir-not::before,.teslim-ek::before,.icerik::before{ background:var(--zemin); }
+}
