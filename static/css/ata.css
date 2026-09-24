@@ -141,6 +141,10 @@ body{
   position:fixed; inset:0; z-index:-1; pointer-events:none;
   width:100%; height:100%;
 }
+/* Zemin tuvalleri en büyük görüntü alanı boyunda (lvh; eski tarayıcıda vh,
+   iOS'ta o da büyük alandır): telefonda adres çubuğu açılıp kapanırken
+   tuval boyu sabit kalır, sahne yeniden ayrılıp titremez (zemin.js ▸ olcule). */
+.zemin-gl,.zemin-yazi{ bottom:auto; height:100vh; height:100lvh; }
 img,svg{ max-width:100%; display:block; }
 img{ height:auto; }
 a{ color:var(--vurgu); text-underline-offset:3px; }
@@ -1460,7 +1464,9 @@ table.veri tbody tr:hover{ background:var(--panel); }
 .zemin-durum .zd-cubuk{ display:block; height:2px; margin-top:7px; background:var(--cizgi-2); }
 .zemin-durum .zd-cubuk b{ display:block; height:100%; background:var(--vurgu);
   transform:scaleX(0); transform-origin:left; }
-@media (max-width:760px){ .zemin-durum{ display:none; } }
+/* Dar ekranda ve yatay telefonda (boy ≤ 500 px) gösterge sahnenin dörtte
+   birini örtüyor; yapım cephesinin 3B etiketi aynı rakamları zaten taşıyor. */
+@media (max-width:760px), (max-height:500px){ .zemin-durum{ display:none; } }
 
 /* Sahne araları (partials/sahne-arasi.html): bölümler arasında metinsiz
    boşluk; zeminin olayları yalnız burada oynar. Zemin oynamıyorsa hiç yer

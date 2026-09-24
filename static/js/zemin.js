@@ -55,11 +55,11 @@
   } catch (e) { gl = null; }
   if (!gl) { yedegeDon(); return; }
 
-  // Hareket kısıtlı ya da ekran darsa sahne çizilir ama OYNAMAZ: bitmiş
-  // projenin tek karesi. Dar ekranda sürekli çizim pil pahalı, hareket
-  // istemeyen kullanıcı için zaten yanlış. İkisinde de zemin boş kalmasın.
-  var duragan = window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
-                !window.matchMedia('(min-width: 760px)').matches;
+  // Hareket kısıtlıysa sahne çizilir ama OYNAMAZ: bitmiş projenin tek
+  // karesi; zemin boş kalmasın. Telefonda da oynar — ziyaretçinin çoğu
+  // oradan bakıyor. Pil yükü sınırlı: sahne yalnız kaydırmayla ya da bir
+  // şey değişince çizilir (bkz. kare), okuyucu dururken GPU boştadır.
+  var duragan = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ========================================================= PROJE VERİSİ */
   var TABAN   = 818;    /* kot ekseninin sıfırı (m) */
@@ -712,7 +712,7 @@
   /* ============================================================== KATMAN */
   // GL tuvali eski katmanın sınıfını taşır: ufuktaki ışıma (ata.css) onun
   // arka planında. Yazılar ayrı bir 2B tuvalde, GL'nin üstünde.
-  tuval.className = 'telkafes-katman';
+  tuval.className = 'telkafes-katman zemin-gl';
   tuval.setAttribute('aria-hidden', 'true');
   var yaziTuval = document.createElement('canvas');
   yaziTuval.className = 'zemin-yazi';
@@ -743,10 +743,19 @@
   function olcule() {
     // 3x DPR'de tam çözünürlük gereksiz pahalı; 1,5 yeter.
     op = Math.min(window.devicePixelRatio || 1, 1.5);
-    w = window.innerWidth; h = window.innerHeight;
-    tuval.width = Math.round(w * op); tuval.height = Math.round(h * op);
-    yaziTuval.width = Math.round(w * op); yaziTuval.height = Math.round(h * op);
-    gl.viewport(0, 0, tuval.width, tuval.height);
+    // Boy tuvalin kendi CSS boyundan (ata.css ▸ 100lvh): telefonda adres
+    // çubuğu kaydırırken açılıp kapanır, innerHeight her seferinde değişir.
+    // Tuval en büyük görüntü alanına sabit olunca çubuk yalnız altını örter;
+    // resize gelse de boyut aynı kalır ve tuval yeniden ayrılmaz — ayrılsa
+    // çizim tamponu silinir, sahne kaydırma ortasında bir kare boş kalırdı.
+    var r = tuval.getBoundingClientRect();
+    var yw = Math.round(r.width) || window.innerWidth, yh = Math.round(r.height) || window.innerHeight;
+    var pw = Math.round(yw * op), ph = Math.round(yh * op);
+    w = yw; h = yh;
+    if (tuval.width === pw && tuval.height === ph) { return; }
+    tuval.width = pw; tuval.height = ph;
+    yaziTuval.width = pw; yaziTuval.height = ph;
+    gl.viewport(0, 0, pw, ph);
   }
 
   /* --------------------------------------------------------------- renkler */
@@ -993,6 +1002,17 @@
     var gp = konum(k[1], k[2]), hp = konum(k[4], k[5]);
     var goz = [gp[0], k[3], gp[1]], hedef = [hp[0], 0, hp[1]];
 
+    // DİKEY EKRAN. Kamera anahtarları yatay ekrana (en/boy ~1,6) göre
+    // kuruldu; dikey telefonda yatay görüş üçte bire iner, yol ve kesitler
+    // iki kenardan kesilir. Görüş açısını açmak tek başına balık gözü
+    // bozulması getirir; kamera onun yerine aynı doğrultuda hedeften geri
+    // çekilir (bakış açısı, eğim değişmez) ve açı yalnız biraz genişler.
+    // Sis mesafesi de aynı oranda uzar, yoksa uzaklaşan sahne sise gömülür.
+    // Yatay ekranda (en/boy ≥ DIKEY_ESIK) hiçbir şey değişmez.
+    var dikey = Math.max(1, Math.min(3, DIKEY_ESIK / asp));
+    var geri = 1 + (dikey - 1) * 0.6, genis = 1 + (dikey - 1) * 0.12;
+    for (var g = 0; g < 3; g++) { goz[g] = hedef[g] + (goz[g] - hedef[g]) * geri; }
+
     // Plan: projenin ortasının tam üstü. Ekranın yukarısı yan görünümün
     // bakış yönü olur, böylece dönüş saf bir eğilme hareketidir, dönme yok;
     // güzergâh da geniş ekranda yatay uzanır.
@@ -1011,7 +1031,7 @@
     // Ayrık düzende sahne sağ yarıya kayar ve küçülür (bkz. SAHNE ▸ AYRIK
     // DÜZEN). Plan o yarıya sığacak yükseklikten bakar: yatayda merkezden
     // sağ kenara kalan (1 − kayma) kadar yer var.
-    var olcek = 1 - 0.35 * kayma, t15 = Math.tan(15 * Math.PI / 180);
+    var olcek = (1 - 0.35 * kayma) / genis, t15 = Math.tan(15 * Math.PI / 180);
     var planH = Math.max(yG * olcek / (t15 * asp * (1 - kayma)), yY * olcek / t15);
     var p = d.plan;
     if (p > 0) {
@@ -1036,8 +1056,9 @@
     KAM_SAG = [V[0], V[4], V[8]];
     var r = Math.max(yG, yY);
     PLANR = [r * 1.1, r * 1.6];
-    SIS = [120, 560];
+    SIS = [120 * geri, 560 * geri];
   }
+  var DIKEY_ESIK = 1.25;
 
   // Dünya → ekran. [x, y, görünürlük] ya da null.
   function ekran(x, y, z) {
