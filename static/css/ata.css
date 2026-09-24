@@ -1298,7 +1298,9 @@ table.veri tbody tr:hover{ background:var(--panel); }
 }
 @media (max-width:860px){
   .sss-izgara{ grid-template-columns:1fr; }
-  .sss-bas{ position:static; }
+  /* static değil relative: yazı perdesi (::before) başlığa bağlı kalmalı,
+     yoksa sayfa genişliğine yayılıp yatay kaydırma çıkarıyor. */
+  .sss-bas{ position:relative; top:auto; }
 }
 
 /* ---------------------------------------------------------------- başvuru */
@@ -1482,10 +1484,79 @@ table.veri tbody tr:hover{ background:var(--panel); }
 .sahne-yazi b{ font-weight:600; color:var(--yazi); letter-spacing:.04em; }
 .sahne-yazi span:last-child{ grid-column:1 / -1; }
 
+/* ============================================= AYRIK DÜZEN (anasayfa) */
+/* Geniş ekranda ve zemin oynarken metin bölümleri (index.html ▸ .ayrik)
+   sol sütuna çekilir; sağ yarı zemin sahnesine kalır, zemin.js sahneyi o
+   yarıya kaydırır. Okuyucu yazının altında kıpırdayan bir resimle
+   yarışmaz: okurken sola, merak edince sağa bakar. Tam genişlik bölümler
+   (ürünler, ekranda, karşılaştırma) görsel kanıt; onlar sıkışmasın diye
+   dokunulmadı.
+
+   Sahnenin kendi yeri olunca uzun metinsiz aralara gerek kalmıyor: aralar
+   kısa bir geçişe iner, yalnız koridor/kübaj arası tam ekran kalır.
+   1100 px'in altında sol sütun ızgaraları boğuyor; orada eski düzen. */
+@media (min-width:1100px){
+  .zemin-oynar{ --sol-sutun:min(680px, 57%); }
+  .zemin-oynar .kesim.ayrik > .sinir > *{ max-width:var(--sol-sutun); }
+  /* Vurgulu bölümün yarı saydam şeridi sahneyi de örtüyordu: ayrıkta kalkar,
+     içerik zaten kendi cam yüzeyinde. */
+  .zemin-oynar .kesim.ayrik.vurgulu{ background:transparent; border-color:transparent; }
+  .zemin-oynar .ayrik .bolum-bas{ grid-template-columns:minmax(0,1fr); align-items:start; }
+  .zemin-oynar .ayrik .bolum-bas h2{ max-width:none; }
+  .zemin-oynar .ayrik .hedef{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .zemin-oynar .ayrik .sss-izgara,
+  .zemin-oynar .ayrik .basvuru-izgara{ grid-template-columns:minmax(0,1fr); }
+  .zemin-oynar .ayrik .sss-bas{ position:relative; top:auto; }
+  .zemin-oynar .ayrik .paneller{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .zemin-oynar .sahne-arasi{ height:40vh; }
+  .zemin-oynar .sahne-arasi.uzun{ height:150vh; }
+}
+
 /* Saydamlık istemeyen kullanıcıya eski opak yüzeyler. */
 @media (prefers-reduced-transparency:reduce){
   .hedef,.dert,.adimlar,.urun,.pnl,.iddia,.teslim-sar,.kiyas-sar{ background:var(--panel-2); }
   .kesim.vurgulu{ background:var(--panel); }
   .hero-ust::before,.bolum-bas::before,.kesim-bas::before,.sss-bas::before,.sss-liste::before,
   .basvuru-sol::before,.zincir-not::before,.teslim-ek::before,.icerik::before{ background:var(--zemin); }
+}
+
+/* ================================================= TELEFON VE DOKUNMATİK */
+/* Menü düğmesi açıkken ✕ olur: üç çizginin ortası söner, üstle alt
+   birbirine doğru döner (çizgi 2 px + aralık 4 px = 6 px kayma). */
+.menu-dugme span{ transition:transform .2s ease, opacity .2s ease; }
+.menu-dugme[aria-expanded="true"] span:nth-child(1){ transform:translateY(6px) rotate(45deg); }
+.menu-dugme[aria-expanded="true"] span:nth-child(2){ opacity:0; }
+.menu-dugme[aria-expanded="true"] span:nth-child(3){ transform:translateY(-6px) rotate(-45deg); }
+@media (prefers-reduced-motion:reduce){ .menu-dugme span{ transition:none; } }
+
+@media (max-width:760px){
+  /* İçerik tabloları en çok üç sütun: telefonda sığarlar, satır kırarlar.
+     520 px alt sınırı iki sütunlu tabloyu bile yana kaydırıyor, yazı
+     kesik görünüyordu. Dört ve üstü sütunlu tablo gelirse sınır geri
+     gelir; kaydırma kabı (.tablo-sar) o zaman işe yarar. */
+  .icerik table, table.veri{ min-width:0; }
+  .icerik table:has(tr > :nth-child(4)), table.veri:has(tr > :nth-child(4)){ min-width:520px; }
+  .icerik th,.icerik td, table.veri th, table.veri td{ padding:9px 11px; }
+  .icerik thead th, table.veri thead th{ font-size:10.5px; letter-spacing:.1em; }
+
+  /* 10 px altı etiketler telefonda okunmuyor. */
+  .pnl-bas .rozetcik{ font-size:10.5px; }
+  .urun-rozet{ font-size:10.5px; }
+
+  /* Alt bilgi bağlantıları alt alta 18 px'lik satırlardı; parmakla
+     komşusuna basılıyordu. Satır aralığı dokunma alanına dönüşür. */
+  .alt-liste li{ margin-bottom:0; }
+  .alt-liste a{ display:inline-block; padding:7px 0; }
+}
+
+/* Dokunmatik ekranda küçük düğmelerin basılabilir alanı büyür. Görünüş
+   aynı kalsın diye tur düğmesinde alan, görünmez bir kenarla genişler. */
+@media (pointer:coarse){
+  /* iOS Safari (iPad dahil) 16 px'ten küçük yazılı bir alana dokunulunca
+     sayfayı yakınlaştırır ve geri çekmez; dokunmatikte form 16 px'le yazılır. */
+  .basvuru input[type="text"],.basvuru select,.basvuru textarea{ font-size:16px; }
+  .menu-dugme{ width:44px; height:40px; padding:0 12px; }
+  .cerceve-dugme{ position:relative; }
+  .cerceve-dugme::after{ content:""; position:absolute; inset:-10px -8px; }
+  .bf-cip span{ padding:10px 13px; }
 }

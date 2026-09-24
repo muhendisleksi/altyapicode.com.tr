@@ -797,9 +797,20 @@
      içinde ilerler; metin ekrandayken sahne son aranın sonunda bekler.
      Okuyucu ya okur ya izler, ikisi aynı anda istenmez.
 
-     Aranın yolu: üst kenarı ekranın %40'ına geldiğinde başlar, alt kenarı
-     %60'a çıktığında biter. Bu arada ekranın en az %60'ı metinsizdir. */
+     Aranın yolu, ortası ekranın ortasından geçerken yarıya varacak
+     biçimde, boyundan ekranın %20'si eksik (en az ekranın %70'i). Uzun
+     arada bu, üst kenar ekranın %40'ındayken başlayıp alt kenar %60'tayken
+     bitmek demek: geçiş boyunca ekranın en az %60'ı metinsiz. Ayrık düzende
+     (ata.css ▸ AYRIK DÜZEN) aralar kısa; geçiş komşu bölümlerin metniyle
+     aynı ekranda ama metin solda, sahne sağda.
+
+     AYRIK DÜZEN. Metin sol sütundaysa sahne sağ yarıya kayar: izdüşümün
+     merkezi serbest alanın ortasına taşınır ve sahne biraz küçülür ki o
+     yarıya sığsın. Hero ve uzun ara tam ekran; orada sahne ortadadır.
+     Kayma da `a` gibi ataletle izler, bölüm sınırında yumuşakça kayar. */
   var aralar = null;       /* anasayfa değilse null: "gezinti" kipi */
+  var ortalar = [];        /* sahnenin ortada durduğu dikey aralıklar */
+  var ayrikKayma = 0;      /* ayrık düzende izdüşüm merkezinin kayması (NDC) */
 
   function bolumleriOlc() {
     var y = window.pageYOffset || 0, liste = [];
@@ -810,7 +821,30 @@
       liste.push({ ust: r.top + y, boy: r.height, a0: +a[0], a1: +a[1] });
     }
     aralar = liste.length ? liste : null;
+
+    ortalar = [];
+    Array.prototype.forEach.call(document.querySelectorAll('.hero, .sahne-arasi.uzun'), function (e) {
+      var r = e.getBoundingClientRect();
+      if (r.height) { ortalar.push([r.top + y, r.bottom + y]); }
+    });
+    // Sol sütunun sağ kenarı; serbest alan ekranın üçte birinden darsa
+    // ayrık düzen yok demektir (dar ekran ya da CSS kuralı işlemiyor).
+    ayrikKayma = 0;
+    var sol = aralar && document.querySelector('.kesim.ayrik .bolum-bas');
+    if (sol && w) {
+      var sag = sol.getBoundingClientRect().right + 24;
+      if (w - sag > w * 0.33) { ayrikKayma = (sag + w) / w - 1; }
+    }
     kirli = true;
+  }
+
+  function kaymaHedef() {
+    if (!ayrikKayma) { return 0; }
+    var orta = (window.pageYOffset || 0) + (h || 800) * 0.5;
+    for (var i = 0; i < ortalar.length; i++) {
+      if (orta >= ortalar[i][0] && orta < ortalar[i][1]) { return 0; }
+    }
+    return ayrikKayma;
   }
 
   function aHesapla() {
@@ -820,8 +854,8 @@
     }
     var a = aralar[0].a0;
     for (var i = 0; i < aralar.length; i++) {
-      var r = aralar[i];
-      var t = (vh * 0.4 - (r.ust - sy)) / Math.max(1, r.boy - vh * 0.2);
+      var r = aralar[i], yol = Math.max(r.boy - vh * 0.2, vh * 0.7);
+      var t = 0.5 + (vh * 0.5 - (r.ust + r.boy * 0.5 - sy)) / yol;
       if (t <= 0) { break; }
       a = r.a0 + (r.a1 - r.a0) * Math.min(1, t);
     }
@@ -845,6 +879,12 @@
   var YAPIM_BAS = 3.85, YAPIM_SON = 5.9;
   var YAN = [7.2, 205, 150, 92, 205, 0];
   var SON = [YAPIM_SON, 345, 105, 82, 425, 0];
+  /* Bitmiş koridor: yapım biter bitmez kamera yükselir ve projenin tamamına
+     doğu yanından, yüksekten bakar. SON'da kalınca (yolun sonundan ileri
+     bakış) koridorun çoğu kameranın solunda, ayrık düzende metnin altında
+     kalıyordu. YAN ile aynı yönden baktığı için yan görünüme geçiş düz bir
+     alçalmadır. */
+  var BITIS = [6.3, 200, 250, 140, 200, 0];
 
   function kameraAnahtar(a) {
     var k;
@@ -867,8 +907,12 @@
       var Y = ara(YAPIM_BAS, YAPIM_SON, a) * UZUNLUK;
       return [a, Y - 55, 105, 82, Y + 25, 0];
     }
-    k = ara(6.05, YAN[0], a);
-    return SON.map(function (v, n) { return v + (YAN[n] - v) * k; });
+    if (a <= BITIS[0]) {
+      k = ara(YAPIM_SON + 0.05, BITIS[0], a);
+      return SON.map(function (v, n) { return v + (BITIS[n] - v) * k; });
+    }
+    k = ara(BITIS[0] + 0.05, YAN[0], a);
+    return BITIS.map(function (v, n) { return v + (YAN[n] - v) * k; });
   }
 
   function durumHesapla(a, zaman) {
@@ -887,7 +931,7 @@
       d.kontur = ara(0.55, 1.9, a);
       d.guzergah = ara(1.9, 2.9, a) * UZUNLUK;
       d.yapim = ara(YAPIM_BAS, YAPIM_SON, a) * UZUNLUK;
-      d.kesit = ara(6.0, 7.2, a);
+      d.kesit = ara(6.35, 7.2, a);
       d.plan = ara(7.6, 9.0, a);
       d.pafta = ara(8.7, 9.6, a);
       d.onKesit = ara(YAPIM_BAS, YAPIM_BAS + 0.12, a) * (1 - ara(YAPIM_SON - 0.05, YAPIM_SON + 0.12, a));
@@ -964,7 +1008,11 @@
       yY = Math.max(yY, Math.abs(vx * planYuk[0] + vz * planYuk[2]));
     }
     yG += 70; yY += 70;
-    var planH = Math.max(yG / (Math.tan(15 * Math.PI / 180) * asp), yY / Math.tan(15 * Math.PI / 180));
+    // Ayrık düzende sahne sağ yarıya kayar ve küçülür (bkz. SAHNE ▸ AYRIK
+    // DÜZEN). Plan o yarıya sığacak yükseklikten bakar: yatayda merkezden
+    // sağ kenara kalan (1 − kayma) kadar yer var.
+    var olcek = 1 - 0.35 * kayma, t15 = Math.tan(15 * Math.PI / 180);
+    var planH = Math.max(yG * olcek / (t15 * asp * (1 - kayma)), yY * olcek / t15);
     var p = d.plan;
     if (p > 0) {
       var pg = [MERKEZ[0] - planYuk[0] * 0.01, planH, MERKEZ[1] - planYuk[2] * 0.01];
@@ -977,6 +1025,8 @@
     if (p > 0.999) { yukari = planYuk; }
     var V = bak(goz, hedef, yukari);
     var P = perspektif(fov, asp, 1.5, 5000);
+    P[0] *= olcek; P[5] *= olcek;
+    P[8] = -kayma;          /* izdüşüm merkezi ekranda +kayma (NDC) sağa */
     // Dünya solak (x doğu, y yukarı, z kuzey), izdüşüm sağlak varsayar:
     // ekranın x'i çevrilmezse sahne aynalanır — sağa dönen kurp sola döner,
     // plan ters harita olur.
@@ -1265,14 +1315,16 @@
       });
     }
 
-    // Pafta: çift çerçeve, kuzey oku, ölçek çubuğu, antet.
+    // Pafta: çift çerçeve, kuzey oku, ölçek çubuğu, antet. Ayrık düzende
+    // pafta sol sütunun sağından başlar (x0), yoksa ölçek ve kuzey oku
+    // metnin altına düşüyordu.
     if (d.pafta > 0.01) {
-      var A = d.pafta * 0.9;
+      var A = d.pafta * 0.9, x0 = Math.round(kayma * w);
       ox.globalAlpha = A;
       ox.strokeStyle = RC.ana; ox.lineWidth = 1;
-      ox.strokeRect(14.5, 14.5, w - 29, h - 29);
+      ox.strokeRect(x0 + 14.5, 14.5, w - x0 - 29, h - 29);
       ox.lineWidth = 2;
-      ox.strokeRect(22, 22, w - 44, h - 44);
+      ox.strokeRect(x0 + 22, 22, w - x0 - 44, h - 44);
 
       var m0 = ekran(MERKEZ[0], 0, MERKEZ[1]), mk = ekran(MERKEZ[0], 0, MERKEZ[1] + 40);
       var mx = ekran(MERKEZ[0] + KAM_SAG[0] * 100, 0, MERKEZ[1] + KAM_SAG[2] * 100);
@@ -1280,7 +1332,7 @@
         // Kuzey oku (dünyada +z kuzey)
         var kx = mk[0] - m0[0], ky = mk[1] - m0[1], kl = Math.hypot(kx, ky) || 1;
         kx /= kl; ky /= kl;
-        var ax = 64, ay = h - 96;
+        var ax = x0 + 64, ay = h - 96;
         ox.lineWidth = 1.4; ox.strokeStyle = RC.yazi; ox.fillStyle = RC.yazi;
         ox.beginPath(); ox.moveTo(ax - kx * 20, ay - ky * 20); ox.lineTo(ax + kx * 20, ay + ky * 20); ox.stroke();
         ox.beginPath();
@@ -1293,7 +1345,7 @@
         // Ölçek çubuğu: 100 m kaç piksel ediyorsa, 120–240 px arası bir boy.
         var pp = Math.hypot(mx[0] - m0[0], mx[1] - m0[1]) / 100;
         var boy = [25, 50, 100, 200].filter(function (m) { return m * pp >= 110; })[0] || 200;
-        var bx = 104, by = h - 60, bl = boy * pp;
+        var bx = x0 + 104, by = h - 60, bl = boy * pp;
         ox.globalAlpha = A;
         ox.strokeStyle = RC.yazi; ox.lineWidth = 1;
         ox.strokeRect(bx + 0.5, by + 0.5, bl, 5);
@@ -1357,7 +1409,7 @@
   // Sahne yalnız bir şey değiştiğinde çizilir: kaydırma, profil imleci,
   // boyut ya da tema. Okuyucu dururken kare kare aynı resmi çizmek pil
   // harcamaktan başka bir şey yapmıyordu.
-  var kirli = true, sonA = null;
+  var kirli = true, sonA = null, kayma = 0, sonKayma = null;
   function kare(an) {
     if (!basAn) { basAn = an; }
     var dt = oncekiAn ? Math.min((an - oncekiAn) / 1000, 0.5) : 0;
@@ -1369,9 +1421,12 @@
     var hedef = aHesapla();
     aSahne += (hedef - aSahne) * y;
     if (Math.abs(hedef - aSahne) < 1e-4) { aSahne = hedef; }
+    var hk = kaymaHedef();
+    kayma += (hk - kayma) * y * 0.8;
+    if (Math.abs(hk - kayma) < 1e-4) { kayma = hk; }
     var zaman = (an - basAn) / 1000;
-    if (kirli || aSahne !== sonA || zaman < 4) {
-      kirli = false; sonA = aSahne;
+    if (kirli || aSahne !== sonA || kayma !== sonKayma || zaman < 4) {
+      kirli = false; sonA = aSahne; sonKayma = kayma;
       ciz(zaman);
     }
     requestAnimationFrame(kare);
@@ -1390,6 +1445,7 @@
   olcule();
   bolumleriOlc();
   aSahne = aHesapla();
+  kayma = kaymaHedef();
 
   // Tuval boyutlanınca ya da renkler değişince resim yeniden çizilmeli.
   function tazele() { if (duragan) { durganCiz(); } else { kirli = true; } }

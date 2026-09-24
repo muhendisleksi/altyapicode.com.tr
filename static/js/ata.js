@@ -38,12 +38,26 @@
       var acik = menu.classList.toggle('acik');
       menuDugme.setAttribute('aria-expanded', acik ? 'true' : 'false');
     });
+    var menuKapat = function () {
+      menu.classList.remove('acik');
+      menuDugme.setAttribute('aria-expanded', 'false');
+    };
     // Menüden bir bağlantıya gidilince kapansın.
     Array.prototype.forEach.call(menu.querySelectorAll('a'), function (a) {
-      a.addEventListener('click', function () {
-        menu.classList.remove('acik');
-        menuDugme.setAttribute('aria-expanded', 'false');
-      });
+      a.addEventListener('click', menuKapat);
+    });
+    // Telefonda menü sayfanın üstünü örtüyor: dışarı dokunmak ya da Esc
+    // kapatır. Esc'te odak düğmeye döner ki klavyeyle gezen yerini yitirmesin.
+    document.addEventListener('click', function (e) {
+      if (menu.classList.contains('acik') && !menu.contains(e.target) && !menuDugme.contains(e.target)) {
+        menuKapat();
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menu.classList.contains('acik')) {
+        menuKapat();
+        menuDugme.focus();
+      }
     });
   }
 

@@ -138,10 +138,15 @@
   </div>
 </section>
 
+{{/* AYRIK DÜZEN. `ayrik` sınıflı bölümler geniş ekranda ve zemin oynarken
+     sol sütuna çekilir, sağ yarı zemin sahnesine kalır (ata.css ▸ AYRIK
+     DÜZEN; zemin.js sahneyi o yarıya kaydırır). Görsel kanıt olan bölümler
+     (ürünler, ekranda, karşılaştırma) tam genişlikte kalır — ekran
+     görüntüleri ve tablolar yarım sütuna sıkışmasın. */}}
 {{ partial "sahne-arasi.html" (dict "a" "0,1.9" "no" 1 "baslik" "Arazi" "metin" "Ölçüm noktalarından arazi yüzeyi, yüzeyden eşyükselti eğrileri.") }}
 
 {{/* ════════════════════════════════════════════════════════ KİMLER İÇİN ══ */}}
-<section class="kesim" id="kimler-icin">
+<section class="kesim ayrik" id="kimler-icin">
   <div class="sinir">
     <header class="bolum-bas ac">
       <h2>Altyapı projesi üreten ekipler için</h2>
@@ -191,7 +196,7 @@
 </section>
 
 {{/* ═══════════════════════════════════════════════════════════ SORUNLAR ══ */}}
-<section class="kesim vurgulu" id="sorunlar">
+<section class="kesim vurgulu ayrik" id="sorunlar">
   <div class="sinir">
     <header class="bolum-bas ac">
       <h2>Bugünkü düzenin yorduğu yerler</h2>
@@ -267,7 +272,7 @@
      bulunduğu adımın sütunu yanar. Fare ya da parmakla profilin üzerinde
      gezinince imleç o noktanın kotlarını okur. Hareket kısıtlıysa çizim baştan
      tamdır; imleç yalnız fareyle çıkar. */}}
-<section class="kesim" id="nasil-calisir">
+<section class="kesim ayrik" id="nasil-calisir">
   <div class="sinir">
     <header class="bolum-bas ac">
       <h2>Araziden kübaja, bir güzergâh boyunca</h2>
@@ -317,7 +322,7 @@
   </div>
 </section>
 
-{{ partial "sahne-arasi.html" (dict "a" "3.0,6.02" "no" 3 "baslik" "Koridor ve kübaj" "metin" "Yol gövdesi araziye oturur; her istasyonda kazı ve dolgu hacmi toplanır." "uzun" true) }}
+{{ partial "sahne-arasi.html" (dict "a" "3.0,6.3" "no" 3 "baslik" "Koridor ve kübaj" "metin" "Yol gövdesi araziye oturur; her istasyonda kazı ve dolgu hacmi toplanır." "uzun" true) }}
 
 {{/* ═══════════════════════════════════════════════════════════ ÜRÜNLER ══ */}}
 <section class="kesim vurgulu" id="urunler">
@@ -395,7 +400,7 @@
 </section>
 
 {{/* ═══════════════════════════════════════════════════════════ MODÜLLER ══ */}}
-<section class="kesim" id="moduller">
+<section class="kesim ayrik" id="moduller">
   <div class="sinir">
     <header class="bolum-bas ac">
       <h2>Tek çekirdek, uzmanlık alanına göre modüller</h2>
@@ -421,7 +426,7 @@
   </div>
 </section>
 
-{{ partial "sahne-arasi.html" (dict "a" "6.02,7.25" "no" 4 "baslik" "En kesitler" "metin" "Her istasyonda en kesit, kazı ve dolgu alanlarıyla.") }}
+{{ partial "sahne-arasi.html" (dict "a" "6.3,7.25" "no" 4 "baslik" "En kesitler" "metin" "Her istasyonda en kesit, kazı ve dolgu alanlarıyla.") }}
 
 {{/* ═══════════════════════════════════════════════════════════ EKRANDAN ══ */}}
 {{/* Hareketli tur hero'da; burası durağan ekranlar, tıklayınca tam boy.
@@ -465,7 +470,7 @@
 {{/* ════════════════════════════════════════════════════════════ ÇIKTILAR ══ */}}
 {{/* Pafta listesi gibi: çıktının adı, içeriği, dosya biçimi. Biçim etiketleri
      gerçek dosya uzantıları olduğu için eş aralıklı yazıyla duruyor. */}}
-<section class="kesim" id="ciktilar">
+<section class="kesim ayrik" id="ciktilar">
   <div class="sinir">
     <header class="bolum-bas ac">
       <h2>Teslim ettiğiniz dosyalar</h2>
@@ -587,7 +592,7 @@
 {{/* Sorular data/sss.yaml'dan gelir; aynı liste aşağıda FAQPage işaretlemesi
      olarak da basılır. `name` ortak olduğu için destekleyen tarayıcıda bir
      soru açılınca öteki kapanır (açılır liste davranışı). */}}
-<section class="kesim" id="sss">
+<section class="kesim ayrik" id="sss">
   <div class="sinir sss-izgara">
     <header class="sss-bas ac">
       <h2>Sık sorulan sorular</h2>
@@ -618,7 +623,7 @@
 <script type="application/ld+json">{{ dict "@context" "https://schema.org" "@type" "FAQPage" "mainEntity" $sorular | jsonify | safeJS }}</script>
 
 {{/* ═══════════════════════════════════════════════════════════ BAŞVURU ══ */}}
-<section class="kesim vurgulu" id="basvuru">
+<section class="kesim vurgulu ayrik" id="basvuru">
   <div class="sinir basvuru-izgara">
     <div class="basvuru-sol ac">
       <h2>İlk sürümü kendi projenizde deneyin</h2>
