@@ -341,7 +341,7 @@
       <a class="urun one-cikan" href="/urun/">
         <div class="urun-gorsel">
           <span class="urun-rozet yakinda">Yakında · Erken erişim</span>
-          <img src="/images/ata-cad/hero-koridor-3b-yakin.jpg" alt="ATA CAD'de koridorun 3B görünümü" width="1600" height="1000" loading="lazy" decoding="async">
+          <img class="odak-alt" src="/images/ata-cad/sahne-koridor-arazi.jpg" alt="ATA CAD'de arazi yüzeyine oturmuş koridor: kazı ve dolgu şevleri" width="1920" height="1080" loading="lazy" decoding="async">
         </div>
         <div class="urun-ic">
           <h3>ATA CAD — Bağımsız 3B CAD Platformu</h3>
@@ -429,10 +429,12 @@
 {{ partial "sahne-arasi.html" (dict "a" "6.3,7.25" "no" 4 "baslik" "En kesitler" "metin" "Her istasyonda en kesit, kazı ve dolgu alanlarıyla.") }}
 
 {{/* ═══════════════════════════════════════════════════════════ EKRANDAN ══ */}}
-{{/* Hareketli tur hero'da; burası durağan ekranlar, tıklayınca tam boy.
-     Vitrin düzeni: en çarpıcı kare (ortofoto üzerinde kazı tasarımı) iki
-     sütun × iki satır, kalanlar çevresinde. Eşit altı kutu hiyerarşi
-     kurmuyordu. */}}
+{{/* Hareketli tur hero'da; burası ekranların akan şeridi, tıklayınca tam boy.
+     Şerit sağdan sola sürekli akar; dizi iki kez yazılır, ikinci kopya
+     birincinin bittiği yerden devam eder ve -%50'de başa sarınca dikiş
+     görünmez. İkinci kopya ekran okuyucuya ve sekme sırasına kapalı.
+     Fare üstündeyken ya da odak içerideyken durur; hareket kısıtlıysa
+     şerit akmaz, elle yatay kaydırılır. */}}
 <section class="kesim vurgulu" id="ekranda">
   <div class="sinir">
     <header class="bolum-bas ac">
@@ -443,23 +445,33 @@
 
     {{ $vitrin := slice
       (dict "ad" "kazi-hacim-yuzeyi" "alt" "Ortofoto altlık üzerinde kazı hacim yüzeyi" "yazi" "Kazı tasarımı — ortofoto altlık üzerinde şevli hacim yüzeyi")
-      (dict "ad" "boy-profil" "alt" "Boyuna profil görünümü, kırmızı hat ve geometri şeritleri" "yazi" "Boyuna profil ve kırmızı hat")
-      (dict "ad" "tip-kesit" "alt" "Tip kesit tanımlama penceresi ve zincir tablosu" "yazi" "Tip kesit tanımı — KGM TİP3F")
-      (dict "ad" "yuzey-tin" "alt" "TIN yüzey, eşyükselti eğrileri ve araç alanı ağacı" "yazi" "TIN yüzey ve eşyükselti eğrileri")
-      (dict "ad" "koridor-3b" "alt" "Koridorun 3B görünümü ve nesne görüntüleyici" "yazi" "Koridor 3B — kazı ve dolgu şevleri")
-      (dict "ad" "kutle-dagilimi" "alt" "Kütle dağılımı diyagramı — depo fazlası ve ariyet" "yazi" "Kütle dağılımı (Brückner)")
+      (dict "ad" "sahne-tin-arazi" "alt" "Üçgen ağ (TIN) arazi yüzeyinin 3B görünümü" "yazi" "Arazi yüzeyi — 3B üçgen ağ")
+      (dict "ad" "boy-profil" "sig" true "alt" "Boyuna profil görünümü, kırmızı hat ve geometri şeritleri" "yazi" "Boyuna profil ve kırmızı hat")
+      (dict "ad" "tip-kesit" "sig" true "alt" "Tip kesit tanımlama penceresi ve zincir tablosu" "yazi" "Tip kesit tanımı — KGM TİP3F")
+      (dict "ad" "sahne-koridor-arazi" "alt" "Koridorun arazi yüzeyine oturmuş 3B görünümü" "yazi" "Koridor araziye oturur — kazı ve dolgu şevleri")
+      (dict "ad" "yuzey-tin" "sig" true "alt" "TIN yüzey, eşyükselti eğrileri ve araç alanı ağacı" "yazi" "TIN yüzey ve eşyükselti eğrileri")
+      (dict "ad" "koridor-3b" "sig" true "alt" "Koridorun 3B görünümü ve nesne görüntüleyici" "yazi" "Koridor 3B — nesne görüntüleyici")
+      (dict "ad" "kutle-dagilimi" "sig" true "alt" "Kütle dağılımı diyagramı — depo fazlası ve ariyet" "yazi" "Kütle dağılımı (Brückner)")
     }}
-    <div class="galeri vitrin" data-kademe=".06">
-      {{- range $i, $k := $vitrin }}
-      <figure class="galeri-hucre">
-        <a href="/images/ata-cad/{{ $k.ad }}.jpg" data-buyut>
-          <img src="/images/ata-cad/{{ if eq $i 0 }}{{ $k.ad }}{{ else }}kucuk/{{ $k.ad }}{{ end }}.jpg"
-               {{- if ne $i 0 }} class="sigdir"{{ end }} loading="lazy" decoding="async" alt="{{ $k.alt }}">
-        </a>
-        <figcaption>{{ $k.yazi }}</figcaption>
-      </figure>
+  </div>
+  <div class="akis ac" style="--g:.1s">
+    <div class="akis-ray">
+      {{- range $kopya := slice 0 1 }}
+      <div class="akis-dizi"{{ if eq $kopya 1 }} aria-hidden="true"{{ end }}>
+        {{- range $vitrin }}
+        <figure class="galeri-hucre akis-hucre">
+          <a href="/images/ata-cad/{{ .ad }}.jpg" data-buyut{{ if eq $kopya 1 }} tabindex="-1"{{ end }}>
+            <img src="/images/ata-cad/kucuk/{{ .ad }}.jpg"{{ if .sig }} class="sigdir"{{ end }}
+                 loading="lazy" decoding="async" alt="{{ if eq $kopya 0 }}{{ .alt }}{{ end }}">
+          </a>
+          <figcaption>{{ .yazi }}</figcaption>
+        </figure>
+        {{- end }}
+      </div>
       {{- end }}
     </div>
+  </div>
+  <div class="sinir">
 
     <p class="ac" style="--g:.1s; margin:24px 0 0">
       <a href="/ekran-goruntuleri/" class="dugme bos">Ekran görüntülerinin tamamı</a>

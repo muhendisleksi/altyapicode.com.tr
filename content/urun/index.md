@@ -12,7 +12,10 @@ platformudur.**
 kübaja kadar projenin tüm adımları tek programda, araya başka bir yazılım
 girmeden tamamlanır.
 
-{{< sekil genis="1" src="/images/ata-cad/koridor-3b-yakin.jpg" alt="ATA CAD'de koridorun 3B görünümü" not="Koridorun 3B görünümü: kazı şevleri kırmızı, dolgu şevleri yeşil." >}}
+{{< sahne >}}
+sahne-tin-arazi | Arazi yüzeyi | Ölçüm noktalarından üretilen üçgen ağ (TIN) yüzey; renkler yüksekliği gösterir.
+sahne-koridor-arazi | Koridor araziye oturur | Yol gövdesi yüzeye yerleşir; kazı şevleri turuncu, dolgu şevleri yeşil.
+{{< /sahne >}}
 
 ## Kapsam sınırları
 

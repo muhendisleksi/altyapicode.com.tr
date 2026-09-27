@@ -1,0 +1,43 @@
+{{- /* Sahne: iki (ya da daha çok) kare üst üste, yavaş yaklaşarak birbirine
+       geçer. Tek görselin anlatamadığı "önce → sonra" için: ham arazi, sonra
+       o araziye oturan koridor. Kareler `kareler` verisinden değil gövdeden
+       gelir — her satır bir kare:  ad | başlık | alt yazı
+
+       {{< sahne >}}
+       sahne-tin-arazi | Arazi yüzeyi | Ölçüm noktalarından üretilen TIN yüzey.
+       sahne-koridor-arazi | Koridor araziye oturur | …
+       {{< /sahne >}}
+
+       Görsel `/images/ata-cad/<ad>.jpg`, dar ekranda `kucuk/<ad>.jpg`.
+       Betik yoksa ilk kare durur, sekmeler düz liste gibi okunur; hareket
+       kısıtlıysa kareler kendiliğinden dönmez, sekmelerle elle geçilir.  */ -}}
+{{- $kareler := slice -}}
+{{- range split (trim .Inner "\n ") "\n" -}}
+  {{- $p := split . "|" -}}
+  {{- if ge (len $p) 3 -}}
+    {{- $kareler = $kareler | append (dict "ad" (trim (index $p 0) " ") "baslik" (trim (index $p 1) " ") "yazi" (trim (index $p 2) " ")) -}}
+  {{- end -}}
+{{- end -}}
+<div class="sahne" data-sahne-kare>
+  <div class="sahne-cerceve">
+    {{- range $i, $k := $kareler }}
+    <figure class="sahne-kare{{ if eq $i 0 }} etkin{{ end }}" data-yon="{{ add (mod $i 4) 1 }}">
+      <a href="/images/ata-cad/{{ $k.ad }}.jpg" data-buyut>
+        <picture>
+          <source media="(max-width:760px)" srcset="/images/ata-cad/kucuk/{{ $k.ad }}.jpg">
+          <img src="/images/ata-cad/{{ $k.ad }}.jpg" alt="{{ $k.baslik }} — {{ $k.yazi }}"
+               {{ if ne $i 0 }}loading="lazy" {{ end }}decoding="async">
+        </picture>
+      </a>
+      <figcaption><b>{{ $k.baslik }}</b> {{ $k.yazi }}</figcaption>
+    </figure>
+    {{- end }}
+  </div>
+  <ol class="sahne-sekmeler">
+    {{- range $i, $k := $kareler }}
+    <li{{ if eq $i 0 }} class="etkin"{{ end }}>
+      <button type="button" aria-label="{{ $k.baslik }}"><span>{{ $k.baslik }}</span><i class="sahne-sure"></i></button>
+    </li>
+    {{- end }}
+  </ol>
+</div>

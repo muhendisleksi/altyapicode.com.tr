@@ -119,6 +119,88 @@
     };
     var sureDurdur = function () { if (dolgu) { dolgu.classList.add('durdu'); } };
 
+    /* Kare geçişi: tarama. Yeni kayıt eskisinin üzerine soldan sağa, km
+       ilerler gibi açılır. Açılma kenarı düz değil, eşyükselti eğrisi gibi
+       kıvrılır; kenarda vurgu renginde tarama çizgisi, arkasında soluk bir
+       ara eğri yürür. Kenar yeni karenin clip-path çokgeni, çizgiler aynı
+       noktalardan geçen bir SVG; ikisi de her karede buradan yazılır.
+       WebGL değil: iki kayıt da geçiş boyunca kendi hızında oynar, doku
+       kopyalamak gerekmez. Hareket kısıtında ya da clip-path yoksa eski
+       sönme geçişi kalır (ata.css ▸ .hero-kare). */
+    var TARAMA_SURE = 1100;     /* ms */
+    var TARAMA_GENLIK = 0.07;   /* kenar kıvrımı, genişliğin oranı */
+    var TARAMA_IZ = 0.05;       /* ara eğrinin kenardan geriliği */
+    var TARAMA_NOKTA = 40;      /* kenar boyunca nokta sayısı */
+    var taramaVar = !azHareket && !!(window.CSS && CSS.supports &&
+        CSS.supports('clip-path', 'polygon(0 0, 100% 0, 0 100%)'));
+    var tarama = null;          /* sürmekte olan geçiş */
+    var taramaSvg = null, taramaYol = [];
+    if (taramaVar) {
+      var svgNs = 'http://www.w3.org/2000/svg';
+      taramaSvg = document.createElementNS(svgNs, 'svg');
+      taramaSvg.setAttribute('class', 'hero-tarama');
+      taramaSvg.setAttribute('viewBox', '0 0 1000 1000');
+      taramaSvg.setAttribute('preserveAspectRatio', 'none');
+      taramaSvg.setAttribute('aria-hidden', 'true');
+      ['ht-iz', 'ht-isik', 'ht-cizgi'].forEach(function (sinif) {
+        var yol = document.createElementNS(svgNs, 'path');
+        yol.setAttribute('class', sinif);
+        taramaSvg.appendChild(yol);
+        taramaYol.push(yol);
+      });
+      kareKap.appendChild(taramaSvg);
+    }
+
+    // Kenarın y'deki (0–1) yatay konumu, genişliğin oranı olarak. Üç sinüs:
+    // biri geniş kıvrım, ikisi ince; genlikleri toplamı 1, kenar ±GENLIK
+    // içinde kalır. u = 0'da kenar tümüyle solda, u = 1'de tümüyle sağda.
+    // Fazlar her geçişte yeniden çekilir, eğri her seferinde başka olur.
+    var kenarX = function (u, y, t, f) {
+      var n = 0.55 * Math.sin(6.2832 * (1.1 * y + f[0]) + 1.3 * t) +
+              0.30 * Math.sin(6.2832 * (2.7 * y + f[1]) - 2.1 * t) +
+              0.15 * Math.sin(6.2832 * (5.3 * y + f[2]) + 3.0 * t);
+      return u * (1 + 2 * TARAMA_GENLIK) - TARAMA_GENLIK + n * TARAMA_GENLIK;
+    };
+
+    // Geçişi bitmiş hâline getirir: sonunda da, yenisi araya girince de.
+    var taramaBitir = function () {
+      var g = tarama;
+      if (!g) { return; }
+      tarama = null;
+      cancelAnimationFrame(g.kare);
+      g.gir.classList.remove('giriyor');
+      g.gir.style.clipPath = '';
+      g.cik.classList.remove('cikiyor');
+      taramaSvg.classList.remove('calisiyor');
+      // Çıkan kaydı başa sar. videoDuzenle bunu çıkan kare görünürken
+      // yapmıyor (bkz. orada `cikiyor`); görünmez olduğu an burası.
+      var v = g.cik.querySelector('video');
+      if (v && !g.cik.classList.contains('etkin')) { v.currentTime = 0; }
+    };
+
+    var taramaKare = function (simdi) {
+      var g = tarama;
+      if (!g) { return; }
+      var gecen = Math.max(0, simdi - g.bas), p = Math.min(1, gecen / TARAMA_SURE);
+      var e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(2 - 2 * p, 3) / 2;
+      var u = e * (1 + TARAMA_IZ), t = gecen / 1000;
+      var cokgen = ['0% 0%'], ana = '', iz = '';
+      for (var i = 0; i <= TARAMA_NOKTA; i++) {
+        var y = i / TARAMA_NOKTA;
+        var x = kenarX(u, y, t, g.faz), xi = kenarX(u - TARAMA_IZ, y, t + 0.6, g.faz);
+        var harf = i ? 'L' : 'M', yk = (y * 1000).toFixed(1);
+        cokgen.push((x * 100).toFixed(2) + '% ' + (y * 100).toFixed(2) + '%');
+        ana += harf + (x * 1000).toFixed(1) + ' ' + yk;
+        iz += harf + (xi * 1000).toFixed(1) + ' ' + yk;
+      }
+      cokgen.push('0% 100%');
+      g.gir.style.clipPath = 'polygon(' + cokgen.join(',') + ')';
+      taramaYol[0].setAttribute('d', iz);
+      taramaYol[1].setAttribute('d', ana);
+      taramaYol[2].setAttribute('d', ana);
+      if (p >= 1) { taramaBitir(); } else { g.kare = requestAnimationFrame(taramaKare); }
+    };
+
     // Video kipi: şerit kaydın oynayan oranını kare kare izler.
     var sureIzle = function () {
       var v = acikVideo();
@@ -149,6 +231,7 @@
 
     // Açılan karenin kaydını baştan oynat, kalanları durdur. Başa sarma sönme
     // bitince yapılır: hemen yapılsaydı kare çıkarken görünür biçimde sıçrardı.
+    // Tarama sürerken çıkan kare hâlâ görünür; onu taramaBitir sarar.
     var videoDuzenle = function (kare, acikMi) {
       var v = kare.querySelector('video');
       if (!v) { return; }
@@ -156,21 +239,39 @@
         if (oynamali()) { oynat(v); }
       } else if (!v.paused || v.currentTime) {
         v.pause();
-        setTimeout(function () { if (!kare.classList.contains('etkin')) { v.currentTime = 0; } }, 900);
+        setTimeout(function () {
+          if (!kare.classList.contains('etkin') && !kare.classList.contains('cikiyor')) { v.currentTime = 0; }
+        }, 900);
       }
     };
 
     var goster = function (i) {
+      var eski = sira;
       sira = (i + kareler.length) % kareler.length;
       var acik = kareler[sira];
       if (videoOynat && dolgu) {
         dolgu.classList.remove('calisiyor', 'durdu');
         dolgu.style.transform = 'scaleX(0)';
       }
+      // Önceki tarama sürüyorsa bitmiş say; yenisi o karenin üstünden başlar.
+      taramaBitir();
+      // Gizli sekmede kare çizilmez; tarama orada yarıda asılı kalırdı.
+      var tara = taramaVar && eski !== sira && !document.hidden;
+      if (tara) {
+        kareler[eski].classList.add('cikiyor');
+        acik.classList.add('giriyor');
+        acik.style.clipPath = 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)';
+      }
       Array.prototype.forEach.call(kareler, function (k, n) {
         k.classList.toggle('etkin', n === sira);
         videoDuzenle(k, n === sira);
       });
+      if (tara) {
+        tarama = { gir: acik, cik: kareler[eski], bas: performance.now(),
+                   faz: [Math.random(), Math.random(), Math.random()] };
+        taramaSvg.classList.add('calisiyor');
+        tarama.kare = requestAnimationFrame(taramaKare);
+      }
 
       // Sıradaki karenin kaydını şimdiden indirmeye başla — sırası gelince
       // ilk saniyesi takılmasın.
@@ -527,21 +628,97 @@
     });
   }
 
+  /* ------------------------------------------------ sahne (iki kare) */
+  // Kareler süre dolunca kendiliğinden döner; süreyi CSS'teki --sahne-sure
+  // tutar, şerit de oradan dolar. Fare üstündeyken ya da sahne ekran
+  // dışındayken durur. Hareket kısıtlıysa hiç dönmez, sekmelerle elle geçilir.
+  Array.prototype.forEach.call(document.querySelectorAll('[data-sahne-kare]'), function (sahne) {
+    var kareler = sahne.querySelectorAll('.sahne-kare');
+    var sekmeler = sahne.querySelectorAll('.sahne-sekmeler li');
+    if (kareler.length < 2) return;
+    var sure = (parseFloat(getComputedStyle(sahne).getPropertyValue('--sahne-sure')) || 7) * 1000;
+    var sira = 0, sayac = null, gorunur = false, ustte = false;
+
+    var goster = function (i) {
+      sira = (i + kareler.length) % kareler.length;
+      Array.prototype.forEach.call(kareler, function (k, n) { k.classList.toggle('etkin', n === sira); });
+      Array.prototype.forEach.call(sekmeler, function (s, n) {
+        s.classList.toggle('etkin', n === sira);
+        s.querySelector('button').setAttribute('aria-current', n === sira ? 'true' : 'false');
+      });
+    };
+    // Şerit animasyonu sınıf yeniden eklenince baştan başlar.
+    var seritYenile = function () {
+      sahne.classList.remove('oynuyor');
+      void sahne.offsetWidth;
+      sahne.classList.add('oynuyor');
+    };
+    var durdur = function () {
+      clearTimeout(sayac); sayac = null;
+      sahne.classList.add('durdu');
+    };
+    var ilerle = function () {
+      sayac = setTimeout(function () { goster(sira + 1); seritYenile(); ilerle(); }, sure);
+    };
+    var basla = function () {
+      if (azHareket || !gorunur || ustte || sayac) return;
+      sahne.classList.remove('durdu');
+      seritYenile();
+      ilerle();
+    };
+
+    Array.prototype.forEach.call(sekmeler, function (s, n) {
+      s.querySelector('button').addEventListener('click', function () {
+        durdur(); goster(n); basla();
+      });
+    });
+    sahne.addEventListener('mouseenter', function () { ustte = true; durdur(); });
+    sahne.addEventListener('mouseleave', function () { ustte = false; basla(); });
+
+    if (azHareket) return;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (girisler) {
+        gorunur = girisler[0].isIntersecting;
+        if (gorunur) { basla(); } else { durdur(); }
+      }, { threshold: 0.4 }).observe(sahne);
+    } else {
+      gorunur = true; basla();
+    }
+  });
+
   /* ------------------------------------------- büyüteç (tam boy görsel) */
-  var buyutec = null;
+  // Sayfadaki bütün büyütülebilir görseller tek dizi: açılan görselden
+  // oklarla (ekrandaki ‹ › ya da klavyede ← →) veya parmakla yana
+  // kaydırarak öncekine/sonrakine geçilir, sona gelince başa sarar. Ana
+  // sayfa şeridinin ikinci kopyası (aria-hidden) diziye girmez; aynı adres
+  // iki kez sayılmaz.
+  var buyutec = null, buyutecDizi = [], buyutecSira = 0, buyutecGoster = null;
 
   function buyutecKapat() {
     if (!buyutec) return;
     document.body.removeChild(buyutec);
     buyutec = null;
-    document.removeEventListener('keydown', esc);
+    document.removeEventListener('keydown', buyutecTus);
   }
-  function esc(e) { if (e.key === 'Escape') buyutecKapat(); }
+  function buyutecTus(e) {
+    if (e.key === 'Escape') { buyutecKapat(); }
+    else if (e.key === 'ArrowRight' && buyutecGoster) { e.preventDefault(); buyutecGoster(buyutecSira + 1); }
+    else if (e.key === 'ArrowLeft' && buyutecGoster) { e.preventDefault(); buyutecGoster(buyutecSira - 1); }
+  }
 
-  function buyutecAc(kaynak, yazi) {
+  function buyutecYazi(a) {
+    var kap = a.closest('figure');
+    var alt = kap ? kap.querySelector('figcaption') : null;
+    return alt ? alt.textContent.replace(/\s+/g, ' ').trim() : '';
+  }
+
+  function buyutecAc(sira) {
     buyutecKapat();
+    buyutecSira = sira;
+    var cok = buyutecDizi.length > 1;
+
     buyutec = document.createElement('div');
-    buyutec.className = 'buyutec';
+    buyutec.className = cok ? 'buyutec cok' : 'buyutec';
     buyutec.setAttribute('role', 'dialog');
     buyutec.setAttribute('aria-modal', 'true');
 
@@ -553,31 +730,89 @@
     var sekil = document.createElement('figure');
     sekil.style.margin = '0';
     var gorsel = document.createElement('img');
-    gorsel.src = kaynak;
-    gorsel.alt = yazi || '';
+    var alt = document.createElement('figcaption');
+    var sayac = document.createElement('span');
+    sayac.className = 'buyutec-sayac';
     sekil.appendChild(gorsel);
-    if (yazi) {
-      var alt = document.createElement('figcaption');
+    sekil.appendChild(alt);
+
+    buyutecGoster = function (i) {
+      var n = buyutecDizi.length;
+      buyutecSira = (i + n) % n;
+      var a = buyutecDizi[buyutecSira];
+      var yazi = buyutecYazi(a);
+      gorsel.src = a.getAttribute('href');
+      gorsel.alt = yazi;
       alt.textContent = yazi;
-      sekil.appendChild(alt);
-    }
+      alt.style.display = yazi ? '' : 'none';
+      sayac.textContent = (buyutecSira + 1) + ' / ' + n;
+      // Komşuları önceden indir: geçişte boş kare görünmesin.
+      [buyutecSira + 1, buyutecSira - 1].forEach(function (k) {
+        new Image().src = buyutecDizi[(k + n) % n].getAttribute('href');
+      });
+    };
 
     buyutec.appendChild(kapat);
     buyutec.appendChild(sekil);
+    if (cok) {
+      [['geri', -1, 'Önceki görsel (←)', '‹'], ['ileri', 1, 'Sonraki görsel (→)', '›']].forEach(function (o) {
+        var d = document.createElement('button');
+        d.className = 'buyutec-ok ' + o[0];
+        d.setAttribute('aria-label', o[2]);
+        d.textContent = o[3];
+        d.addEventListener('click', function (e) { e.stopPropagation(); buyutecGoster(buyutecSira + o[1]); });
+        buyutec.appendChild(d);
+      });
+      buyutec.appendChild(sayac);
+
+      // Parmakla yana kaydırma. Kaydırma sonrası gelen tıklama kapatmasın.
+      var dokunus = null, kaydirildi = false;
+      buyutec.addEventListener('touchstart', function (e) {
+        if (e.touches.length !== 1) { dokunus = null; return; }
+        dokunus = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }, { passive: true });
+      buyutec.addEventListener('touchend', function (e) {
+        if (!dokunus) return;
+        var dx = e.changedTouches[0].clientX - dokunus.x;
+        var dy = e.changedTouches[0].clientY - dokunus.y;
+        dokunus = null;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+          kaydirildi = true;
+          buyutecGoster(buyutecSira + (dx < 0 ? 1 : -1));
+        }
+      });
+      buyutec.addEventListener('click', function (e) {
+        if (kaydirildi) { kaydirildi = false; e.stopImmediatePropagation(); }
+      }, true);
+    }
+    buyutecGoster(sira);
+
+    // Görselin kendisine tıklamak kapatmaz; zemine ve ✕'e tıklamak kapatır.
+    gorsel.addEventListener('click', function (e) { if (cok) e.stopPropagation(); });
     buyutec.addEventListener('click', buyutecKapat);
     document.body.appendChild(buyutec);
-    document.addEventListener('keydown', esc);
+    document.addEventListener('keydown', buyutecTus);
     kapat.focus();
   }
 
-  Array.prototype.forEach.call(document.querySelectorAll('[data-buyut]'), function (a) {
-    a.addEventListener('click', function (e) {
-      e.preventDefault();
-      var kap = a.closest('figure');
-      var alt = kap ? kap.querySelector('figcaption') : null;
-      buyutecAc(a.getAttribute('href'), alt ? alt.textContent : '');
+  (function () {
+    var gorulen = {};
+    Array.prototype.forEach.call(document.querySelectorAll('[data-buyut]'), function (a) {
+      var adres = a.getAttribute('href');
+      if (!a.closest('[aria-hidden="true"]') && !gorulen[adres]) {
+        gorulen[adres] = true;
+        buyutecDizi.push(a);
+      }
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        var sira = 0;
+        for (var k = 0; k < buyutecDizi.length; k++) {
+          if (buyutecDizi[k].getAttribute('href') === adres) { sira = k; break; }
+        }
+        buyutecAc(sira);
+      });
     });
-  });
+  })();
 
   /* ---------------------------------------- geniş tabloları yatay kaydır */
   Array.prototype.forEach.call(document.querySelectorAll('.icerik table'), function (t) {
