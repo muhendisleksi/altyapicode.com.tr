@@ -1515,6 +1515,8 @@ table.veri tbody tr:hover{ background:var(--panel); }
 .bf-dugmeler{ display:flex; flex-wrap:wrap; gap:10px; margin-top:2px; }
 .bf-dugmeler .dugme svg{ width:18px; height:18px; }
 .bf-not{ margin:0; max-width:62ch; font-size:12.5px; line-height:1.55; color:var(--yazi-3); }
+.bf-grup{ margin:0; max-width:62ch; font-size:14px; line-height:1.55; color:var(--yazi-2); }
+.bf-grup a{ font-weight:600; white-space:nowrap; }
 .bf-durum{ margin:0; font-size:13.5px; color:var(--yesil); }
 .bf-durum:empty{ display:none; }
 @media (max-width:560px){ .bf-iki{ grid-template-columns:1fr; } }
