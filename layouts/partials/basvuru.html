@@ -6,10 +6,28 @@
      programını dolu metinle açar, gönderme kararı kullanıcıda kalır.
      Betik çalışmazsa `action="mailto:"` devreye girer — kaba ama çalışır.
 
-     Telefon numarası `telefonGorunen`'den türetilir; numara tek yerde durur. */}}
+     Telefon numarası `telefonGorunen`'den türetilir; numara tek yerde durur.
+
+     Formun başındaki grup kutusu birincil yol: kurulum dosyaları ve
+     güncellemeler grupta paylaşılıyor, doğrudan yazanlar da zaten gruba
+     yönlendiriliyordu. Bu yüzden sayfadaki tek dolu düğme o; formun kendi
+     gönderme düğmeleri ikincil. */}}
 {{- $tel := replaceRE "[^0-9]" "" .Site.Params.telefonGorunen }}
+{{- $waIkon := `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 8.6c.2-.4.5-.4.8-.4h.4c.2 0 .3.1.4.3l.6 1.5c.1.2 0 .4-.1.5l-.5.6c-.1.1-.1.3 0 .4.3.6 1.2 1.7 2.4 2.2.2.1.3.1.4-.1l.6-.7c.1-.2.3-.2.5-.1l1.4.7c.2.1.3.2.3.4 0 .5-.2 1.1-.7 1.4-.6.4-1.4.5-2.6 0-1.5-.6-3.1-2.1-3.8-3.5-.5-1-.5-1.9-.1-2.6Z" fill="currentColor"/></svg>` | safeHTML }}
 <form class="basvuru" id="basvuru-form" action="mailto:{{ .Site.Params.eposta }}" method="post" enctype="text/plain"
       data-tel="{{ $tel }}" data-eposta="{{ .Site.Params.eposta }}">
+
+  <div class="bf-grup">
+    <p class="bf-grup-bas">En hızlı yol: WhatsApp grubu</p>
+    <p class="bf-grup-metin">Kurulum dosyaları, güncellemeler ve duyurular grupta
+       paylaşılıyor. Sorularınızı da grupta sorabilirsiniz.</p>
+    <a class="dugme wa-grup" href="{{ .Site.Params.whatsapp }}" target="_blank" rel="noopener">
+      {{ $waIkon }}
+      WhatsApp grubuna katılın
+    </a>
+  </div>
+
+  <p class="bf-ayrac"><span>ya da formu doldurun</span></p>
 
   <div class="bf-satir bf-iki">
     <div class="bf-alan">
@@ -79,8 +97,8 @@
   </div>
 
   <div class="bf-dugmeler">
-    <button type="submit" class="dugme dolu" data-kanal="whatsapp">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 8.6c.2-.4.5-.4.8-.4h.4c.2 0 .3.1.4.3l.6 1.5c.1.2 0 .4-.1.5l-.5.6c-.1.1-.1.3 0 .4.3.6 1.2 1.7 2.4 2.2.2.1.3.1.4-.1l.6-.7c.1-.2.3-.2.5-.1l1.4.7c.2.1.3.2.3.4 0 .5-.2 1.1-.7 1.4-.6.4-1.4.5-2.6 0-1.5-.6-3.1-2.1-3.8-3.5-.5-1-.5-1.9-.1-2.6Z" fill="currentColor"/></svg>
+    <button type="submit" class="dugme bos" data-kanal="whatsapp">
+      {{ $waIkon }}
       WhatsApp'ta gönder
     </button>
     <button type="submit" class="dugme bos" data-kanal="eposta">E-postayla gönder</button>
@@ -88,7 +106,5 @@
 
   <p class="bf-not">Form bu sitede saklanmaz. Mesajınız WhatsApp'ta ya da e-posta
      programınızda hazır açılır; göndermek için son tuşa siz basarsınız.</p>
-  <p class="bf-grup">Kurulum dosyaları ve güncellemeler WhatsApp grubunda paylaşılıyor.
-     <a href="{{ .Site.Params.whatsapp }}" target="_blank" rel="noopener">WhatsApp grubuna katılın →</a></p>
   <p class="bf-durum" role="status" aria-live="polite"></p>
 </form>

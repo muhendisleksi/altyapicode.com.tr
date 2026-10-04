@@ -1515,8 +1515,30 @@ table.veri tbody tr:hover{ background:var(--panel); }
 .bf-dugmeler{ display:flex; flex-wrap:wrap; gap:10px; margin-top:2px; }
 .bf-dugmeler .dugme svg{ width:18px; height:18px; }
 .bf-not{ margin:0; max-width:62ch; font-size:12.5px; line-height:1.55; color:var(--yazi-3); }
-.bf-grup{ margin:0; max-width:62ch; font-size:14px; line-height:1.55; color:var(--yazi-2); }
-.bf-grup a{ font-weight:600; white-space:nowrap; }
+/* Grup kutusu: formun birincil yolu. WhatsApp yeşili bilerek sitenin mavi
+   vurgusundan ayrı — tanıdık renk "buraya bas" diye okunuyor. Yeşil iki
+   temada da sabit; beyaz yazıyla kontrast ~5,5:1. */
+.bf-grup{
+  display:grid; gap:10px; justify-items:start;
+  padding:clamp(16px,2.2vw,22px); border-radius:4px;
+  background:color-mix(in srgb, #0F7A3F 10%, transparent);
+  border:1px solid color-mix(in srgb, #0F7A3F 45%, transparent);
+}
+.bf-grup p{ margin:0; }
+.bf-grup-bas{ font-size:17px; font-weight:700; letter-spacing:-.01em; color:var(--yazi); }
+.bf-grup-metin{ max-width:52ch; font-size:14px; line-height:1.55; color:var(--yazi-2); }
+.dugme.wa-grup{
+  margin-top:4px; font-size:16.5px; padding:15px 28px; gap:10px;
+  background:#0F7A3F; color:#fff; box-shadow:0 6px 18px -8px rgba(15,122,63,.7);
+}
+.dugme.wa-grup:hover{ background:#0B6533; transform:translateY(-1px); }
+.dugme.wa-grup svg{ width:22px; height:22px; }
+@media (max-width:560px){ .dugme.wa-grup{ width:100%; justify-content:center; } }
+.bf-ayrac{
+  display:flex; align-items:center; gap:12px; margin:2px 0 0;
+  font-size:12.5px; color:var(--yazi-3);
+}
+.bf-ayrac::before,.bf-ayrac::after{ content:""; flex:1; height:1px; background:var(--cizgi); }
 .bf-durum{ margin:0; font-size:13.5px; color:var(--yesil); }
 .bf-durum:empty{ display:none; }
 @media (max-width:560px){ .bf-iki{ grid-template-columns:1fr; } }
