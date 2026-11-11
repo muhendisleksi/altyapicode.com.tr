@@ -118,9 +118,9 @@ p{margin:0}
 /* ── kurum şeridi ── */
 .kurum .ic{display:flex;align-items:center;gap:18px 36px;flex-wrap:wrap;padding-block:26px}
 .kurum p{flex:1 1 320px;min-width:0;color:var(--yazi-2)}
-.kurum .logolar{display:flex;gap:12px;flex-wrap:wrap}
-.kurum .logolar span{background:#fff;border-radius:3px;padding:6px 10px;height:52px;display:flex;align-items:center}
-.kurum .logolar img{height:38px;width:auto;display:block}
+.kurum .logolar{display:flex;gap:14px 30px;flex-wrap:wrap;align-items:center}
+.kurum .logolar span{height:52px;display:flex;align-items:center}
+.kurum .logolar img{height:46px;width:auto;display:block}
 
 /* ── blok ── */
 section.blok{border-top:1px solid var(--cizgi)}

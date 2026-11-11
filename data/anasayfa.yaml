@@ -25,10 +25,10 @@ yerli:
       yazi: "Projection zone suggestion from the province boundary, institutional WMS background maps, AGS4 borehole files, old drawings with Turkish characters."
 
 kurumlar:
-  - { dosya: "logo-iller-bankasi.png", ad: "İller Bankası" }
-  - { dosya: "logo-iski.png", ad: "İSKİ" }
-  - { dosya: "logo-dsi.png", ad: "DSİ" }
-  - { dosya: "logo-kgm.png", ad: "KGM" }
+  - { dosya: "iller-bankasi.png", ad: "İller Bankası" }
+  - { dosya: "iski.png", ad: "İSKİ" }
+  - { dosya: "dsi.png", ad: "DSİ" }
+  - { dosya: "kgm.png", ad: "KGM" }
 
 # sayfa: alanın kendi sayfası (varsa başlık ve "Ayrıntı" oraya bağlanır) · capa: ana sayfadaki çapa
 alanlar:

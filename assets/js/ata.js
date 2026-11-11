@@ -78,6 +78,7 @@
       y:el('polygon',{'stroke-linejoin':'round'},yuz),
       o:el('polygon',{'fill-opacity':0},ust),
       c:el('polygon',{fill:'none',stroke:R.cizgi,'stroke-width':1.6,'stroke-linejoin':'round','stroke-opacity':kucuk?0:R.cizgiO},ciz)}});
+    var halka=[0,1].map(function(){return el('polygon',{fill:'none',stroke:SARI,'stroke-width':kucuk?8:5,'stroke-linejoin':'round',opacity:0},g)});
     var dis=el('polygon',{fill:'none',stroke:R.dis,'stroke-width':kucuk?10:5.5,'stroke-linejoin':'round'},g);
     var yuvar={'stroke-linecap':'round','stroke-linejoin':'round'};
     function yol(ozn){for(var k in yuvar)ozn[k]=yuvar[k];return el('path',ozn,g)}
@@ -90,7 +91,7 @@
       kotIsaret=el('path',{fill:'#131211',stroke:R.dis,'stroke-width':1.6,'stroke-linejoin':'round'},kot);
       KOTLU.forEach(function(i){var t=el('text',{},kot);t.textContent=(100+ARAZI[i][2]/10).toFixed(2);kotYazi.push(t)});
     }
-    return {g:g,ucg:ucg,dis:dis,hale:hale,gozS:gozS,gozG:gozG,kas:kas,kucuk:kucuk,kot:kot,kotIsaret:kotIsaret,kotYazi:kotYazi};
+    return {g:g,ucg:ucg,dis:dis,halka:halka,hale:hale,gozS:gozS,gozG:gozG,kas:kas,kucuk:kucuk,kot:kot,kotIsaret:kotIsaret,kotYazi:kotYazi};
   }
 
   function gozYol(yp,cx,cy,w,k,m){return 'M'+yp(cx-w/2,cy+k)+'L'+yp(cx,cy+m)+'L'+yp(cx+w/2,cy+k)}
@@ -105,6 +106,14 @@
     if(durum==='bakiyor')kirp=((zm+0.9)%3.6)<0.13;
     if(durum==='calisiyor'){bx=Math.cos(dt*2.4)*0.5;by=0.6}
     if(durum==='gecti')ol=1+0.06*Math.sin(Math.PI*dil(dt,0.1,0.55));
+    // Aykırılık (kullanıcı 2026-11-11: tek sarı üçgen "hiç belli olmuyor"): baş sönümlenerek iki yana sallanır,
+    // bütün yüzlerden sarı dalga geçer, dış hat sarıya döner ve dışarı iki halka yayılır. uyari: 1 → 0 sönüş.
+    var uyari=0;
+    if(durum==='aykiri'){
+      uyari=dt>=DURGUN?1:1-yum(dil(dt,2.1,2.6));
+      bx+=0.85*Math.sin(dt*21)*Math.exp(-dt*3.2);
+      ol=1+0.07*Math.sin(Math.PI*dil(dt,0,0.3));
+    }
     // ac: 1 = arazi parçası, 0 = baş.
     if(durum==='dogus')ac=1-yum(dil(dt,1.25,2.2));
     // Yolcu Ata'nın kısa geçişleri: `ac` araziden toplanır, `kapan` araziye yatıp kaybolur.
@@ -146,11 +155,26 @@
       var f=0,fr=R.isik;
       if(durum==='calisiyor')f=0.38*Math.max(0,Math.sin(dt*6-idx*0.55));
       if(durum==='gecti'){fr=YESIL;f=0.7*Math.max(0,Math.sin(Math.PI*dil(dt,0.05+idx*0.02,0.55+idx*0.02)))}
-      if(durum==='aykiri'&&idx===sari){fr=SARI;f=0.55+0.35*Math.sin(dt*4.4)}
+      if(durum==='aykiri'){
+        fr=SARI;f=0.8*Math.max(0,Math.sin(Math.PI*dil(dt,idx*0.012,0.55+idx*0.012)))+0.5*Math.max(0,Math.sin(Math.PI*dil(dt,1.15+idx*0.012,1.7+idx*0.012)));
+        if(idx===sari)f=Math.max(f,uyari*(0.78+0.22*Math.sin(dt*6)));
+      }
       u.o.setAttribute('fill',fr);u.o.setAttribute('fill-opacity',f.toFixed(2));
     });
     o.dis.setAttribute('points',P.slice(0,8).map(function(q){return f1(q[0])+','+f1(q[1])}).join(' '));
     o.dis.setAttribute('stroke-opacity',soluk.toFixed(2));
+    if(uyari!==o.uyari){
+      o.uyari=uyari;
+      o.dis.setAttribute('stroke',uyari>0?'rgb(242,'+Math.round(239-58*uyari)+','+Math.round(234-166*uyari)+')':R.dis);
+    }
+    o.halka.forEach(function(h,n){
+      var hp=durum==='aykiri'&&dt<DURGUN?dil(dt,n*0.42,n*0.42+0.8):0,acik=hp>0&&hp<1;
+      if(acik){
+        var buyume=1+0.62*yum(hp);
+        h.setAttribute('points',P.slice(0,8).map(function(q){return f1(MX+(q[0]-MX)*buyume)+','+f1(MY-4+(q[1]-MY+4)*buyume)}).join(' '));
+      }
+      if(acik||h.ataAcik){h.ataAcik=acik;h.setAttribute('opacity',acik?(0.95*(1-hp)).toFixed(2):'0')}
+    });
     var cizim=durum==='kur'?dil(dt,0,0.9):durum==='dogus'?dil(dt,0,0.8):1;
     if(cizim<1)o.dis.setAttribute('stroke-dasharray',(620*yum(cizim)).toFixed(0)+' 700');else o.dis.removeAttribute('stroke-dasharray');
     // ezik: konarken tabana (y≈168) doğru basılma.
@@ -185,7 +209,7 @@
 
   }
 
-  var hepsi=[],dongu=0,dinliyor=false,gozcu=null;
+  var hepsi=[],dongu=0,dinliyor=false,gozcu=null,sonKare=-1;
   // kalici: sayfanın verdiği süresiz ifade · anlik: süreli ifadeler · hedef: imleç yerine bakılacak öğe
   var ruh={kalici:null,anlik:[],hedef:null,sonHareket:0};
 
@@ -228,6 +252,9 @@
     dongu=0;
     if(document.hidden)return;
     var zm=simdi(),surecek=false;
+    // Saniyede en çok ~60 çizim: 120/144/240 Hz ekranda ara yenilemeler atlanır (eşik 15 ms).
+    if(zm-sonKare<0.015){dongu=requestAnimationFrame(kare);return}
+    sonKare=zm;
     hepsi.forEach(function(t){
       if(!t.canli||t.durdu||!t.gorunur)return;
       var dt=zm-t.t0;
@@ -508,7 +535,9 @@
     function dongu(){
       requestAnimationFrame(dongu);
       if(document.hidden)return;
-      var zm=simdi(),dt=Math.min(0.05,Math.max(0,zm-son));
+      var zm=simdi();
+      if(zm-son<0.015)return;
+      var dt=Math.min(0.05,Math.max(0,zm-son));
       sayac++;
       // Ortada yokken (sabit Ata görünüyor, kenar yok) her kare yerine seyrek yoklar.
       if(A.durum==='bekle'&&A.gor<=0.01&&sayac%8)return;
