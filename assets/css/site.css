@@ -371,7 +371,7 @@ section.deneme>.ic{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items
   .giris-eylem .ata{margin-block:0}
   .ata-soz{display:none}
   .giris{display:flex;flex-direction:column}
-  .giris .giris-sahne{position:relative;top:auto;right:auto;transform:none;width:100%;order:2}
+  .giris .giris-sahne{position:relative;z-index:1;top:auto;right:auto;transform:none;width:100%;order:2}
   .giris .ic.lejant{order:3}
   .alan li{grid-template-columns:minmax(0,1fr);gap:0}
   .olcu strong{font-size:1.7rem}

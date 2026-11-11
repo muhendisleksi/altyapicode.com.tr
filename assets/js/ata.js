@@ -380,7 +380,7 @@
   /* Gezgin Ata: sayfadaki [data-ata-kenar] öğelerinin üst kenarını zemin sayan tek Ata. Ayağı yoktur; sekizgen
      gövdesi köşe köşe devrilerek yuvarlanır (düzgün sekizgen varsayımı: R dış yarıçap, S bir kenar, tam sayı u =
      bir yüzü yere basmış duruş). Kenar ekrandan çıkınca alttaki görünür kenara düşer, konarken ezilir; yukarı
-     kaydırmada sönüp belirerek yer değiştirir. İmleç çok yaklaşınca birkaç köşe öteye yuvarlanır, uzun
+     kaydırmada ekranın altından üstteki kenara zıplar. İmleç çok yaklaşınca birkaç köşe öteye yuvarlanır, uzun
      hareketsizlikte mola verir. data-ata-kenar="0.68 1" → kenarın yalnız o aralığında gezer (üstü boş olan kısım).
      Sayfanın sabit Ata'larından biri görünürken, 900 px'ten dar pencerede ve hareket kısıtında ortada yoktur.
      Mizaç sabitleri kullanıcı seçimi "Sakin" (2026-11-10 taslağı: taslak/ata-yuvarlanan.html). */
@@ -419,15 +419,17 @@
     function rast(a,b){return a+Math.random()*(b-a)}
 
     var A={durum:'bekle',kenar:null,u:0,hedefU:0,t:0,sonraki:0,cx:0,cy:-999,cark:0,ezik:0,gor:0,acele:false,saskin:0,
-           fx:0,fy:0,vx:0,vy:0,sure:0,cark0:0,dCark:0,hedef:null,hedefU2:0,kacSon:0,etiket:''};
+           fx:0,fy:0,vx:0,vy:0,sure:0,sy:0,yon:1,yukari:false,cark0:0,dCark:0,hedef:null,hedefU2:0,kacSon:0,etiket:''};
     function gecis(k,u){A.durum='gec';A.t=0;A.hedef=k;A.hedefU2=u}
     function atla(k){
       var b=bilgi(k),uT=kis(Math.round((A.cx-b.sol)/S),0,b.n),tx=b.sol+S*uT,ty=b.ust-APO;
-      // Ekranın üstünde kaldıysa düşüş ekranın üst kenarından başlar.
-      A.fx=A.cx;A.fy=Math.max(A.cy,window.scrollY-R-10);
+      // Ekranın dışında kaldıysa uçuş ekranın o kenarından başlar: üstten düşer, alttan zıplar.
+      A.fx=A.cx;A.fy=kis(A.cy,window.scrollY-R-10,window.scrollY+window.innerHeight+R+10);
       var dy=ty-A.fy;
-      if(dy<24){gecis(k,uT);return}
-      var g=1500,vy0=-190,sure=(-vy0+Math.sqrt(vy0*vy0+2*g*dy))/g;
+      if(Math.abs(dy)<24){gecis(k,uT);return}
+      // Yukarı zıplayışta tepe noktası hedef kenarın 44 px üstündedir; 'dus' adımındaki 750·t² ile aynı yerçekimi.
+      var g=1500,tepe=44,vy0=dy>0?-190:-Math.sqrt(2*g*(tepe-dy)),sure=dy>0?(-vy0+Math.sqrt(vy0*vy0+2*g*dy))/g:-vy0/g+Math.sqrt(2*tepe/g);
+      A.yukari=dy<0;
       A.vx=(tx-A.fx)/sure;A.vy=vy0;A.sure=sure;A.t=0;A.hedef=k;A.hedefU2=uT;
       // Dönüş 45°'nin tam katıdır: konduğunda yeni kenardaki duruşla çakışır.
       A.cark0=A.cark;A.dCark=(A.vx<0?-1:1)*Math.max(2,Math.round(sure*5))*Math.PI/4;
@@ -437,7 +439,7 @@
       var g=gorunenler();
       if(!g.length){A.durum='bekle';return}
       if(!A.kenar||bilgi(A.kenar).ekran<2*R+16)atla(g[0]);
-      else{var k=g[g.length-1],b=bilgi(k);gecis(k,kis(Math.round((A.cx-b.sol)/S),0,b.n))}
+      else atla(g[g.length-1]);
     }
     function alttaki(){
       var ust=bilgi(A.kenar).ust,aday=null;
@@ -447,12 +449,16 @@
     function dinlen(zm,carpan){A.durum='otur';A.sonraki=zm+rast(GZ.bekle[0],GZ.bekle[1])*(carpan||1)}
 
     function adim(zm,dt){
-      var b,bos=zm-ruh.sonHareket;
+      var b,bos=zm-ruh.sonHareket,sy=window.scrollY;
+      if(sy!==A.sy){A.yon=sy>A.sy?1:-1;A.sy=sy}
       switch(A.durum){
         case 'bekle':
           A.gor=Math.max(0,A.gor-dt*5);
           var g=gorunenler();
-          if(g.length&&A.gor<=0.01){b=bilgi(g[0]);A.kenar=null;A.cx=b.sol+S*Math.floor(b.n*rast(0.2,0.8));A.cy=window.scrollY-R-10;A.cark=0;atla(g[0])}
+          if(g.length&&A.gor<=0.01){
+            // Yukarı kaydırılırken ekranın altından zıplayarak, aşağı kaydırılırken üstünden düşerek gelir.
+            var hk=A.yon<0?g[g.length-1]:g[0];
+            b=bilgi(hk);A.kenar=null;A.cx=b.sol+S*Math.floor(b.n*rast(0.2,0.8));A.cy=window.scrollY+(A.yon<0?window.innerHeight+R+10:-R-10);A.cark=0;atla(hk)}
           break;
         case 'otur':case 'uyu':case 'kenar':
           if(!acik()||!gorunur(A.kenar)){yerDegis();break}
@@ -518,7 +524,7 @@
         var a2=A.t>0.35&&alttaki();
         if(a2){var fark=((bilgi(a2).ust-bilgi(A.kenar).ust)/100).toFixed(2);et='Δh '+(ing?fark:fark.replace('.',','))+' m'}
       }
-      if(A.durum==='dus'){yuz='saskin';bk=[A.vx>0?0.5:-0.5,0.6]}
+      if(A.durum==='dus'){yuz=A.yukari?'heyecan':'saskin';bk=[A.vx>0?0.5:-0.5,A.yukari?-0.6:0.6]}
       if(A.durum==='kon')yuz='odak';
       if(A.durum==='uyu'){yuz='uyku';et=ing?'Break':'Mola'}
       if(zm<A.saskin)yuz='saskin';

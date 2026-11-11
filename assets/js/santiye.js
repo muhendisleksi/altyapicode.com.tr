@@ -53,7 +53,7 @@ function ton(c,l){return [kar(c[0][0],c[1][0],l),kar(c[0][1],c[1][1],l),kar(c[0]
 function Sahne(kap){
   var cv=kap.querySelector('canvas'),ctx=cv.getContext('2d'),svg=kap.querySelector('.ata'),kok=kap.closest('[data-santiye-kok]')||kap;
   var ata=svg.ataTutamak||null;
-  var hucre={},son={},asamaNo=-1,ap=null,yaziPx=11,cvEn=W,ataEn=0,sonZm=0,sonDonusum='';
+  var hucre={},son={},asamaNo=-1,ap=null,yaziPx=11,dar=0,cvEn=W,ataEn=0,sonZm=0,sonDonusum='';
   // Arazi ağı (≈1500 üçgen) ayrı tampona çizilir ve yalnız değiştiği karelerde yenilenir (ölçüm 2026-11-11:
   // her karede baştan çizmek 6–8 ms tutuyordu; 240 Hz ekranda kare bütçesi 4,2 ms).
   var tampon=document.createElement('canvas'),tctx=tampon.getContext('2d'),araziImza='',sonArazi=-1;
@@ -62,6 +62,8 @@ function Sahne(kap){
   function boyut(){
     var en=cv.getBoundingClientRect().width||W,dpr=Math.min(2,window.devicePixelRatio||1);
     yaziPx=Math.round(Math.max(11,9.5*W/en));
+    // Telefonda sahne ~390 px: 0,6'lık ağ çizgisi 0,37 piksele iner, koyu arazi zeminde kaybolur (kullanıcı bulgusu 2026-11-11).
+    dar=kis((620-en)/230,0,1);
     cv.width=Math.round(en*dpr);cv.height=Math.round(en*H/W*dpr);
     ctx.setTransform(cv.width/W,0,0,cv.height/H,0,0);
     tampon.width=cv.width;tampon.height=cv.height;
@@ -69,7 +71,7 @@ function Sahne(kap){
     araziImza='';cvEn=en;ataEn=svg.getBoundingClientRect().width;
   }
   function araziCiz(agD,dalga,tesviye,tarama){
-    var c=tctx,i,j,s,u,dg,q,bant=tarama>0&&tarama<1?-2+tarama*(GX+GY+4):null;
+    var c=tctx,i,j,s,u,dg,q,parlak=1+0.45*dar,bant=tarama>0&&tarama<1?-2+tarama*(GX+GY+4):null;
     c.clearRect(0,0,W,H);c.lineJoin='round';
     for(i=0;i<NX;i++)for(j=0;j<NY;j++){dg=D[i][j];q=iz(dg.x,dg.y,dg.z);dg.sx=q[0];dg.sy=q[1]}
     // uzaktan yakına
@@ -91,7 +93,7 @@ function Sahne(kap){
         if(hedef)renk=[kar(renk[0],hedef[0],kk),kar(renk[1],hedef[1],kk),kar(renk[2],hedef[2],kk)];
         if(padN2===3&&tesviye>0){var pr=ton(RENK.pad,isik);renk=[kar(renk[0],pr[0],tesviye),kar(renk[1],pr[1],tesviye),kar(renk[2],pr[2],tesviye)]}
         if(bant!==null){var tg=Math.max(0,1-Math.abs(s/R-bant)/2.2)*0.75;renk=[kar(renk[0],60,tg),kar(renk[1],198,tg),kar(renk[2],164,tg)]}
-        c.globalAlpha=gor;c.fillStyle='rgb('+Math.round(renk[0])+','+Math.round(renk[1])+','+Math.round(renk[2])+')';
+        c.globalAlpha=gor;c.fillStyle='rgb('+Math.min(255,Math.round(renk[0]*parlak))+','+Math.min(255,Math.round(renk[1]*parlak))+','+Math.min(255,Math.round(renk[2]*parlak))+')';
         c.beginPath();c.moveTo(t0.sx,t0.sy);c.lineTo(t1.sx,t1.sy);c.lineTo(t2.sx,t2.sy);c.closePath();c.fill();
       }
     }
@@ -103,7 +105,7 @@ function Sahne(kap){
       while(a<NX&&b<NY){dg=D[a][b];if(tam||(a+b)/R<esik){if(acik)c.lineTo(dg.sx,dg.sy);else{c.moveTo(dg.sx,dg.sy);acik=true}}else acik=false;a+=di;b+=dj}
       c.stroke();
     }
-    c.globalAlpha=1;c.strokeStyle='rgba(242,239,234,.15)';c.lineWidth=0.6;
+    c.globalAlpha=1;c.strokeStyle='rgba(242,239,234,'+(0.15+0.13*dar).toFixed(2)+')';c.lineWidth=0.6+0.5*dar;
     for(i=0;i<NX;i++)hat(i,0,0,1);
     for(j=0;j<NY;j++)hat(0,j,1,0);
     for(j=0;j<NY-1;j++)hat(0,j,1,1);
