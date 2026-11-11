@@ -1,4 +1,4 @@
-baseURL = "https://altyapicode.com.tr/"          # alan adı taşınınca atacad.com.tr
+baseURL = "https://atacad.com.tr/"               # 2026-11-11'e dek altyapicode.com.tr (oradan 301 ile yönlenir)
 title = "ATA CAD"
 enableRobotsTXT = true
 # BEKLEME KİPİ ("çok yakında" sayfası) kapalı. Açmak için bu satırı
@@ -87,8 +87,8 @@ defaultContentLanguageInSubdir = false
 [params]
   marka    = "ATA CAD"
   surum    = "1.0.3"
-  eposta   = "bilgi@altyapicode.com.tr"           # alan adı taşınınca bilgi@atacad.com.tr
-  formAdresi = "https://form.altyapicode.com.tr/v1/deneme-istegi"   # canlı form sunucusu (2026-11-10); boş bırakılırsa form kapanır
+  eposta   = "bilgi@atacad.com.tr"                # eski bilgi@altyapicode.com.tr da aynı kutuya yönlenir
+  formAdresi = "https://form.altyapicode.com.tr/v1/deneme-istegi"   # canlı form sunucusu; alt alan adı eski bölgede KALIR (lisans/indir/medya gibi); boşsa form kapanır
   turnstileAnahtar = "0x4AAAAAAF7uTEi6TmjnI0KV"    # Turnstile açık site anahtarı (gizli değil); formAdresi boşken yüklenmez
   medyaKoku = "https://medya.altyapicode.com.tr/"  # R2 atacad-medya; dosya adları data/videolar.yaml
 
