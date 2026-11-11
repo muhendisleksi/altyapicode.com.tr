@@ -1,0 +1,20 @@
+{{ define "main" }}
+{{- $dil := site.Language.Lang }}
+{{- $ogeler := slice }}
+{{- range site.Data.sss }}
+{{- with index . $dil | default .tr }}
+{{- $duz := partial "sss-metin.html" (dict "metin" .cevap "duz" true) }}
+{{- $ogeler = $ogeler | append (dict "@type" "Question" "name" .soru "acceptedAnswer" (dict "@type" "Answer" "text" $duz)) }}
+{{- end }}
+{{- end }}
+{{- $ld := dict "@context" "https://schema.org" "@type" "FAQPage" "mainEntity" $ogeler }}
+<article class="sayfa"><div class="ic">
+  <header class="blok-bas">
+    {{- with .Params.ustEtiket }}<span class="ust-etiket">{{ . }}</span>{{ end }}
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}<p>{{ . }}</p>{{ end }}
+  </header>
+  <div class="sorular">{{ partial "sorular.html" (dict "anahtarlar" nil) }}</div>
+</div></article>
+<script type="application/ld+json">{{ $ld | jsonify | safeJS }}</script>
+{{ end }}

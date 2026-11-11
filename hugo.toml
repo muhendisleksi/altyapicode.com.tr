@@ -1,140 +1,95 @@
-baseURL = "https://altyapicode.com.tr/"
-languageCode = "tr-TR"
-defaultContentLanguage = "tr"
-title = "ATA CAD — Bağımsız Altyapı CAD Platformu"
+baseURL = "https://altyapicode.com.tr/"          # alan adı taşınınca atacad.com.tr
+title = "ATA CAD"
 enableRobotsTXT = true
+disableKinds = ["taxonomy", "term", "RSS"]
+defaultContentLanguage = "tr"
+defaultContentLanguageInSubdir = false
 
-# Bu sitede etiket/kategori arsivi yok — gurultu yapiyordu.
-disableKinds = ["taxonomy", "term"]
+[languages.tr]
+  languageCode = "tr-TR"
+  languageName = "Türkçe"
+  weight = 1
+  [languages.tr.params]
+    description = "ATA CAD yolu, altyapı ağını ve 3B modeli aynı dosyada çizer. Kübaj, pafta ve metraj o modelden çıkar. Başka bir CAD lisansı gerekmez."
+
+  [[languages.tr.menus.main]]
+    identifier = "altyapi"
+    name = "Altyapı"
+    pageRef = "/altyapi"
+    weight = 10
+  [[languages.tr.menus.main]]
+    identifier = "yol-ve-arazi"
+    name = "Yol ve arazi"
+    pageRef = "/yol-ve-arazi"
+    weight = 20
+  [[languages.tr.menus.main]]
+    identifier = "3b-model"
+    name = "3B model"
+    pageRef = "/3b-model-ve-denetim"
+    weight = 30
+  [[languages.tr.menus.main]]
+    identifier = "yapay-zeka"
+    name = "Yapay zekâ"
+    pageRef = "/yapay-zeka"
+    weight = 40
+  [[languages.tr.menus.main]]
+    identifier = "yetenekler"
+    name = "Yetenekler"
+    pageRef = "/yetenekler"
+    weight = 50
+  [[languages.tr.menus.main]]
+    identifier = "demolar"
+    name = "Demolar"
+    pageRef = "/demolar"
+    weight = 60
+
+[languages.en]
+  languageCode = "en"
+  languageName = "English"
+  weight = 2
+  [languages.en.params]
+    description = "ATA CAD draws the road, the utility network and the 3D model in one file. Earthwork volumes, sheets and quantities come from that model. No other CAD licence required."
+
+  [[languages.en.menus.main]]
+    identifier = "altyapi"
+    name = "Infrastructure"
+    pageRef = "/altyapi"
+    weight = 10
+  [[languages.en.menus.main]]
+    identifier = "yol-ve-arazi"
+    name = "Road and terrain"
+    pageRef = "/yol-ve-arazi"
+    weight = 20
+  [[languages.en.menus.main]]
+    identifier = "3b-model"
+    name = "3D model"
+    pageRef = "/3b-model-ve-denetim"
+    weight = 30
+  [[languages.en.menus.main]]
+    identifier = "yapay-zeka"
+    name = "AI"
+    pageRef = "/yapay-zeka"
+    weight = 40
+  [[languages.en.menus.main]]
+    identifier = "yetenekler"
+    name = "Capabilities"
+    pageRef = "/yetenekler"
+    weight = 50
+  [[languages.en.menus.main]]
+    identifier = "demolar"
+    name = "Demos"
+    pageRef = "/demolar"
+    weight = 60
 
 [params]
-  marka          = "ATA CAD"
-  altbaslik      = "Bağımsız Altyapı CAD Platformu"
-  sahis          = "Abdulbaki Atakan"
-  surum          = "v0.9 · geliştirme"
-  asama          = "Erken Erişim"
-  eposta         = "abdulbakiatakan@gmail.com"
-  telefonGorunen = "+90 545 563 68 67"
-  whatsapp       = "https://chat.whatsapp.com/EM3peGrWC6C9jVYvpz0qZU"
-  description    = "ATA CAD, altyapı projeleri için geliştirilmiş bağımsız ve modüler bir 3B CAD platformudur. Arazi, güzergâh, profil, koridor, kübaj, altyapı, havza ve istinat duvarı modülleriyle İller Bankası, İSKİ, DSİ ve KGM standartlarında proje ve metraj."
-
-  # Araç alanı ağacı ve modül panelleri bu listeden üretilir — tek kaynak.
-  # durum: var | yapiliyor | planli
-  [[params.moduller]]
-    id = "cekirdek"
-    kod = "ÇEKİRDEK"
-    ad = "CAD Çekirdeği"
-    durum = "var"
-    etiket = "çalışıyor"
-    aciklama = "Çizim, düzenleme, katman, stil, seçim, kenetleme, grip, blok, ölçü ve çıktı."
-
-  [[params.moduller]]
-    id = "arazi"
-    kod = "ARAZİ"
-    ad = "Arazi ve Yüzey"
-    durum = "var"
-    etiket = "çalışıyor"
-    aciklama = "Ölçüm noktası, nokta grupları, TIN yüzey, eşyükselti eğrileri ve yüzey analizi."
-
-  [[params.moduller]]
-    id = "guzergah"
-    kod = "GÜZERGÂH"
-    ad = "Güzergâh"
-    durum = "var"
-    etiket = "çalışıyor"
-    aciklama = "Yatay geometri, PI ekleme/silme/ayırma, kilometraj denklemleri, ofset güzergâh, kısıt tabanlı parça ve LandXML aktarımı."
-
-  [[params.moduller]]
-    id = "profil"
-    kod = "PROFİL"
-    ad = "Profil ve En Kesit"
-    durum = "var"
-    etiket = "çalışıyor"
-    aciklama = "Boyuna profil ve profil görünümü, kırmızı hat, örnek hatları ve en kesit üretimi. Güzergâh ile yüzeyin üzerine oturur."
-
-  [[params.moduller]]
-    id = "koridor"
-    kod = "KORİDOR"
-    ad = "Tip Kesit ve Koridor"
-    durum = "var"
-    etiket = "çalışıyor"
-    aciklama = "Ölçüyle düzenlenen tip kesit tanımları, KGM kesit kütüphanesi, koridor modeli ve koridordan proje yüzeyi."
-
-  [[params.moduller]]
-    id = "kubaj"
-    kod = "KÜBAJ"
-    ad = "Kübaj"
-    durum = "var"
-    etiket = "çalışıyor"
-    aciklama = "İki yüzeyden ve güzergâhtan hacim, kazı tasarımı, kütle dağılımı (Brückner), kübaj panosu ve CSV çıktısı."
-
-  [[params.moduller]]
-    id = "altyapi"
-    kod = "ALTYAPI"
-    ad = "Altyapı"
-    durum = "planli"
-    etiket = "planlı"
-    aciklama = "Kanalizasyon, yağmursuyu, içmesuyu. Boru ağı, baca, hendek kesiti, kurum kontrolleri ve İller Bankası formatında metraj."
-
-  [[params.moduller]]
-    id = "havza"
-    kod = "HAVZA"
-    ad = "Havza"
-    durum = "planli"
-    etiket = "planlı"
-    aciklama = "Havza tanımı, akış hesabı ve yağmursuyu debisi."
-
-  [[params.moduller]]
-    id = "istinat"
-    kod = "İSTİNAT"
-    ad = "İstinat Duvarı"
-    durum = "planli"
-    etiket = "planlı"
-    aciklama = "Stabilite kontrolü, TBDY-2018 deprem hesabı, kesit çizimi ve metraj. Ayrı mühendislik modülü."
-
-# Başlıktaki yatay ana menü.
-[[menu.main]]
-  name = "Anasayfa"
-  url = "/"
-  weight = 10
-
-[[menu.main]]
-  name = "Ürün"
-  url = "/urun/"
-  weight = 20
-
-[[menu.main]]
-  name = "Modüller"
-  url = "/moduller/"
-  weight = 30
-
-[[menu.main]]
-  name = "Ekran Görüntüleri"
-  url = "/ekran-goruntuleri/"
-  weight = 35
-
-[[menu.main]]
-  name = "Karşılaştırma"
-  url = "/karsilastirma/"
-  weight = 40
-
-[[menu.main]]
-  name = "Eklentiler"
-  url = "/eklentiler/"
-  weight = 70
-
-[[menu.main]]
-  name = "İletişim"
-  url = "/iletisim/"
-  weight = 80
+  marka    = "ATA CAD"
+  surum    = "1.0.3"
+  eposta   = "bilgi@altyapicode.com.tr"           # alan adı taşınınca bilgi@atacad.com.tr
+  formAdresi = "https://form.altyapicode.com.tr/v1/deneme-istegi"   # canlı form sunucusu (2026-11-10); boş bırakılırsa form kapanır
+  turnstileAnahtar = "0x4AAAAAAF7uTEi6TmjnI0KV"    # Turnstile açık site anahtarı (gizli değil); formAdresi boşken yüklenmez
+  medyaKoku = "https://medya.altyapicode.com.tr/"  # R2 atacad-medya; dosya adları data/videolar.yaml
 
 [markup.goldmark.renderer]
   unsafe = true
-
-[markup.highlight]
-  noClasses = true
-  style = "github-dark"
-  lineNos = false
-
 [outputs]
-  home = ["HTML", "RSS"]
+  home = ["HTML"]

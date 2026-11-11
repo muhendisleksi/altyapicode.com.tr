@@ -1,0 +1,11 @@
+{{- /* Çerçeveli şekil: pafta köşe işaretli görsel + "Şekil n" altyazısı. Numara sayfa içinde kendiliğinden artar.
+       Girdi: dict "sayfa" <Page> "dosya" "img/…" (assets altında) "alt" "…" "not" "…" "sizes" "<isteğe bağlı>" */ -}}
+{{- $sayfa := .sayfa }}
+{{- $sayfa.Store.Add "sekilNo" 1 }}
+{{- $no := $sayfa.Store.Get "sekilNo" }}
+<figure>
+  <div class="cerceve">
+    {{ partial "gorsel.html" (dict "dosya" .dosya "alt" .alt "sizes" .sizes) }}
+  </div>
+  <figcaption><b>{{ i18n "sekil" }} {{ $no }}</b>{{ with .not }}<span>{{ . }}</span>{{ end }}</figcaption>
+</figure>

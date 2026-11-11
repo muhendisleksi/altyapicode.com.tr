@@ -1,0 +1,2 @@
+{{- /* {{< eposta >}} vurgulu adres satırı · {{< eposta duz >}} cümle içinde sıradan bağlantı */ -}}
+<a{{ if not (.Get 0) }} class="eposta"{{ end }} href="mailto:{{ site.Params.eposta }}">{{ site.Params.eposta }}</a>

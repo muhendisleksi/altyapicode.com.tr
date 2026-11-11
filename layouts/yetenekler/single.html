@@ -1,0 +1,34 @@
+{{ define "main" }}
+{{- $dil := site.Language.Lang }}
+{{- $gruplar := index site.Data.yetenekler.gruplar $dil | default site.Data.yetenekler.gruplar.tr }}
+<article class="sayfa">
+  <div class="ic">
+    <header class="blok-bas">
+      {{- with .Params.ustEtiket }}<span class="ust-etiket">{{ . }}</span>{{ end }}
+      <h1>{{ .Title }}</h1>
+      {{- with .Description }}<p>{{ . }}</p>{{ end }}
+    </header>
+    {{- with .Params.kapakSekil }}
+    {{ partial "sekil.html" (dict "sayfa" $ "dosya" .dosya "alt" .alt "not" .not "sizes" "(max-width: 1180px) 100vw, 1140px") }}
+    {{- end }}
+    {{- with .Content }}<div class="yazi">{{ . }}</div>{{ end }}
+    <div class="gruplar">
+      {{- range $gruplar }}
+      <section class="grup">
+        <h2>{{ .ad }}</h2>
+        <div class="tablo-kap"><table>
+          <thead><tr><th>{{ i18n "yetenek.ad" }}</th><th>{{ i18n "yetenek.not" }}</th><th>{{ i18n "yetenek.durum" }}</th></tr></thead>
+          <tbody>
+            {{- range .satirlar }}
+            <tr><td>{{ .ad }}</td><td class="not">{{ .not }}</td><td class="durum-hucre"><span class="durum {{ .durum }}">{{ i18n (printf "durum.%s" .durum) }}</span></td></tr>
+            {{- end }}
+          </tbody>
+        </table></div>
+      </section>
+      {{- end }}
+    </div>
+  </div>
+</article>
+
+{{ partial "deneme-blogu.html" . }}
+{{ end }}

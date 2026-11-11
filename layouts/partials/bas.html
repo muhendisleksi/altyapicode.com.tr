@@ -1,0 +1,12 @@
+{{- $dene := partial "bag.html" "/deneme" | default (printf "%s#deneme" site.Home.RelPermalink) }}
+<header class="bas"><div class="ic">
+  <a class="marka" href="{{ site.Home.RelPermalink }}">{{ partial "logo.html" . }}<span>CAD</span></a>
+  {{ partial "menu.html" (dict "sayfa" . "sinif" "menu genis" "ad" (i18n "menu.ad")) }}
+  {{ partial "dil-secici.html" . }}
+  <a class="dugme kucuk" href="{{ $dene }}">{{ i18n "dugme.dene" }}</a>
+  {{- /* Dar ekran: betiksiz açılır. Liste başlığın altına tam genişlikte iner (site.css ▸ dar ekran). */}}
+  <details class="menu-ac">
+    <summary>{{ i18n "menu.ac" }}</summary>
+    {{ partial "menu.html" (dict "sayfa" . "sinif" "menu" "ad" (i18n "menu.ad")) }}
+  </details>
+</div></header>

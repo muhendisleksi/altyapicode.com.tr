@@ -1,0 +1,256 @@
+# Site strings — English. Same keys as tr.toml; no sentence is added that the Turkish text does not have.
+
+# common
+[slogan]
+other = "From terrain to quantities, one program."
+[atla]
+other = "Skip to content"
+[menu.ad]
+other = "Main menu"
+[menu.ac]
+other = "Menu"
+[dil.ad]
+other = "Language"
+[dugme.dene]
+other = "Try 30 days"
+[sekil]
+other = "Figure"
+[ayrinti]
+other = "Details"
+[anasayfa]
+other = "Home"
+
+# hero
+[giris.etiket]
+other = "Turkish-made · independent · Windows"
+[giris.baslik1]
+other = "From terrain to quantities,"
+[giris.baslik2]
+other = "one program."
+[giris.alt]
+other = "ATA CAD draws the road, the utility network and the 3D model in one file. Earthwork volumes, sheets and quantities come from that model. No other CAD licence required."
+[giris.dene]
+other = "Try free for 30 days"
+[giris.videolar]
+other = "Watch the videos"
+[giris.sozDene]
+other = "No card details asked"
+[giris.sozVideolar]
+other = "Nothing to install"
+[giris.surum]
+other = "Version"
+[giris.isletim]
+other = "Windows 10 / 11"
+[giris.arayuz]
+other = "The interface and commands are in Turkish"
+[giris.yarma]
+other = "cut"
+[giris.dolgu]
+other = "fill"
+[giris.sekil]
+other = "animation ·"
+[giris.gorselAlt]
+other = "Road corridor fitted to mountainous terrain, 3D view"
+
+# institutions strip
+[kurum.metin]
+other = "The rules of İller Bankası (Turkey's municipal development bank), İSKİ (Istanbul Water and Sewerage Administration) and DSİ (State Hydraulic Works), and the tables of the KGM (General Directorate of Highways) handbook are built into the program."
+
+# built for Turkey
+[yerli.etiket]
+other = "Built for Turkey"
+[yerli.baslik]
+other = "Rules, tables and sources built in."
+[yerli.metin]
+other = "Every value used in a calculation carries its source. A value whose source is not verified does not enter the calculation."
+
+# workspaces
+[alanlar.etiket]
+other = "Three workspaces"
+[alanlar.baslik]
+other = "Road. Utilities. 3D model."
+[alanlar.metin]
+other = "The program is organised around three kinds of work. When you switch workspace the ribbon changes; the drawing stays the same."
+[alanlar.cikti]
+other = "Output:"
+
+# AI
+[ajan.etiket]
+other = "With AI"
+[ajan.baslik]
+other = "Say it, and it gets drawn."
+[ajan.metin]
+other = "ATA CAD connects to your own Claude account. You write the request in Turkish and the program runs the commands on your screen."
+[ajan.istem]
+other = "Prompt"
+[ajan.istemYer]
+other = "Zeytinli Ev · one chat · translated from Turkish"
+[ajan.istemMetin]
+other = "\"Build a three-storey villa on the sloping parcel: the basement opens onto the pool terrace, the ground floor cantilevers to the south on V columns, the upper floor has a gable roof. Add the garage, the entrance court, the pool and the garden paths; furnish the rooms.\""
+[ajan.istemSonuc]
+other = "Villa built · landscape draped on the terrain · rooms furnished"
+[ajan.sekilAlt]
+other = "Three-storey villa on a slope: cantilevered terrace, glazed facade, pool and garden; 3D view"
+[ajan.sekilNot]
+other = "Zeytinli Ev · villa built by the AI through the program bridge"
+[ajan.sayfa]
+other = "AI page"
+
+# videos
+[videolar.etiket]
+other = "Videos"
+[videolar.baslik]
+other = "From the program's own screen."
+[videolar.metin]
+other = "All three videos are edited from real screen recordings."
+[videolar.kisa]
+other = "12 short demos"
+
+# outputs
+[teslim.etiket]
+other = "Outputs"
+[teslim.baslik]
+other = "Your data stays with you."
+[teslim.metin]
+other = "Every output is in an open format and opens in other programs."
+[teslim.dwg]
+other = "DWG and DXF files are read; DWG is not written. Drawings are delivered as DXF."
+[teslim.sutun1]
+other = "Deliverable"
+[teslim.sutun2]
+other = "Format"
+
+# trial
+[deneme.etiket]
+other = "Free for 30 days"
+[deneme.baslik]
+other = "Try it on your own project."
+[deneme.adim1]
+other = "Fill in the form; the link to the installer arrives in your e-mail."
+[deneme.adim2]
+other = "Open the program and enter your name and phone number. The 30-day trial starts at that moment."
+[deneme.adim3]
+other = "Use it on your own project."
+[deneme.not]
+other = "The trial is available once per computer. During the trial, DXF, Excel, CSV and LandXML outputs carry a \"DEMO\" stamp."
+[form.ad]
+other = "Full name"
+[form.eposta]
+other = "E-mail"
+[form.firma]
+other = "Company or organisation"
+[form.alan]
+other = "Workspace"
+[form.secenek.altyapi]
+other = "Sewer, stormwater, water supply"
+[form.secenek.yol]
+other = "Road"
+[form.secenek.bina-peyzaj]
+other = "Buildings and landscape"
+[form.secenek.kazi-arazi]
+other = "Excavation and site grading"
+[form.gonder]
+other = "Request the 30-day trial"
+[form.gonderiliyor]
+other = "Sending…"
+[form.yakinda]
+other = "The trial form opens very soon. For now:"
+[form.not]
+other = "Your details are used to send the installer link and to reply to your request."
+[form.aydinlatma]
+other = "Privacy notice (KVKK)"
+[form.betiksiz]
+other = "To use the form, scripts must be enabled in your browser. You can also write your trial request by e-mail:"
+[form.sonra1]
+other = "Download the installer from the link in the e-mail and install it."
+# Form status messages. {adres} is the e-mail the visitor typed, {iletisim} is the site's contact address (the script turns it into a link).
+[form.m.gitti]
+other = "The installer link was sent to {adres}. If it does not arrive within a few minutes, check your spam folder or write to {iletisim}."
+[form.m.alan]
+other = "Please check this field."
+[form.m.dogrulama]
+other = "Verification could not be completed. Reload the page and try again, or write to {iletisim}."
+[form.m.cok]
+other = "Too many requests came in today. Try again tomorrow or write to {iletisim}."
+[form.m.dustu]
+other = "Your request was received but the e-mail could not be sent. Write to {iletisim} and we will send the link by hand."
+[form.m.ag]
+other = "Could not connect. Try again shortly or write to {iletisim}."
+
+# title block
+[antet.proje]
+other = "Project"
+[antet.projeDeger]
+other = "ATA CAD · independent CAD platform"
+[antet.pafta]
+other = "Sheet"
+[antet.olcek]
+other = "Scale"
+[antet.tarih]
+other = "Date"
+[antet.iletisim]
+other = "Contact"
+[antet.baglar]
+other = "Site links"
+
+# inner pages
+[sayfa.ciktilar]
+other = "Outputs"
+[sayfa.yapmaz]
+other = "Plainly: what it does not do"
+[sayfa.demolar]
+other = "Related demos"
+[sayfa.sorular]
+other = "Frequently asked questions"
+[yetenek.ad]
+other = "Capability"
+[yetenek.not]
+other = "Details"
+[yetenek.durum]
+other = "Status"
+[durum.calisiyor]
+other = "available"
+[durum.siradaki]
+other = "in progress"
+[sss.kvkk]
+other = "the privacy notice (KVKK)"
+
+# demos
+[demolar.uzun]
+other = "Long videos"
+[demolar.bolumler]
+other = "Chapters"
+[demolar.kisa]
+other = "Short demos"
+[demolar.kisaMetin]
+other = "Each one shows a single task and is cut from the long videos. Its page states separately what the program did and what the engineer decided."
+[demolar.suzgec]
+other = "Filter by workspace"
+[demoalan.altyapi]
+other = "Infrastructure"
+[demoalan.yol]
+other = "Road and terrain"
+[demoalan.3b]
+other = "3D model"
+[demo.iz]
+other = "Location"
+[demo.program]
+other = "What the program did"
+[demo.muhendis]
+other = "What the engineer approved"
+[demo.tam]
+other = "Full video"
+[demo.tamMetin]
+other = "This demo is cut from the video below. The link starts the video at the same point."
+[demo.gez]
+other = "Previous and next demo"
+[demo.onceki]
+other = "Previous"
+[demo.sonraki]
+other = "Next"
+
+# 404
+[yok.baslik]
+other = "This sheet could not be found."
+[yok.metin]
+other = "The page you are looking for may have been removed or moved."

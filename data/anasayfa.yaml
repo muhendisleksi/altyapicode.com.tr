@@ -1,0 +1,158 @@
+# Ana sayfanın liste içerikleri, dil anahtarıyla. Bir dilde anahtar yoksa şablon Türkçesini kullanır.
+
+yerli:
+  tr:
+    - ad: "KGM"
+      yazi: "Dever, klotoid ve düşey kurp, KGM Karayolu Tasarım El Kitabı 2022 tablolarından gelir. Plan gösterimi KGM dilindedir: some bloğu, dever bandı."
+    - ad: "İller Bankası · İSKİ · DSİ"
+      yazi: "Eğim, örtü, hız, baca aralığı ve düşü her kurumun kendi kuralıyla denetlenir. Ulusal taban: Resmî Gazete 29940."
+    - ad: "Ortak hendek"
+      yazi: "Birden çok ağ aynı hendekte birlikte hesaplanır; seki ve yan eğimli arazi dahil. Kazı güvenliği eşikleri hesaba girer."
+    - ad: "Yönetmelik denetimi"
+      yazi: "Kurallar veri dosyasındadır; her kural kaynak, madde ve tarih taşır. İlk paket peyzaj: Otopark Yönetmeliği, Planlı Alanlar İmar Yönetmeliği ve iki rehber."
+    - ad: "Türkiye verisi"
+      yazi: "İl sınırından projeksiyon dilimi önerisi, kurum WMS altlığı, AGS4 sondaj dosyası, Türkçe karakterli eski çizimler."
+  en:
+    - ad: "KGM"
+      yazi: "Superelevation, spiral (clothoid) and vertical curves come from the tables of the KGM (General Directorate of Highways) Highway Design Handbook 2022. Plan display follows KGM practice: curve data block, superelevation band."
+    - ad: "İller Bankası · İSKİ · DSİ"
+      yazi: "Slope, cover, velocity, manhole spacing and drop are checked against each institution's own rules. National baseline: Resmî Gazete (Official Gazette) 29940."
+    - ad: "Shared trench"
+      yazi: "Several networks are calculated together in the same trench, including benches and sloping ground. Excavation safety thresholds enter the calculation."
+    - ad: "Compliance check"
+      yazi: "Rules live in a data file; every rule carries its source, article and date. The first rule set is landscape: the Parking Regulation (Otopark Yönetmeliği), the Zoning Regulation for Planned Areas (Planlı Alanlar İmar Yönetmeliği) and two guidelines."
+    - ad: "Turkey data"
+      yazi: "Projection zone suggestion from the province boundary, institutional WMS background maps, AGS4 borehole files, old drawings with Turkish characters."
+
+kurumlar:
+  - { dosya: "logo-iller-bankasi.png", ad: "İller Bankası" }
+  - { dosya: "logo-iski.png", ad: "İSKİ" }
+  - { dosya: "logo-dsi.png", ad: "DSİ" }
+  - { dosya: "logo-kgm.png", ad: "KGM" }
+
+# sayfa: alanın kendi sayfası (varsa başlık ve "Ayrıntı" oraya bağlanır) · capa: ana sayfadaki çapa
+alanlar:
+  tr:
+    - capa: "altyapi"
+      sayfa: "/altyapi"
+      baslik: "Altyapı"
+      ozet: "Kanalizasyon, yağmursuyu ve içmesuyu ağları; bacadan hendek metrajına."
+      satirlar:
+        - { ad: "Ağ", yazi: "Baca ve boru, kotlar kurum kuralından, birden çok ağ aynı çizimde; hata tek tıkla düzeltilir" }
+        - { ad: "Hazır veriden", yazi: "Eski çizimin çizgi ve yazılarından, saha alımından (GSI, CSV, Excel) ya da LandXML'den ağ kurulur" }
+        - { ad: "3B", yazi: "Baca ve boru gövdeleri arazinin altında; röntgen görünümü, ağ ağ göster-gizle" }
+        - { ad: "Çakışma", yazi: "Ağlar arası kesişimler 3B'de işaretlenir, bulgu listesine düşer" }
+        - { ad: "Hendek", yazi: "Kazı, yatak, gömlek, baca ve geri dolgu ayrı ayrı; ağ tablosu altı sayfalık Excel" }
+      cikti: "boy profili · hendek en kesiti · baca detay paftası"
+      sekiller:
+        - { dosya: "img/sekil/g02.png", alt: "Üç altyapı ağının boruları ve bacaları, arazi gizlenmiş 3B görünüm", not: "Üç ağ aynı çizimde · baca ve boru gövdeleri, arazi gizlenmiş 3B görünüm" }
+        - { dosya: "img/sekil/g03.png", alt: "Yamaçta ortak hendek en kesiti: içmesuyu borusu sekideki kendi yuvasında, baca hendek tabanında; altında alan tablosu", not: "Yamaçta ortak hendek en kesiti · içmesuyu Ø250 kendi yuvasında, baca tabanda · km 0+000" }
+    - capa: "yol-ve-arazi"
+      sayfa: "/yol-ve-arazi"
+      baslik: "Yol ve arazi"
+      ozet: "Ölçüm noktasından kütle dağılımına kadar yol projesinin tamamı."
+      satirlar:
+        - { ad: "Arazi", yazi: "Nokta, TIN yüzey, LAS/LAZ nokta bulutu, sondaj kolonları ve log paftası, uydu ve kurum altlığı" }
+        - { ad: "Güzergâh", yazi: "Kurp ve klotoid, KGM'ye göre dever" }
+        - { ad: "Koridor", yazi: "KGM tip kesit kütüphanesi, eşdüzey ve dönel kavşak" }
+        - { ad: "Kübaj", yazi: "Kazı ve dolgu hacmi, zemin sınıfı, saha tesviyesi, taşıma dengeli kütle dağılımı, dönemsel kübaj" }
+      cikti: "boyuna profil · en kesit paftaları · kübaj cetveli"
+      sekiller:
+        - { dosya: "img/sekil/y08.png", alt: "Boy profili: arazi, kırmızı hat, kot, geometri ve dever bantları", not: "Tepe Geçidi boy profili · kotlar, yatay ve düşey geometri, dever" }
+    - capa: "3b-model"
+      sayfa: "/3b-model-ve-denetim"
+      baslik: "3B model ve denetim"
+      ozet: "Bina, tesisat ve peyzaj tek modelde. Model kural paketiyle denetlenir; ilk paket peyzaj."
+      satirlar:
+        - { ad: "Yapı", yazi: "Kat, duvar, döşeme, kolon, kiriş, merdiven, çatı" }
+        - { ad: "Tesisat", yazi: "Temiz su, pis su, yağmur ve ısıtma hatları" }
+        - { ad: "Peyzaj", yazi: "Yol, otopark, yeşil alan, oyun ve spor alanları araziye oturur" }
+        - { ad: "Denetim", yazi: "Her kural kaynağı ve madde numarasıyla; aykırı olan kırmızı görünür" }
+      cikti: "IFC 4.3 · glTF · inşaat filmi"
+      sekiller:
+        - { dosya: "img/sekil/g12.png", alt: "İki kule, podyum ve peyzaj; ATA CAD 3B modeli", not: "Erguvan · iki kule, 96 daire, podyum ve peyzaj" }
+  en:
+    - capa: "altyapi"
+      sayfa: "/altyapi"
+      baslik: "Infrastructure"
+      ozet: "Sewer, stormwater and water supply networks, from the manhole to the trench quantities."
+      satirlar:
+        - { ad: "Network", yazi: "Manholes and pipes, levels from the institution's rules, several networks in one drawing; errors are fixed with one click" }
+        - { ad: "From existing data", yazi: "Build a network from the lines and text of an old drawing, from field surveys (GSI, CSV, Excel) or from LandXML" }
+        - { ad: "3D", yazi: "Manhole and pipe bodies below the terrain; x-ray view, show or hide network by network" }
+        - { ad: "Clashes", yazi: "Crossings between networks are marked in 3D and added to the findings list" }
+        - { ad: "Trench", yazi: "Excavation, bedding, surround, manholes and backfill separately; the network table is a six-sheet Excel file" }
+      cikti: "longitudinal profile · trench cross-section · manhole detail sheet"
+      sekiller:
+        - { dosya: "img/sekil/g02.png", alt: "Pipes and manholes of three utility networks, 3D view with the terrain hidden", not: "Three networks in one drawing · manhole and pipe bodies, 3D view with the terrain hidden" }
+        - { dosya: "img/sekil/g03.png", alt: "Shared trench cross-section on a slope: the water pipe in its own bench, the manhole at the trench bottom; area table below", not: "Shared trench cross-section on a slope · Ø250 water pipe in its own bench, manhole at the bottom · km 0+000" }
+    - capa: "yol-ve-arazi"
+      sayfa: "/yol-ve-arazi"
+      baslik: "Road and terrain"
+      ozet: "The whole road project, from the survey point to the mass haul diagram."
+      satirlar:
+        - { ad: "Terrain", yazi: "Points, TIN surface, LAS/LAZ point cloud, borehole columns and log sheets, satellite imagery and institutional background maps" }
+        - { ad: "Alignment", yazi: "Curve and spiral (clothoid), superelevation per KGM" }
+        - { ad: "Corridor", yazi: "KGM typical section library, at-grade intersections and roundabouts" }
+        - { ad: "Volumes", yazi: "Cut and fill volume, soil class, site grading, haul-balanced mass haul diagram, periodic volumes (progress quantities)" }
+      cikti: "longitudinal profile · cross-section sheets · earthwork volume schedule"
+      sekiller:
+        - { dosya: "img/sekil/y08.png", alt: "Longitudinal profile: terrain, design profile, level, geometry and superelevation bands", not: "Tepe Geçidi longitudinal profile · levels, horizontal and vertical geometry, superelevation" }
+    - capa: "3b-model"
+      sayfa: "/3b-model-ve-denetim"
+      baslik: "3D model and compliance check"
+      ozet: "Building, services and landscape in one model. The model is checked against a rule set; the first set is landscape."
+      satirlar:
+        - { ad: "Structure", yazi: "Storey, wall, slab, column, beam, stair, roof" }
+        - { ad: "Services", yazi: "Clean water, waste water, rainwater and heating lines" }
+        - { ad: "Landscape", yazi: "Road, car park, green area, play and sports areas sit on the terrain" }
+        - { ad: "Check", yazi: "Every rule shows its source and article number; what is non-compliant appears in red" }
+      cikti: "IFC 4.3 · glTF · construction sequence animation"
+      sekiller:
+        - { dosya: "img/sekil/g12.png", alt: "Two towers, podium and landscape; ATA CAD 3D model", not: "Erguvan · two towers, 96 apartments, podium and landscape" }
+
+olculer:
+  tr:
+    - { sayi: "12", yazi: "istemde iki kule ve peyzaj" }
+    - { sayi: "1 sa 30 dk", yazi: "parselden IFC'ye" }
+    - { sayi: "7", yazi: "istemde yol, ağ, bina" }
+  en:
+    - { sayi: "12", yazi: "prompts for two towers and landscape" }
+    - { sayi: "1 h 30 min", yazi: "from the parcel to IFC" }
+    - { sayi: "7", yazi: "prompts for road, network, building" }
+
+guvence:
+  tr:
+    - "Her işlem ekranda görünür ve tek adımda geri alınır."
+    - "Onay eşiğini siz belirlersiniz."
+    - "ATA CAD yapay zekâ için ek ücret almaz; kendi üyeliğinizi kullanırsınız."
+  en:
+    - "Every action is visible on screen and can be undone in one step."
+    - "You set the approval threshold."
+    - "ATA CAD charges nothing extra for AI; you use your own subscription."
+
+ciktilar:
+  tr:
+    - { ad: "Boyuna profil paftası", bicim: "DXF" }
+    - { ad: "En kesit paftaları", bicim: "DXF" }
+    - { ad: "Kübaj cetveli", bicim: "XLSX · CSV" }
+    - { ad: "Kütle dağılımı", bicim: "DXF" }
+    - { ad: "Dönemsel kübaj", bicim: "XLSX" }
+    - { ad: "Altyapı ağ tablosu", bicim: "XLSX" }
+    - { ad: "Hendek en kesiti · baca detayı", bicim: "DXF" }
+    - { ad: "Denetim raporu", bicim: "XLSX · PDF · DXF" }
+    - { ad: "Güzergâh ve yüzey verisi", bicim: "LandXML" }
+    - { ad: "3B model", bicim: "IFC 4.3 · glTF" }
+  en:
+    - { ad: "Longitudinal profile sheet", bicim: "DXF" }
+    - { ad: "Cross-section sheets", bicim: "DXF" }
+    - { ad: "Earthwork volume schedule", bicim: "XLSX · CSV" }
+    - { ad: "Mass haul diagram", bicim: "DXF" }
+    - { ad: "Periodic volumes", bicim: "XLSX" }
+    - { ad: "Utility network table", bicim: "XLSX" }
+    - { ad: "Trench cross-section · manhole detail", bicim: "DXF" }
+    - { ad: "Compliance report", bicim: "XLSX · PDF · DXF" }
+    - { ad: "Alignment and surface data", bicim: "LandXML" }
+    - { ad: "3D model", bicim: "IFC 4.3 · glTF" }
+
+form_alanlari: ["altyapi", "yol", "bina-peyzaj", "kazi-arazi"]

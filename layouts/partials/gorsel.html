@@ -1,0 +1,20 @@
+{{- /* Duyarlı görsel: assets altındaki kaynaktan WebP üretir (800 · 1600 · kaynak genişliği), srcset + sizes yazar.
+       Girdi: dict "dosya" "img/…" "alt" "…" "sizes" "<isteğe bağlı>" "oncelik" <true = ilk ekran görseli>
+       Kaynak bulunamazsa `dosya` doğrudan adres sayılır. */ -}}
+{{- $alt := .alt | default "" }}
+{{- $sizes := .sizes | default "(max-width: 860px) 100vw, 660px" }}
+{{- with resources.Get .dosya }}
+  {{- $kaynak := . }}
+  {{- $liste := slice }}
+  {{- range slice 800 1600 2560 }}
+    {{- if lt . $kaynak.Width }}
+      {{- $k := $kaynak.Resize (printf "%dx webp q82" .) }}
+      {{- $liste = $liste | append (printf "%s %dw" $k.RelPermalink $k.Width) }}
+    {{- end }}
+  {{- end }}
+  {{- $tam := $kaynak.Resize (printf "%dx webp q82" $kaynak.Width) }}
+  {{- $liste = $liste | append (printf "%s %dw" $tam.RelPermalink $tam.Width) }}
+<img src="{{ $tam.RelPermalink }}" srcset="{{ delimit $liste ", " }}" sizes="{{ $sizes }}" width="{{ $kaynak.Width }}" height="{{ $kaynak.Height }}" alt="{{ $alt }}"{{ if $.oncelik }} fetchpriority="high"{{ else }} loading="lazy"{{ end }} decoding="async">
+{{- else }}
+<img src="{{ .dosya | relURL }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+{{- end }}

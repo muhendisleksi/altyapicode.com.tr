@@ -1,0 +1,17 @@
+{{- /* Kart için video kaydı üretir: videolar.yaml + medya_olcum.json + (kısa demoda) sayfanın başlığı ve özeti.
+       Girdi: dict "kod" "<v-… | dNN>" "sayfa" <demo sayfası, isteğe bağlı>
+       Dönüş: dict kod, kapak, sure, baslik, yazi, dosya, altyazi, kaynak, t — kod bilinmiyorsa boş dict. */ -}}
+{{- $d := site.Data.videolar }}
+{{- $dil := site.Language.Lang }}
+{{- $kayit := dict }}
+{{- range where $d.uzun "kod" .kod }}
+  {{- $m := index . $dil | default .tr }}
+  {{- $o := index site.Data.medya_olcum .olcum | default dict }}
+  {{- $kayit = dict "kod" .kod "kapak" .kapak "dosya" .dosya "altyazi" .altyazi "sure" $o.sure "baslik" $m.baslik "yazi" $m.yazi }}
+{{- end }}
+{{- range where $d.kisa "kod" .kod }}
+  {{- $o := index site.Data.medya_olcum .kod | default dict }}
+  {{- $kayit = dict "kod" .kod "kapak" .kapak "dosya" .dosya "sure" $o.sure "kaynak" .kaynak "t" .t }}
+  {{- with $.sayfa }}{{ $kayit = merge $kayit (dict "baslik" .Title "yazi" .Params.ozet) }}{{ end }}
+{{- end }}
+{{- return $kayit -}}

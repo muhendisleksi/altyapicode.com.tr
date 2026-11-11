@@ -1,0 +1,25 @@
+{{- /* İlgili demolar. Girdi: sayfa (Params.demolar = kodlar). "dNN" → /demolar/<kod> sayfası; "v-…" → Demolar
+       sayfasındaki uzun video. Yazılmamış kod sessizce atlanır, hiçbiri bulunmazsa bölüm basılmaz. */ -}}
+{{- $kartlar := slice }}
+{{- $liste := site.GetPage "/demolar" }}
+{{- range .Params.demolar }}
+  {{- if hasPrefix . "v-" }}
+    {{- $v := partial "video-kaydi.html" (dict "kod" .) }}
+    {{- if and $v $liste }}{{ $kartlar = $kartlar | append (dict "v" $v "adres" (printf "%s#%s" $liste.RelPermalink .) "kunye" (i18n "demo.tam")) }}{{ end }}
+  {{- else }}
+    {{- with site.GetPage (printf "/demolar/%s" .) }}
+    {{- $v := partial "video-kaydi.html" (dict "kod" .Params.kod "sayfa" .) }}
+    {{- $kartlar = $kartlar | append (dict "v" $v "adres" .RelPermalink "kunye" (i18n (printf "demoalan.%s" .Params.alan))) }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- with $kartlar }}
+<section class="blok"><div class="ic">
+  <div class="blok-bas"><h2>{{ i18n "sayfa.demolar" }}</h2></div>
+  <div class="videolar">
+    {{- range . }}
+    {{ partial "video-karti.html" . }}
+    {{- end }}
+  </div>
+</div></section>
+{{- end }}

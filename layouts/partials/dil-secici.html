@@ -1,0 +1,16 @@
+{{- /* Dil seçici: sayfanın o dildeki çevirisine gider; çeviri yoksa o dilin ana sayfasına. */ -}}
+{{- if hugo.IsMultilingual }}
+{{- $sayfa := . }}
+<div class="dil" role="group" aria-label="{{ i18n "dil.ad" }}">
+  {{- range site.Sites }}
+  {{- $kod := .Language.Lang }}
+  {{- if eq $kod site.Language.Lang }}
+  <span aria-current="true">{{ upper $kod }}</span>
+  {{- else }}
+  {{- $hedef := .Home.RelPermalink }}
+  {{- range $sayfa.Translations }}{{ if eq .Language.Lang $kod }}{{ $hedef = .RelPermalink }}{{ end }}{{ end }}
+  <a href="{{ $hedef }}" lang="{{ $kod }}" hreflang="{{ $kod }}" title="{{ .Language.LanguageName }}">{{ upper $kod }}</a>
+  {{- end }}
+  {{- end }}
+</div>
+{{- end }}

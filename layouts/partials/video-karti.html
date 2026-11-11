@@ -1,0 +1,16 @@
+{{- /* Video kartı. Girdi: dict "v" <kayıt: kapak, sure, baslik, yazi> "adres" "<bağlantı ya da boş>"
+       "kunye" "<alan · süre, isteğe bağlı>" "alan" "<süzgeç anahtarı, isteğe bağlı>"
+       Hedef sayfa henüz yoksa kart bağlantısız durur. */ -}}
+{{- $v := .v }}
+{{ if .adres }}<a class="video" href="{{ .adres }}"{{ with .alan }} data-alan="{{ . }}"{{ end }}>{{ else }}<div class="video">{{ end }}
+  <div class="kapak">
+    {{- with resources.Get $v.kapak }}
+    {{- $k := .Resize "800x webp q80" }}
+    <img src="{{ $k.RelPermalink }}" width="{{ $k.Width }}" height="{{ $k.Height }}" alt="" loading="lazy" decoding="async">
+    {{- end }}
+    {{- with $v.sure }}<span class="sure">{{ . }}</span>{{ end }}
+  </div>
+  <h3>{{ $v.baslik }}</h3>
+  {{- with $v.yazi }}<p>{{ . }}</p>{{ end }}
+  {{- with .kunye }}<span class="kunye-satir">{{ . }}</span>{{ end }}
+{{ if .adres }}</a>{{ else }}</div>{{ end }}

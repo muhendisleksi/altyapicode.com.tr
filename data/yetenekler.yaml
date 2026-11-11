@@ -1,0 +1,218 @@
+# Yetenekler sayfası. durum: calisiyor (bugünkü sürümde kullanılır) | siradaki (üzerinde çalışılıyor, tarih verilmez).
+# Dil anahtarı altında liste; bir dilde yoksa şablon Türkçesini kullanır.
+
+gruplar:
+  tr:
+    - ad: "Çizim çekirdeği"
+      satirlar:
+        - { ad: "Türkçe arayüz ve komutlar", durum: calisiyor, not: "" }
+        - { ad: "Başka CAD lisansı gerekmez", durum: calisiyor, not: "Program kendi başına çalışır" }
+        - { ad: "Yol, altyapı ağı ve 3B model aynı dosyada", durum: calisiyor, not: "" }
+        - { ad: "Üç çalışma alanı", durum: calisiyor, not: "Alan değişince şerit değişir, çizim aynı kalır" }
+        - { ad: "Türkçe karakterli eski çizimler", durum: calisiyor, not: "" }
+        - { ad: "Ölçülendirme, yazı ve tablo", durum: calisiyor, not: "" }
+        - { ad: "Blok ve dış referans", durum: calisiyor, not: "" }
+    - ad: "Arazi"
+      satirlar:
+        - { ad: "Nokta ve TIN yüzey", durum: calisiyor, not: "" }
+        - { ad: "Nokta editörü ve nokta grupları", durum: calisiyor, not: "" }
+        - { ad: "Yüzey kaynakları", durum: calisiyor, not: "Nokta, kot yazıları, üçgenler, DEM, LandXML" }
+        - { ad: "LAS/LAZ nokta bulutu", durum: calisiyor, not: "" }
+        - { ad: "Sondaj kolonları ve log paftası", durum: calisiyor, not: "Excel, CSV, AGS4" }
+        - { ad: "Tabaka yüzeyi", durum: calisiyor, not: "" }
+        - { ad: "Uydu ve kurum altlığı", durum: calisiyor, not: "Kurum WMS altlığı dahil" }
+        - { ad: "Projeksiyon dilimi önerisi", durum: calisiyor, not: "İl sınırından" }
+        - { ad: "DWG ve DXF altlık", durum: calisiyor, not: "Okunur; DWG'ye yazılmaz" }
+    - ad: "Güzergâh ve profil"
+      satirlar:
+        - { ad: "Kurp ve klotoid", durum: calisiyor, not: "" }
+        - { ad: "Dever", durum: calisiyor, not: "KGM'ye göre" }
+        - { ad: "KGM plan gösterimi", durum: calisiyor, not: "Some bloğu, dever bandı" }
+        - { ad: "Düşey kurp", durum: calisiyor, not: "KGM El Kitabı tablolarından" }
+        - { ad: "Boyuna profil ve kırmızı hat", durum: calisiyor, not: "Pafta DXF olarak verilir" }
+        - { ad: "Profilde dever bandı", durum: calisiyor, not: "" }
+        - { ad: "Duvar boy profili", durum: siradaki, not: "" }
+    - ad: "Koridor ve kavşak"
+      satirlar:
+        - { ad: "KGM tip kesit kütüphanesi", durum: calisiyor, not: "" }
+        - { ad: "Çizimden tip kesit", durum: calisiyor, not: "" }
+        - { ad: "Koridor yüzeyi", durum: calisiyor, not: "" }
+        - { ad: "Hızlı kesit", durum: calisiyor, not: "" }
+        - { ad: "Koridor", durum: calisiyor, not: "Güzergâh, kırmızı hat ve tip kesitten 3B yol modeli" }
+        - { ad: "Eşdüzey kavşak", durum: calisiyor, not: "" }
+        - { ad: "Dönel kavşak", durum: calisiyor, not: "" }
+    - ad: "Kübaj"
+      satirlar:
+        - { ad: "Kazı ve dolgu hacmi", durum: calisiyor, not: "" }
+        - { ad: "Zemin sınıfı", durum: calisiyor, not: "" }
+        - { ad: "Saha tesviyesi", durum: calisiyor, not: "" }
+        - { ad: "Kazı tasarımı", durum: calisiyor, not: "Taban kotu, şev, palye" }
+        - { ad: "İki yüzeyden hacim", durum: calisiyor, not: "" }
+        - { ad: "Kübaj panosu", durum: calisiyor, not: "" }
+        - { ad: "Kütle dağılımı", durum: calisiyor, not: "Taşıma dengeli; DXF olarak verilir" }
+        - { ad: "Dönemsel kübaj", durum: calisiyor, not: "XLSX" }
+        - { ad: "Kübaj cetveli", durum: calisiyor, not: "XLSX · CSV" }
+        - { ad: "En kesit paftaları", durum: calisiyor, not: "DXF" }
+    - ad: "Altyapı"
+      satirlar:
+        - { ad: "Baca ve boru ağı", durum: calisiyor, not: "Kotlar kurum kuralından" }
+        - { ad: "Baca ve boru kataloğu", durum: calisiyor, not: "" }
+        - { ad: "Birden çok ağ", durum: calisiyor, not: "Aynı çizimde" }
+        - { ad: "Ağ kayıtları ve bulgular", durum: calisiyor, not: "Tablo ve bulgu listesi" }
+        - { ad: "Kural denetimi", durum: calisiyor, not: "Eğim, örtü, hız, baca aralığı, düşü; hata tek tıkla düzelir" }
+        - { ad: "Hazır veriden ağ", durum: calisiyor, not: "Eski çizim, saha alımı (GSI, CSV, Excel), LandXML" }
+        - { ad: "3B röntgen görünümü", durum: calisiyor, not: "Ağ ağ göster-gizle" }
+        - { ad: "Ağlar arası çakışma", durum: calisiyor, not: "3B'de işaretlenir, bulgu listesine düşer" }
+        - { ad: "Hendek kübajı", durum: calisiyor, not: "Ortak hendek, seki ve yan eğimli arazi dahil" }
+        - { ad: "Altyapı paftaları", durum: calisiyor, not: "Boy profili, hendek en kesiti, baca detayı; DXF" }
+        - { ad: "Ortak hendekte her boru kendi kurum tablosuyla", durum: siradaki, not: "" }
+        - { ad: "Büyük ağda 3B hız", durum: siradaki, not: "" }
+        - { ad: "Altyapı kural istisnaları ve Excel bulgu sayfası", durum: siradaki, not: "" }
+    - ad: "3B model"
+      satirlar:
+        - { ad: "Yapı elemanları", durum: calisiyor, not: "Kat, duvar, döşeme, kolon, kiriş, merdiven, çatı" }
+        - { ad: "Kütle ve it/çek", durum: calisiyor, not: "" }
+        - { ad: "Bileşen kütüphanesi", durum: calisiyor, not: "" }
+        - { ad: "Model içe alma", durum: calisiyor, not: "glTF · OBJ · STL" }
+        - { ad: "Kat planından yapı", durum: calisiyor, not: "Duvar, kolon, açıklık, mahal" }
+        - { ad: "Boşluk ve şaft", durum: calisiyor, not: "" }
+        - { ad: "Mahal ve alan", durum: calisiyor, not: "" }
+        - { ad: "Tesisat", durum: calisiyor, not: "Temiz su, pis su, yağmur, ısıtma" }
+        - { ad: "Peyzaj", durum: calisiyor, not: "Yol, otopark, yeşil alan, oyun ve spor alanları araziye oturur" }
+        - { ad: "Kesit ve kat planı", durum: calisiyor, not: "" }
+        - { ad: "İnşaat filmi", durum: calisiyor, not: "" }
+        - { ad: "Dışa aktarma", durum: calisiyor, not: "IFC 4.3 · glTF" }
+        - { ad: "Mimari aks ve cephe elemanları", durum: siradaki, not: "" }
+    - ad: "Yönetmelik denetimi"
+      satirlar:
+        - { ad: "Kurallar veri dosyasında", durum: calisiyor, not: "" }
+        - { ad: "Tür eşleme", durum: calisiyor, not: "Çizim katmanından nesne türüne" }
+        - { ad: "Kaynak, madde ve tarih", durum: calisiyor, not: "Her kural üçünü de taşır" }
+        - { ad: "Aykırı olan kırmızı görünür", durum: calisiyor, not: "" }
+        - { ad: "Peyzaj paketi", durum: calisiyor, not: "Otopark Yönetmeliği, Planlı Alanlar İmar Yönetmeliği ve iki rehber" }
+        - { ad: "Denetim raporu", durum: calisiyor, not: "XLSX · PDF · DXF" }
+    - ad: "Yapay zekâ bağlantısı"
+      satirlar:
+        - { ad: "Kendi Claude hesabınıza bağlanır", durum: calisiyor, not: "" }
+        - { ad: "İstek Türkçe yazılır", durum: calisiyor, not: "" }
+        - { ad: "Program komutları sizin ekranınızda çalışır", durum: calisiyor, not: "" }
+        - { ad: "Her işlem ekranda görünür", durum: calisiyor, not: "" }
+        - { ad: "Tek adımda geri alma", durum: calisiyor, not: "" }
+        - { ad: "Onay eşiğini siz belirlersiniz", durum: calisiyor, not: "" }
+        - { ad: "Ek ücret yok", durum: calisiyor, not: "Kendi üyeliğinizi kullanırsınız" }
+    - ad: "Veri alışverişi"
+      satirlar:
+        - { ad: "DWG ve DXF okuma", durum: calisiyor, not: "DWG'ye yazılmaz" }
+        - { ad: "Paftalar", durum: calisiyor, not: "DXF" }
+        - { ad: "Kübaj cetveli", durum: calisiyor, not: "XLSX · CSV" }
+        - { ad: "Altyapı ağ tablosu", durum: calisiyor, not: "XLSX" }
+        - { ad: "Güzergâh ve yüzey", durum: calisiyor, not: "LandXML" }
+        - { ad: "3B model", durum: calisiyor, not: "IFC 4.3 · glTF" }
+        - { ad: "Denetim raporu", durum: calisiyor, not: "XLSX · PDF · DXF" }
+  en:
+    - ad: "Drawing core"
+      satirlar:
+        - { ad: "Turkish interface and commands", durum: calisiyor, not: "" }
+        - { ad: "No other CAD licence required", durum: calisiyor, not: "The program runs on its own" }
+        - { ad: "Road, utility network and 3D model in one file", durum: calisiyor, not: "" }
+        - { ad: "Three workspaces", durum: calisiyor, not: "When the workspace changes the ribbon changes; the drawing stays the same" }
+        - { ad: "Old drawings with Turkish characters", durum: calisiyor, not: "" }
+        - { ad: "Dimensions, text and tables", durum: calisiyor, not: "" }
+        - { ad: "Blocks and external references", durum: calisiyor, not: "" }
+    - ad: "Terrain"
+      satirlar:
+        - { ad: "Points and TIN surface", durum: calisiyor, not: "" }
+        - { ad: "Point editor and point groups", durum: calisiyor, not: "" }
+        - { ad: "Surface sources", durum: calisiyor, not: "Points, elevation labels, triangles, DEM, LandXML" }
+        - { ad: "LAS/LAZ point cloud", durum: calisiyor, not: "" }
+        - { ad: "Borehole columns and log sheets", durum: calisiyor, not: "Excel, CSV, AGS4" }
+        - { ad: "Stratum surface", durum: calisiyor, not: "" }
+        - { ad: "Satellite imagery and institutional background maps", durum: calisiyor, not: "Including institutional WMS background maps" }
+        - { ad: "Projection zone suggestion", durum: calisiyor, not: "From the province boundary" }
+        - { ad: "DWG and DXF underlay", durum: calisiyor, not: "Read only; DWG is not written" }
+    - ad: "Alignment and profile"
+      satirlar:
+        - { ad: "Curve and spiral (clothoid)", durum: calisiyor, not: "" }
+        - { ad: "Superelevation", durum: calisiyor, not: "Per KGM" }
+        - { ad: "KGM plan display", durum: calisiyor, not: "Curve data block, superelevation band" }
+        - { ad: "Vertical curve", durum: calisiyor, not: "From the KGM handbook tables" }
+        - { ad: "Longitudinal profile and design profile", durum: calisiyor, not: "The sheet is delivered as DXF" }
+        - { ad: "Superelevation band on the profile", durum: calisiyor, not: "" }
+        - { ad: "Wall longitudinal profile", durum: siradaki, not: "" }
+    - ad: "Corridor and intersection"
+      satirlar:
+        - { ad: "KGM typical section library", durum: calisiyor, not: "" }
+        - { ad: "Typical section from a drawing", durum: calisiyor, not: "" }
+        - { ad: "Corridor surface", durum: calisiyor, not: "" }
+        - { ad: "Quick section", durum: calisiyor, not: "" }
+        - { ad: "Corridor", durum: calisiyor, not: "3D road model from the alignment, design profile and typical section" }
+        - { ad: "At-grade intersection", durum: calisiyor, not: "" }
+        - { ad: "Roundabout", durum: calisiyor, not: "" }
+    - ad: "Earthwork volumes"
+      satirlar:
+        - { ad: "Cut and fill volume", durum: calisiyor, not: "" }
+        - { ad: "Soil class", durum: calisiyor, not: "" }
+        - { ad: "Site grading", durum: calisiyor, not: "" }
+        - { ad: "Excavation design", durum: calisiyor, not: "Formation level, slope, benches" }
+        - { ad: "Volume between two surfaces", durum: calisiyor, not: "" }
+        - { ad: "Volume dashboard", durum: calisiyor, not: "" }
+        - { ad: "Mass haul diagram", durum: calisiyor, not: "Haul-balanced; delivered as DXF" }
+        - { ad: "Periodic volumes", durum: calisiyor, not: "XLSX" }
+        - { ad: "Earthwork volume schedule", durum: calisiyor, not: "XLSX · CSV" }
+        - { ad: "Cross-section sheets", durum: calisiyor, not: "DXF" }
+    - ad: "Infrastructure"
+      satirlar:
+        - { ad: "Manhole and pipe network", durum: calisiyor, not: "Levels from the institution's rules" }
+        - { ad: "Manhole and pipe catalogue", durum: calisiyor, not: "" }
+        - { ad: "Several networks", durum: calisiyor, not: "In the same drawing" }
+        - { ad: "Network records and findings", durum: calisiyor, not: "Table and findings list" }
+        - { ad: "Rule check", durum: calisiyor, not: "Slope, cover, velocity, manhole spacing, drop; errors are fixed with one click" }
+        - { ad: "Network from existing data", durum: calisiyor, not: "Old drawing, field survey (GSI, CSV, Excel), LandXML" }
+        - { ad: "3D x-ray view", durum: calisiyor, not: "Show or hide network by network" }
+        - { ad: "Clashes between networks", durum: calisiyor, not: "Marked in 3D and added to the findings list" }
+        - { ad: "Trench volumes", durum: calisiyor, not: "Shared trench, including benches and sloping ground" }
+        - { ad: "Utility sheets", durum: calisiyor, not: "Longitudinal profile, trench cross-section, manhole detail; DXF" }
+        - { ad: "Each pipe with its own institution table in a shared trench", durum: siradaki, not: "" }
+        - { ad: "3D speed on large networks", durum: siradaki, not: "" }
+        - { ad: "Utility rule exceptions and an Excel findings sheet", durum: siradaki, not: "" }
+    - ad: "3D model"
+      satirlar:
+        - { ad: "Building elements", durum: calisiyor, not: "Storey, wall, slab, column, beam, stair, roof" }
+        - { ad: "Massing and push/pull", durum: calisiyor, not: "" }
+        - { ad: "Component library", durum: calisiyor, not: "" }
+        - { ad: "Model import", durum: calisiyor, not: "glTF · OBJ · STL" }
+        - { ad: "Building from a floor plan", durum: calisiyor, not: "Walls, columns, openings, rooms" }
+        - { ad: "Openings and shafts", durum: calisiyor, not: "" }
+        - { ad: "Rooms and areas", durum: calisiyor, not: "" }
+        - { ad: "Services", durum: calisiyor, not: "Clean water, waste water, rainwater, heating" }
+        - { ad: "Landscape", durum: calisiyor, not: "Road, car park, green area, play and sports areas sit on the terrain" }
+        - { ad: "Section and floor plan", durum: calisiyor, not: "" }
+        - { ad: "Construction sequence animation", durum: calisiyor, not: "" }
+        - { ad: "Export", durum: calisiyor, not: "IFC 4.3 · glTF" }
+        - { ad: "Architectural grid and facade elements", durum: siradaki, not: "" }
+    - ad: "Compliance check"
+      satirlar:
+        - { ad: "Rules in a data file", durum: calisiyor, not: "" }
+        - { ad: "Type mapping", durum: calisiyor, not: "From drawing layer to object type" }
+        - { ad: "Source, article and date", durum: calisiyor, not: "Every rule carries all three" }
+        - { ad: "What is non-compliant appears in red", durum: calisiyor, not: "" }
+        - { ad: "Landscape rule set", durum: calisiyor, not: "Parking Regulation (Otopark Yönetmeliği), Zoning Regulation for Planned Areas (Planlı Alanlar İmar Yönetmeliği) and two guidelines" }
+        - { ad: "Compliance report", durum: calisiyor, not: "XLSX · PDF · DXF" }
+    - ad: "AI connection"
+      satirlar:
+        - { ad: "Connects to your own Claude account", durum: calisiyor, not: "" }
+        - { ad: "Requests are written in Turkish", durum: calisiyor, not: "" }
+        - { ad: "The program runs the commands on your screen", durum: calisiyor, not: "" }
+        - { ad: "Every action is visible on screen", durum: calisiyor, not: "" }
+        - { ad: "One-step undo", durum: calisiyor, not: "" }
+        - { ad: "You set the approval threshold", durum: calisiyor, not: "" }
+        - { ad: "No extra charge", durum: calisiyor, not: "You use your own subscription" }
+    - ad: "Data exchange"
+      satirlar:
+        - { ad: "Reading DWG and DXF", durum: calisiyor, not: "DWG is not written" }
+        - { ad: "Sheets", durum: calisiyor, not: "DXF" }
+        - { ad: "Earthwork volume schedule", durum: calisiyor, not: "XLSX · CSV" }
+        - { ad: "Utility network table", durum: calisiyor, not: "XLSX" }
+        - { ad: "Alignment and surface", durum: calisiyor, not: "LandXML" }
+        - { ad: "3D model", durum: calisiyor, not: "IFC 4.3 · glTF" }
+        - { ad: "Compliance report", durum: calisiyor, not: "XLSX · PDF · DXF" }

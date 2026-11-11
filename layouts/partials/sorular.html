@@ -1,0 +1,11 @@
+{{- /* Soru satırları. Girdi: dict "anahtarlar" <anahtar listesi; boşsa hepsi, veri sırasıyla>.
+       Kaynak: data/sss.yaml (anahtar · tr/en ▸ soru, cevap). Bu dilde yoksa Türkçesi kullanılır. */ -}}
+{{- $dil := site.Language.Lang }}
+{{- $anahtarlar := .anahtarlar }}
+{{- range site.Data.sss }}
+{{- if or (not $anahtarlar) (in $anahtarlar .anahtar) }}
+{{- with index . $dil | default .tr }}
+<details class="soru"><summary>{{ .soru }}</summary><div>{{ partial "sss-metin.html" (dict "metin" .cevap "duz" false) }}</div></details>
+{{- end }}
+{{- end }}
+{{- end }}

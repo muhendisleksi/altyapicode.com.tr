@@ -1,0 +1,108 @@
+{{ define "main" }}
+{{- $d := site.Data.anasayfa }}
+<article class="sayfa">
+  <div class="ic">
+    <header class="blok-bas">
+      {{- with .Params.ustEtiket }}<span class="ust-etiket">{{ . | safeHTML }}</span>{{ end }}
+      <h1>{{ .Title }}</h1>
+      {{- with .Params.ozet }}<p>{{ . }}</p>{{ end }}
+    </header>
+    {{- with .Params.kapakSekil }}
+    {{ partial "sekil.html" (dict "sayfa" $ "dosya" .dosya "alt" .alt "not" .not) }}
+    {{- end }}
+  </div>
+
+  {{- with .Params.bolumler }}
+  <section class="blok bolumler"><div class="ic">
+    {{- $ters := 0 }}
+    {{- range $i, $b := . }}
+    {{- $sinif := "tek" }}
+    {{- if $b.sekil }}
+    {{- $ters = add $ters 1 }}
+    {{- $sinif = cond (modBool $ters 2) "ters" "" }}
+    {{- end }}
+    <div class="alan {{ $sinif }}" id="{{ $b.baslik | anchorize }}">
+      <div class="metin">
+        <h2>{{ $b.baslik }}</h2>
+        {{- with $b.metin }}<p class="soluk">{{ . }}</p>{{ end }}
+        {{- with $b.maddeler }}
+        <ul>
+          {{- range . }}
+          <li><b>{{ .ad }}</b><span>{{ .yazi }}</span></li>
+          {{- end }}
+        </ul>
+        {{- end }}
+        {{- with $b.istem }}
+        <div class="istem">
+          <header><span><svg class="ata" data-ata data-canli data-kucuk data-durum="calisiyor" viewBox="19 23 162 162" width="28" height="28" aria-hidden="true"></svg>{{ i18n "ajan.istem" }}</span><span>{{ .yer }}</span></header>
+          <p>{{ .metin }}</p>
+          <footer>{{ .sonuc }}</footer>
+        </div>
+        {{- end }}
+        {{- with $b.olculer }}
+        <div class="olcu">
+          {{- range . }}
+          <div><strong>{{ .sayi }}</strong><span>{{ .yazi }}</span></div>
+          {{- end }}
+        </div>
+        {{- end }}
+        {{- with $b.guvence }}
+        <ul class="guvence">
+          {{- range . }}
+          <li>{{ . }}</li>
+          {{- end }}
+        </ul>
+        {{- end }}
+        {{- with $b.adimlar }}
+        <ol class="adimlar">
+          {{- range . }}
+          <li>{{ . }}</li>
+          {{- end }}
+        </ol>
+        {{- end }}
+      </div>
+      {{- with $b.sekil }}
+      {{ partial "sekil.html" (dict "sayfa" $ "dosya" .dosya "alt" .alt "not" .not) }}
+      {{- end }}
+    </div>
+    {{- end }}
+  </div></section>
+  {{- end }}
+
+  {{- with .Params.ciktilar }}
+  <section class="blok"><div class="ic">
+    <div class="blok-bas"><h2>{{ i18n "sayfa.ciktilar" }}</h2></div>
+    <div class="teslim tek"><div class="tablo-kap"><table>
+      <thead><tr><th>{{ i18n "teslim.sutun1" }}</th><th>{{ i18n "teslim.sutun2" }}</th></tr></thead>
+      <tbody>
+        {{- range . }}
+        <tr><td>{{ .ad }}</td><td>{{ .bicim }}</td></tr>
+        {{- end }}
+      </tbody>
+    </table></div></div>
+  </div></section>
+  {{- end }}
+
+  {{- with .Params.yapmaz }}
+  <section class="blok"><div class="ic">
+    <div class="blok-bas"><h2>{{ i18n "sayfa.yapmaz" }}</h2></div>
+    <ul class="guvence">
+      {{- range . }}
+      <li>{{ . }}</li>
+      {{- end }}
+    </ul>
+  </div></section>
+  {{- end }}
+
+  {{ partial "ilgili-demolar.html" . }}
+
+  {{- with .Params.sorular }}
+  <section class="blok"><div class="ic">
+    <div class="blok-bas"><h2>{{ i18n "sayfa.sorular" }}</h2></div>
+    <div class="sorular">{{ partial "sorular.html" (dict "anahtarlar" .) }}</div>
+  </div></section>
+  {{- end }}
+</article>
+
+{{ partial "deneme-blogu.html" . }}
+{{ end }}

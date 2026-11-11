@@ -1,0 +1,14 @@
+{{- /* SSS cevabındaki yer tutucuları açar. Girdi: dict "metin" "<cevap>" "duz" <bool>.
+       {eposta} → params.eposta · {kvkk} → KVKK sayfası bağlantısı. duz=true: işaretleme yok (FAQPage verisi). */ -}}
+{{- $kvkkAd := i18n "sss.kvkk" -}}
+{{- $eposta := site.Params.eposta -}}
+{{- $baglanti := $kvkkAd -}}
+{{- $m := .metin -}}
+{{- if not .duz -}}
+  {{- $m = $m | htmlEscape -}}
+  {{- $eposta = printf `<a href="mailto:%s">%s</a>` $eposta $eposta -}}
+  {{- with site.GetPage "/kvkk" }}{{ $baglanti = printf `<a href="%s">%s</a>` .RelPermalink $kvkkAd }}{{ end -}}
+{{- end -}}
+{{- $m = replace $m "{eposta}" $eposta -}}
+{{- $m = replace $m "{kvkk}" $baglanti -}}
+{{- return (cond .duz $m ($m | safeHTML)) -}}

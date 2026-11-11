@@ -1,0 +1,61 @@
+{{ define "main" }}
+{{- $v := partial "video-kaydi.html" (dict "kod" .Params.kod "sayfa" .) }}
+{{- $kaynak := partial "video-kaydi.html" (dict "kod" .Params.kaynak) }}
+{{- $liste := .Parent.Pages.ByParam "kod" }}
+{{- $onceki := false }}{{ $sonraki := false }}
+{{- range $i, $s := $liste }}
+  {{- if eq $s.RelPermalink $.RelPermalink }}
+    {{- if gt $i 0 }}{{ $onceki = index $liste (sub $i 1) }}{{ end }}
+    {{- if lt (add $i 1) (len $liste) }}{{ $sonraki = index $liste (add $i 1) }}{{ end }}
+  {{- end }}
+{{- end }}
+<article class="sayfa demo">
+  <div class="ic">
+    <nav class="iz" aria-label="{{ i18n "demo.iz" }}"><a href="{{ .Parent.RelPermalink }}">{{ .Parent.LinkTitle }}</a><span aria-hidden="true">/</span><span>{{ .Title }}</span></nav>
+    <header class="blok-bas">
+      <span class="ust-etiket">{{ i18n (printf "demoalan.%s" .Params.alan) }}{{ with $v.sure }} · {{ . }}{{ end }}</span>
+      <h1>{{ .Title }}</h1>
+      {{- with .Params.ozet }}<p>{{ . }}</p>{{ end }}
+    </header>
+    {{ partial "oynatici.html" (dict "v" $v "ad" .Title) }}
+    {{- with .Params.sayilar }}
+    <div class="olcu s{{ len . }}">
+      {{- range . }}
+      <div><strong>{{ .deger }}</strong><span>{{ .ad }}</span></div>
+      {{- end }}
+    </div>
+    {{- end }}
+    <div class="ajan-izgara">
+      <div class="ayrim">
+        <h2>{{ i18n "demo.program" }}</h2>
+        <ul class="guvence">
+          {{- range .Params.program }}
+          <li>{{ . }}</li>
+          {{- end }}
+        </ul>
+      </div>
+      <div class="ayrim">
+        <h2>{{ i18n "demo.muhendis" }}</h2>
+        <ul class="guvence onay">
+          {{- range .Params.muhendis }}
+          <li>{{ . }}</li>
+          {{- end }}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <section class="blok"><div class="ic">
+    <div class="blok-bas"><h2>{{ i18n "demo.tam" }}</h2><p>{{ i18n "demo.tamMetin" }}</p></div>
+    <div class="videolar">
+      {{ partial "video-karti.html" (dict "v" $kaynak "adres" (printf "%s?t=%d#%s" .Parent.RelPermalink (int $v.t) .Params.kaynak)) }}
+    </div>
+    <nav class="sira-gez" aria-label="{{ i18n "demo.gez" }}">
+      {{- with $onceki }}<a href="{{ .RelPermalink }}"><small>← {{ i18n "demo.onceki" }}</small>{{ .Title }}</a>{{ else }}<span></span>{{ end }}
+      {{- with $sonraki }}<a class="sag" href="{{ .RelPermalink }}"><small>{{ i18n "demo.sonraki" }} →</small>{{ .Title }}</a>{{ end }}
+    </nav>
+  </div></section>
+</article>
+
+{{ partial "deneme-blogu.html" . }}
+{{ end }}

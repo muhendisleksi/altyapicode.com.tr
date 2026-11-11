@@ -1,0 +1,61 @@
+{{- /* Deneme bloğu: maskot + üç adım + form. Ana sayfada ve Deneme sayfasında aynı kısmi dosya.
+       params.formAdresi boşken form gönderim yapmaz: alanlar kapalıdır; Deneme sayfası varsa (ve bu o değilse)
+       düğme oraya bağlantıdır, yoksa "çok yakında" satırı görünür. */ -}}
+{{- $adres := site.Params.formAdresi }}
+{{- $denemeSayfasi := partial "bag.html" "/deneme" }}
+{{- $kendisi := eq $denemeSayfasi .RelPermalink }}
+{{- if $kendisi }}{{ $denemeSayfasi = "" }}{{ end }}
+<section class="blok deneme" id="deneme"><div class="ic">
+  <div class="sutun">
+    <svg class="ata" data-ata data-canli data-durum="bakiyor" viewBox="19 23 162 162" width="92" height="92" aria-hidden="true"></svg>
+    <div class="blok-bas">
+      <span class="ust-etiket">{{ i18n "deneme.etiket" }}</span>
+      {{- if $kendisi }}
+      <h1>{{ i18n "deneme.baslik" }}</h1>
+      {{- else }}
+      <h2>{{ i18n "deneme.baslik" }}</h2>
+      {{- end }}
+    </div>
+    <ol class="adimlar">
+      <li>{{ i18n "deneme.adim1" }}</li>
+      <li>{{ i18n "deneme.adim2" }}</li>
+      <li>{{ i18n "deneme.adim3" }}</li>
+    </ol>
+    <p class="soluk kucuk-not">{{ i18n "deneme.not" }}</p>
+  </div>
+  <form class="form" id="deneme-formu" novalidate{{ with $adres }} method="post" action="{{ . }}" data-dil="{{ site.Language.Lang }}" data-gonderiliyor="{{ i18n "form.gonderiliyor" }}" data-iletisim="{{ site.Params.eposta }}" data-anahtar="{{ site.Params.turnstileAnahtar }}" data-m-gitti="{{ i18n "form.m.gitti" }}" data-m-alan="{{ i18n "form.m.alan" }}" data-m-dogrulama="{{ i18n "form.m.dogrulama" }}" data-m-cok="{{ i18n "form.m.cok" }}" data-m-dustu="{{ i18n "form.m.dustu" }}" data-m-ag="{{ i18n "form.m.ag" }}"{{ end }}>
+    <label>{{ i18n "form.ad" }}<input name="ad" type="text" autocomplete="name" maxlength="80" required{{ if not $adres }} disabled{{ end }}></label>
+    <label>{{ i18n "form.eposta" }}<input name="eposta" type="email" autocomplete="email" maxlength="254" required{{ if not $adres }} disabled{{ end }}></label>
+    <label>{{ i18n "form.firma" }}<input name="firma" type="text" autocomplete="organization" maxlength="120"{{ if not $adres }} disabled{{ end }}></label>
+    <label>{{ i18n "form.alan" }}<select name="alan"{{ if not $adres }} disabled{{ end }}>
+      {{- range site.Data.anasayfa.form_alanlari }}
+      <option value="{{ . }}">{{ i18n (printf "form.secenek.%s" .) }}</option>
+      {{- end }}
+    </select></label>
+    {{- if $adres }}
+    <label class="tuzak" aria-hidden="true">Web<input name="web" type="text" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore data-bwignore data-form-type="other"></label>
+    {{- with site.Params.turnstileAnahtar }}
+    <div class="tam dogrulama" id="f-dogrulama"></div>
+    {{- end }}
+    {{- /* Düğme betikle açılır: betiksiz gönderim tarayıcıyı sunucunun ham yanıtına götürürdü. */}}
+    <button class="dugme tam" type="submit" disabled>{{ i18n "form.gonder" }}</button>
+    <output class="tam" id="f-sonuc" aria-live="polite"></output>
+    <p class="tam not">{{ i18n "form.not" }}{{ with partial "bag.html" "/kvkk" }} <a href="{{ . }}">{{ i18n "form.aydinlatma" }}</a>{{ end }}</p>
+    <noscript><p class="tam not">{{ i18n "form.betiksiz" }} <a href="mailto:{{ site.Params.eposta }}">{{ site.Params.eposta }}</a></p></noscript>
+    {{- else if $denemeSayfasi }}
+    <a class="dugme tam" href="{{ $denemeSayfasi }}">{{ i18n "form.gonder" }}</a>
+    {{- else }}
+    <output class="tam" id="f-sonuc">{{ i18n "form.yakinda" }} <a href="mailto:{{ site.Params.eposta }}">{{ site.Params.eposta }}</a></output>
+    {{- end }}
+  </form>
+  {{- if $adres }}
+  <div class="form bitti" id="deneme-bitti" role="status" tabindex="-1" hidden>
+    <p id="deneme-bitti-metin"></p>
+    <ol class="adimlar">
+      <li>{{ i18n "form.sonra1" }}</li>
+      <li>{{ i18n "deneme.adim2" }}</li>
+      <li>{{ i18n "deneme.adim3" }}</li>
+    </ol>
+  </div>
+  {{- end }}
+</div></section>

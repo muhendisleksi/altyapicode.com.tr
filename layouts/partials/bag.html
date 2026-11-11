@@ -1,0 +1,5 @@
+{{- /* Sayfa yolundan adres: sayfa bu dilde varsa adresi, yoksa boş dize.
+       Henüz yazılmamış sayfaya bağlantı verilmesin diye her iç bağlantı buradan geçer. */ -}}
+{{- $adres := "" -}}
+{{- with site.GetPage . }}{{ $adres = .RelPermalink }}{{ end -}}
+{{- return $adres -}}

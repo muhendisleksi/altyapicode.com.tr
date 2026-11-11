@@ -1,36 +1,10 @@
 {{ define "main" }}
-<article>
-  <header class="sayfa-bas">
-    <div class="sinir">
-      <p class="iz">
-        <a href="/">Anasayfa</a>
-        {{- with .Parent }}{{ if not .IsHome }} / <a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}{{ end }}
-        / {{ .Title }}
-      </p>
-      <h1>{{ .Title }}</h1>
-      {{- with .Description }}<p class="giris">{{ . }}</p>{{ end }}
-    </div>
+<article class="sayfa"><div class="ic">
+  <header class="blok-bas">
+    {{- with .Params.ustEtiket }}<span class="ust-etiket">{{ . }}</span>{{ end }}
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}<p>{{ . }}</p>{{ end }}
   </header>
-
-  <section class="kesim">
-    <div class="sinir">
-      <div class="icerik ac">{{ .Content }}</div>
-    </div>
-  </section>
-</article>
-
-<section class="kesim vurgulu">
-  <div class="sinir">
-    <div class="kesim-bas ac">
-      <p class="komut">Erken Erişim</p>
-      <h2>İlk sürümü kendi projenizde deneyin</h2>
-      <p>Erken erişim ücretsizdir. Karşılığında beklenen tek şey, ürünü gerçek bir
-         projede deneyip geri bildirim vermenizdir.</p>
-    </div>
-    <div class="dugmeler ac" style="--g:.05s; justify-content:center;">
-      <a href="{{ .Site.Params.whatsapp }}" class="dugme dolu" target="_blank" rel="noopener">WhatsApp grubuna katılın</a>
-      <a href="/iletisim/" class="dugme bos">Erken erişim listesine katıl</a>
-    </div>
-  </div>
-</section>
+  <div class="yazi">{{ .Content }}</div>
+</div></article>
 {{ end }}

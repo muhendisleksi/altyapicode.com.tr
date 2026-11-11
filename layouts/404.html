@@ -1,0 +1,16 @@
+{{ define "main" }}
+<article class="sayfa"><div class="ic yok">
+  <svg class="ata" data-ata data-canli data-durum="uyku" viewBox="19 23 162 162" width="132" height="132" aria-hidden="true"></svg>
+  <header class="blok-bas">
+    <span class="ust-etiket">404</span>
+    <h1>{{ i18n "yok.baslik" }}</h1>
+    <p>{{ i18n "yok.metin" }}</p>
+  </header>
+  <div class="sira">
+    <a class="dugme" href="{{ site.Home.RelPermalink }}">{{ i18n "anasayfa" }}</a>
+    {{- with site.GetPage "/demolar" }}
+    <a class="dugme ikincil" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+    {{- end }}
+  </div>
+</div></article>
+{{ end }}

@@ -1,0 +1,13 @@
+{{ define "main" }}
+{{ partial "deneme-blogu.html" . }}
+
+<article class="sayfa">
+  {{- with .Content }}
+  <div class="ic"><div class="yazi">{{ . }}</div></div>
+  {{- end }}
+  <section class="blok"><div class="ic">
+    <div class="blok-bas"><h2>{{ i18n "sayfa.sorular" }}</h2></div>
+    <div class="sorular">{{ partial "sorular.html" (dict "anahtarlar" (slice "deneme" "sistem" "fiyat")) }}</div>
+  </div></section>
+</article>
+{{ end }}

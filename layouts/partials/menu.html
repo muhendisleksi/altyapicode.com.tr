@@ -1,0 +1,8 @@
+{{- /* Ana menü kalemleri. Geniş ekranda başlıkta, dar ekranda açılır kutuda aynı liste kullanılır.
+       Girdi: dict "sayfa" . "sinif" "menu genis" "ad" "<erişilebilir ad>" */ -}}
+{{- $sayfa := .sayfa }}
+<nav class="{{ .sinif }}" aria-label="{{ .ad }}">
+  {{- range site.Menus.main }}
+  <a href="{{ .URL }}"{{ if or ($sayfa.IsMenuCurrent "main" .) ($sayfa.HasMenuCurrent "main" .) }} aria-current="page"{{ end }}>{{ .Name }}</a>
+  {{- end }}
+</nav>

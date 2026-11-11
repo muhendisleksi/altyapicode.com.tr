@@ -1,0 +1,54 @@
+{{ define "main" }}
+{{- $d := site.Data.videolar }}
+{{- $dil := site.Language.Lang }}
+<article class="sayfa">
+  <div class="ic">
+    <header class="blok-bas">
+      {{- with .Params.ustEtiket }}<span class="ust-etiket">{{ . }}</span>{{ end }}
+      <h1>{{ .Title }}</h1>
+      {{- with .Params.ozet }}<p>{{ . }}</p>{{ end }}
+    </header>
+  </div>
+
+  <section class="blok"><div class="ic">
+    <div class="blok-bas"><h2>{{ i18n "demolar.uzun" }}</h2></div>
+    {{- range $d.uzun }}
+    {{- $v := partial "video-kaydi.html" (dict "kod" .kod) }}
+    {{- $adres := printf "%s%s" site.Params.medyaKoku .dosya }}
+    <div class="uzun-video" id="{{ .kod }}">
+      {{ partial "oynatici.html" (dict "v" . "ad" $v.baslik) }}
+      <div class="metin">
+        <h3>{{ $v.baslik }}</h3>
+        <p class="soluk">{{ $v.yazi }}</p>
+        {{- with $v.sure }}<span class="kunye-satir">{{ . }}</span>{{ end }}
+        <ol class="bolum-liste" aria-label="{{ i18n "demolar.bolumler" }}">
+          {{- range .bolumler }}
+          <li><a href="{{ $adres }}#t={{ .t }}" data-atla="{{ .t }}"><span>{{ div .t 60 }}:{{ printf "%02d" (mod .t 60) }}</span>{{ index . $dil | default .tr }}</a></li>
+          {{- end }}
+        </ol>
+      </div>
+    </div>
+    {{- end }}
+  </div></section>
+
+  <section class="blok" id="kisa"><div class="ic">
+    <div class="blok-bas">
+      <h2>{{ i18n "demolar.kisa" }}</h2>
+      <p>{{ i18n "demolar.kisaMetin" }}</p>
+    </div>
+    <div class="suzgec" role="group" aria-label="{{ i18n "demolar.suzgec" }}" hidden>
+      {{- range slice "altyapi" "yol" "3b" }}
+      <button type="button" data-alan="{{ . }}" aria-pressed="false">{{ i18n (printf "demoalan.%s" .) }}</button>
+      {{- end }}
+    </div>
+    <div class="videolar demolar">
+      {{- range .Pages.ByParam "kod" }}
+      {{- $v := partial "video-kaydi.html" (dict "kod" .Params.kod "sayfa" .) }}
+      {{ partial "video-karti.html" (dict "v" $v "adres" .RelPermalink "alan" .Params.alan "kunye" (i18n (printf "demoalan.%s" .Params.alan))) }}
+      {{- end }}
+    </div>
+  </div></section>
+</article>
+
+{{ partial "deneme-blogu.html" . }}
+{{ end }}

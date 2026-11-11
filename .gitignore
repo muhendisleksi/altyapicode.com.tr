@@ -17,3 +17,6 @@ Thumbs.db
 # Ham ekran kayıtları — siteye sıkıştırılmış hâlleri (static/video/) girer,
 # yüzlerce megabaytlık kaynak dosya depoda tutulmaz.
 ham-video/
+
+# Tasarım taslağı — üretim bitene dek başvuru kaynağı, siteye girmez.
+taslak/

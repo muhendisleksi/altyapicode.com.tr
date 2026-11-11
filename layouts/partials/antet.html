@@ -1,0 +1,38 @@
+{{- /* Antet kutusu: paftanın künyesi. "Pafta" = sayfanın adı + menü sırasındaki yeri
+       (ana sayfa 1, menü kalemleri 2…N); menüde olmayan sayfada yalnız ad. */ -}}
+{{- $sayfa := . }}
+{{- $toplam := add (len site.Menus.main) 1 }}
+{{- $sira := 0 }}
+{{- $ad := .LinkTitle }}
+{{- if .IsHome }}{{ $sira = 1 }}{{ $ad = i18n "anasayfa" }}{{ end }}
+{{- if eq .Kind "404" }}{{ $ad = "404" }}{{ end }}
+{{- range $i, $m := site.Menus.main }}
+  {{- if or ($sayfa.IsMenuCurrent "main" $m) ($sayfa.HasMenuCurrent "main" $m) }}{{ $sira = add $i 2 }}{{ end }}
+{{- end }}
+<footer class="antet"><div class="ic">
+  <div class="antet-kutu">
+    <div><small>{{ i18n "antet.proje" }}</small><span>{{ i18n "antet.projeDeger" }}</span></div>
+    <div><small>{{ i18n "antet.pafta" }}</small><span>{{ $ad }}{{ if $sira }} · {{ $sira }} / {{ $toplam }}{{ end }}</span></div>
+    <div><small>{{ i18n "antet.olcek" }}</small><span>1 : 1</span></div>
+    <div><small>{{ i18n "antet.tarih" }}</small><span>{{ now.Format "2006-01" }}</span></div>
+    <div><small>{{ i18n "antet.iletisim" }}</small><a href="mailto:{{ site.Params.eposta }}">{{ site.Params.eposta }}</a></div>
+  </div>
+  <nav class="alt-baglar" aria-label="{{ i18n "antet.baglar" }}">
+    {{- range site.Menus.main }}
+    <a href="{{ .URL }}">{{ .Name }}</a>
+    {{- end }}
+    {{- range slice "/sss" "/hakkinda" "/iletisim" "/kvkk" }}
+    {{- with site.GetPage . }}
+    <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+    {{- end }}
+    {{- end }}
+    {{- range site.Sites }}
+    {{- if ne .Language.Lang site.Language.Lang }}
+    {{- $hedef := .Home.RelPermalink }}
+    {{- $kod := .Language.Lang }}
+    {{- range $sayfa.Translations }}{{ if eq .Language.Lang $kod }}{{ $hedef = .RelPermalink }}{{ end }}{{ end }}
+    <a href="{{ $hedef }}" lang="{{ $kod }}" hreflang="{{ $kod }}">{{ .Language.LanguageName }}</a>
+    {{- end }}
+    {{- end }}
+  </nav>
+</div></footer>

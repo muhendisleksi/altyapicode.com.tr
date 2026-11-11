@@ -1,0 +1,256 @@
+# Site metinleri — Türkçe. Şablonlarda sabit metin durmaz; liste içerikleri data/anasayfa.yaml'dadır.
+
+# ortak
+[slogan]
+other = "Araziden hakedişe, tek program."
+[atla]
+other = "İçeriğe atla"
+[menu.ad]
+other = "Ana menü"
+[menu.ac]
+other = "Menü"
+[dil.ad]
+other = "Dil"
+[dugme.dene]
+other = "30 gün dene"
+[sekil]
+other = "Şekil"
+[ayrinti]
+other = "Ayrıntı"
+[anasayfa]
+other = "Ana sayfa"
+
+# giriş
+[giris.etiket]
+other = "Yerli · bağımsız · <span lang=\"en\">Windows</span>"
+[giris.baslik1]
+other = "Araziden hakedişe,"
+[giris.baslik2]
+other = "tek program."
+[giris.alt]
+other = "ATA CAD yolu, altyapı ağını ve 3B modeli aynı dosyada çizer. Kübaj, pafta ve metraj o modelden çıkar. Başka bir CAD lisansı gerekmez."
+[giris.dene]
+other = "30 gün ücretsiz deneyin"
+[giris.videolar]
+other = "Videoları izle"
+[giris.sozDene]
+other = "Kart bilgisi istenmez"
+[giris.sozVideolar]
+other = "Kurulum gerekmez"
+[giris.surum]
+other = "Sürüm"
+[giris.isletim]
+other = "Windows 10 / 11"
+[giris.arayuz]
+other = "Türkçe arayüz ve komutlar"
+[giris.yarma]
+other = "yarma"
+[giris.dolgu]
+other = "dolgu"
+[giris.sekil]
+other = "canlandırma ·"
+[giris.gorselAlt]
+other = "Dağlık araziye oturmuş yol koridoru, 3B görünüm"
+
+# kurum şeridi
+[kurum.metin]
+other = "İller Bankası, İSKİ ve DSİ kuralları ile KGM El Kitabı tabloları programın içinde."
+
+# Türkiye için yapıldı
+[yerli.etiket]
+other = "Türkiye için yapıldı"
+[yerli.baslik]
+other = "Kural, tablo ve künye içinde."
+[yerli.metin]
+other = "Hesapta kullanılan her değer kaynağını taşır. Kaynağı doğrulanmamış değer hesaba girmez."
+
+# çalışma alanları
+[alanlar.etiket]
+other = "Üç çalışma alanı"
+[alanlar.baslik]
+other = "Yol. Altyapı. 3B model."
+[alanlar.metin]
+other = "Program üç işe göre düzenlenir. Alan değiştirince şerit değişir, çizim aynı kalır."
+[alanlar.cikti]
+other = "Çıktı:"
+
+# yapay zekâ
+[ajan.etiket]
+other = "Yapay zekâ ile"
+[ajan.baslik]
+other = "Söyle, çizilsin."
+[ajan.metin]
+other = "ATA CAD kendi Claude hesabınıza bağlanır. İsteği Türkçe yazarsınız, program komutları sizin ekranınızda çalıştırır."
+[ajan.istem]
+other = "İstem"
+[ajan.istemYer]
+other = "Zeytinli Ev · tek sohbet"
+[ajan.istemMetin]
+other = "Yamaçtaki parsele üç katlı bir villa kur: bodrum havuz terasına açılsın, zemin kat güneye konsol çıksın ve V kolonlarla taşınsın, üst kat beşik çatılı olsun. Garajı, giriş avlusunu, havuzu ve bahçe yollarını ekle; odaları döşe."
+[ajan.istemSonuc]
+other = "Villa kuruldu · peyzaj araziye oturdu · odalar döşendi"
+[ajan.sekilAlt]
+other = "Yamaçta üç katlı villa: konsol teras, cam cephe, havuz ve bahçe; 3B görünüm"
+[ajan.sekilNot]
+other = "Zeytinli Ev · yapay zekânın program köprüsünden kurduğu villa"
+[ajan.sayfa]
+other = "Yapay zekâ sayfası"
+
+# videolar
+[videolar.etiket]
+other = "Videolar"
+[videolar.baslik]
+other = "Programın kendi ekranından."
+[videolar.metin]
+other = "Üç video da gerçek ekran kaydından kurgulandı."
+[videolar.kisa]
+other = "12 kısa demo"
+
+# çıktılar
+[teslim.etiket]
+other = "Çıktılar"
+[teslim.baslik]
+other = "Veri sizde kalır."
+[teslim.metin]
+other = "Her çıktı açık formattadır ve başka programda açılır."
+[teslim.dwg]
+other = "DWG ve DXF dosyaları okunur; DWG'ye yazılmaz, çizim DXF olarak verilir."
+[teslim.sutun1]
+other = "Teslim edilen"
+[teslim.sutun2]
+other = "Format"
+
+# deneme
+[deneme.etiket]
+other = "30 gün ücretsiz"
+[deneme.baslik]
+other = "Kendi projenizde deneyin."
+[deneme.adim1]
+other = "Formu doldurun; kurulum dosyasının bağlantısı e-postanıza gelir."
+[deneme.adim2]
+other = "Programı açın, adınızı ve telefonunuzu yazın. 30 günlük deneme o an başlar."
+[deneme.adim3]
+other = "Kendi projenizde kullanın."
+[deneme.not]
+other = "Deneme bilgisayar başına bir kezdir. Deneme süresince DXF, Excel, CSV ve LandXML çıktıları \"DEMO\" damgası taşır."
+[form.ad]
+other = "Ad soyad"
+[form.eposta]
+other = "E-posta"
+[form.firma]
+other = "Firma ya da kurum"
+[form.alan]
+other = "Çalışma alanı"
+[form.secenek.altyapi]
+other = "Altyapı (kanalizasyon, yağmursuyu, içmesuyu)"
+[form.secenek.yol]
+other = "Yol"
+[form.secenek.bina-peyzaj]
+other = "Bina ve peyzaj"
+[form.secenek.kazi-arazi]
+other = "Kazı ve arazi düzenleme"
+[form.gonder]
+other = "30 günlük denemeyi iste"
+[form.gonderiliyor]
+other = "Gönderiliyor…"
+[form.yakinda]
+other = "Deneme formu çok yakında açılıyor. Şimdilik:"
+[form.not]
+other = "Bilgileriniz kurulum bağlantısını göndermek ve isteğinize dönüş yapmak için kullanılır."
+[form.aydinlatma]
+other = "Aydınlatma metni"
+[form.betiksiz]
+other = "Formu kullanmak için tarayıcıda betik açık olmalı. Deneme isteğinizi e-postayla da yazabilirsiniz:"
+[form.sonra1]
+other = "E-postadaki bağlantıdan kurulum dosyasını indirin ve kurun."
+# Form durum metinleri. {adres} ziyaretçinin yazdığı e-posta, {iletisim} sitenin iletişim adresidir (betik bağlantıya çevirir).
+[form.m.gitti]
+other = "Kurulum bağlantısı {adres} adresine gönderildi. Birkaç dakika içinde gelmezse gereksiz klasörüne bakın ya da {iletisim} adresine yazın."
+[form.m.alan]
+other = "Bu alanı denetleyin."
+[form.m.dogrulama]
+other = "Doğrulama tamamlanamadı. Sayfayı yenileyip yeniden deneyin ya da {iletisim} adresine yazın."
+[form.m.cok]
+other = "Bugün çok fazla istek geldi. Yarın yeniden deneyin ya da {iletisim} adresine yazın."
+[form.m.dustu]
+other = "İsteğiniz alındı ama e-posta gönderilemedi. {iletisim} adresine yazın, bağlantıyı elle gönderelim."
+[form.m.ag]
+other = "Bağlantı kurulamadı. Biraz sonra yeniden deneyin ya da {iletisim} adresine yazın."
+
+# antet
+[antet.proje]
+other = "Proje"
+[antet.projeDeger]
+other = "ATA CAD · bağımsız CAD platformu"
+[antet.pafta]
+other = "Pafta"
+[antet.olcek]
+other = "Ölçek"
+[antet.tarih]
+other = "Tarih"
+[antet.iletisim]
+other = "İletişim"
+[antet.baglar]
+other = "Site bağlantıları"
+
+# iç sayfalar
+[sayfa.ciktilar]
+other = "Çıktılar"
+[sayfa.yapmaz]
+other = "Açıkça: ne yapmaz"
+[sayfa.demolar]
+other = "İlgili demolar"
+[sayfa.sorular]
+other = "Sık sorulanlar"
+[yetenek.ad]
+other = "Yetenek"
+[yetenek.not]
+other = "Ayrıntı"
+[yetenek.durum]
+other = "Durum"
+[durum.calisiyor]
+other = "çalışıyor"
+[durum.siradaki]
+other = "sıradaki"
+[sss.kvkk]
+other = "KVKK sayfasına"
+
+# demolar
+[demolar.uzun]
+other = "Uzun videolar"
+[demolar.bolumler]
+other = "Bölümler"
+[demolar.kisa]
+other = "Kısa demolar"
+[demolar.kisaMetin]
+other = "Her biri tek bir işi gösterir ve uzun videolardan kesilmiştir. Sayfasında programın ne yaptığı ile mühendisin neye karar verdiği ayrı yazılır."
+[demolar.suzgec]
+other = "Çalışma alanına göre süz"
+[demoalan.altyapi]
+other = "Altyapı"
+[demoalan.yol]
+other = "Yol ve arazi"
+[demoalan.3b]
+other = "3B model"
+[demo.iz]
+other = "Konum"
+[demo.program]
+other = "Program ne yaptı"
+[demo.muhendis]
+other = "Mühendis neyi onayladı"
+[demo.tam]
+other = "Tam video"
+[demo.tamMetin]
+other = "Bu demo aşağıdaki videodan kesildi. Bağlantı videoyu aynı yerden başlatır."
+[demo.gez]
+other = "Önceki ve sonraki demo"
+[demo.onceki]
+other = "Önceki"
+[demo.sonraki]
+other = "Sonraki"
+
+# 404
+[yok.baslik]
+other = "Bu pafta bulunamadı."
+[yok.metin]
+other = "Aradığınız sayfa kaldırılmış ya da adresi değişmiş olabilir."

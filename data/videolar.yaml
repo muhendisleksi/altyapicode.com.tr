@@ -1,0 +1,70 @@
+# Videolar. Dosyalar medya deposundadır (hugo.toml ▸ params.medyaKoku + dosya); ad sürümlüdür: video yenilenirse v2.
+# Süre ve boyut ELLE yazılmaz: data/medya_olcum.json'dan gelir (CAD deposu Araclar/VideoKayıt/site/site_medya.py olc).
+# olcum: o dosyadaki anahtar · t: kısa demonun kaynak videodaki başlangıç saniyesi · bolumler[].t: saniye
+
+uzun:
+  - kod: "v-erguvan"
+    olcum: "erguvan-1080"
+    dosya: "uzun/erguvan-1080.v1.mp4"
+    kapak: "img/kapak/ATACAD_Claude_Erguvan_kapak.jpg"
+    tr: { baslik: "İki kule, parselden IFC'ye", yazi: "Karkas, tesisat, peyzaj, denetim ve inşaat filmi." }
+    en: { baslik: "Two towers, from parcel to IFC", yazi: "Structural frame, services, landscape, compliance check and construction sequence animation." }
+    bolumler:
+      - { t: 8,   tr: "Parsel ve karkas", en: "Parcel and frame" }
+      - { t: 52,  tr: "Podyum", en: "Podium" }
+      - { t: 77,  tr: "Kule", en: "Tower" }
+      - { t: 120, tr: "Çatı", en: "Roof" }
+      - { t: 138, tr: "Tesisat", en: "Services" }
+      - { t: 172, tr: "Altyapı", en: "Infrastructure" }
+      - { t: 203, tr: "İç mekân", en: "Interior" }
+      - { t: 245, tr: "Peyzaj", en: "Landscape" }
+      - { t: 284, tr: "Denetim", en: "Compliance check" }
+      - { t: 328, tr: "Çıktı", en: "Output" }
+      - { t: 390, tr: "3B gezinti", en: "3D walkthrough" }
+      - { t: 431, tr: "İnşaat filmi", en: "Construction sequence animation" }
+      - { t: 449, tr: "Modelden fotoğrafa", en: "Model to photo" }
+  - kod: "v-sogutlu"
+    olcum: "sogutlu-1080"
+    dosya: "uzun/sogutlu-1080.v1.mp4"
+    kapak: "img/kapak/ATACAD_Claude_Sogutlu_v3_kapak.jpg"
+    tr: { baslik: "Araziden 3B modele", yazi: "Arazi, yol, atıksu hattı, yapılar ve peyzaj tek sohbette." }
+    en: { baslik: "From terrain to 3D model", yazi: "Terrain, road, waste water line, buildings and landscape in a single chat." }
+    bolumler:
+      - { t: 8,   tr: "Arazi", en: "Terrain" }
+      - { t: 36,  tr: "Yol", en: "Road" }
+      - { t: 88,  tr: "Altyapı", en: "Infrastructure" }
+      - { t: 176, tr: "Yapılar", en: "Buildings" }
+      - { t: 311, tr: "Peyzaj", en: "Landscape" }
+      - { t: 355, tr: "3B gezinti", en: "3D walkthrough" }
+  - kod: "v-kurallar"
+    olcum: "kurallar-1080"
+    dosya: "uzun/kurallar-1080.v1.mp4"
+    kapak: "img/kapak/ATACAD_Kurallar_v4_kapak.jpg"
+    altyazi: "altyazi/kurallar.en.vtt"
+    tr: { baslik: "Yol tasarımı: tip kesit kurallarından metraja", yazi: "Güzergâh, tip kesit kuralları, dever, duvarlar, en kesit paftası ve metraj." }
+    en: { baslik: "Road design: from typical section rules to quantities", yazi: "Alignment, typical section rules, superelevation, walls, cross-section sheet and quantity take-off." }
+    bolumler:
+      - { t: 8,   tr: "Güzergâh ve profil", en: "Alignment and profile" }
+      - { t: 119, tr: "Tip kesit", en: "Typical section" }
+      - { t: 218, tr: "Kurallar", en: "Rules" }
+      - { t: 320, tr: "Koridor ve yarma", en: "Corridor and cut" }
+      - { t: 446, tr: "Dever ve yerleşim", en: "Superelevation and built-up section" }
+      - { t: 542, tr: "İkazlar", en: "Warnings" }
+      - { t: 585, tr: "3B sürüş", en: "3D drive-through" }
+      - { t: 683, tr: "Duvarlar", en: "Walls" }
+      - { t: 745, tr: "En kesit paftası", en: "Cross-section sheet" }
+      - { t: 801, tr: "Metraj", en: "Quantity take-off" }
+
+kisa:
+  - { kod: "d01", dosya: "kisa/d01.v1.mp4", kapak: "img/kapak/d01.jpg", kaynak: "v-erguvan",  t: 8 }
+  - { kod: "d02", dosya: "kisa/d02.v1.mp4", kapak: "img/kapak/d02.jpg", kaynak: "v-erguvan",  t: 138 }
+  - { kod: "d03", dosya: "kisa/d03.v1.mp4", kapak: "img/kapak/d03.jpg", kaynak: "v-erguvan",  t: 245 }
+  - { kod: "d04", dosya: "kisa/d04.v1.mp4", kapak: "img/kapak/d04.jpg", kaynak: "v-erguvan",  t: 285 }
+  - { kod: "d05", dosya: "kisa/d05.v1.mp4", kapak: "img/kapak/d05.jpg", kaynak: "v-erguvan",  t: 328 }
+  - { kod: "d06", dosya: "kisa/d06.v1.mp4", kapak: "img/kapak/d06.jpg", kaynak: "v-erguvan",  t: 432 }
+  - { kod: "d07", dosya: "kisa/d07.v1.mp4", kapak: "img/kapak/d07.jpg", kaynak: "v-sogutlu",  t: 8 }
+  - { kod: "d08", dosya: "kisa/d08.v1.mp4", kapak: "img/kapak/d08.jpg", kaynak: "v-sogutlu",  t: 37 }
+  - { kod: "d09", dosya: "kisa/d09.v1.mp4", kapak: "img/kapak/d09.jpg", kaynak: "v-sogutlu",  t: 88 }
+  - { kod: "d10", dosya: "kisa/d10.v1.mp4", kapak: "img/kapak/d10.jpg", kaynak: "v-kurallar", t: 218 }
+  - { kod: "d11", dosya: "kisa/d11.v1.mp4", kapak: "img/kapak/d11.jpg", kaynak: "v-kurallar", t: 446 }
+  - { kod: "d12", dosya: "kisa/d12.v1.mp4", kapak: "img/kapak/d12.jpg", kaynak: "v-kurallar", t: 745 }

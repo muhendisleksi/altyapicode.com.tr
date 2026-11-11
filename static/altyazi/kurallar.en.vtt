@@ -1,0 +1,292 @@
+WEBVTT
+
+00:05.050 --> 00:08.500
+ATA CAD. Terrain changes, the section decides itself.
+
+00:08.550 --> 00:12.910
+Alignment and profile. Draw the alignment, let the profile meet the highway standard.
+
+00:13.583 --> 00:23.117
+We draw the road centerline on the Karaçam surface with the Alignment command.
+
+00:23.617 --> 00:33.618
+We set the alignment options.
+
+00:33.918 --> 00:42.650
+We place the centerline points by clicking on the terrain.
+
+00:42.950 --> 00:50.017
+We set the drawing color back to the layer.
+
+00:50.517 --> 01:05.717
+With the Profile command we place the terrain section in an empty area.
+
+01:06.150 --> 01:17.483
+We zoom into the profile view.
+
+01:17.983 --> 01:33.650
+We draw the design line by clicking the design elevations.
+
+01:33.750 --> 01:43.150
+The program warns at once: the vertical curve K value is below the highway standard.
+
+01:43.350 --> 01:55.250
+We drag the curve grip; K grows and the warning clears.
+
+01:55.350 --> 01:59.283
+The design line now meets the standard.
+
+01:59.483 --> 02:02.483
+Typical section. Define the road once.
+
+02:04.117 --> 02:09.451
+Now we define the road. We open the Typical Section window.
+
+02:10.451 --> 02:16.418
+We create a new typical section: Karaçam Road.
+
+02:16.618 --> 02:20.918
+We add a lane from the palette.
+
+02:21.218 --> 02:25.418
+Then a shoulder and a guardrail.
+
+02:25.518 --> 02:27.035
+We mirror the right side to the left.
+
+02:27.085 --> 02:30.068
+Shoulder width: one metre.
+
+02:30.118 --> 02:35.151
+In the Pavement tab we define a new asphalt package.
+
+02:35.551 --> 03:09.052
+We enter the wearing, binder, base and subbase layers with their thicknesses.
+
+03:09.252 --> 03:15.102
+We link the package to the section; the layers appear in the preview.
+
+03:15.152 --> 03:25.102
+Slope ratios: 1:1 in cut, 1:1.5 in fill.
+
+03:25.152 --> 03:34.952
+The test ground shows the same section in cut and in fill.
+
+03:35.052 --> 03:38.152
+We click OK; the typical section is saved.
+
+03:38.352 --> 03:41.352
+Rules. Write the rule, let the program decide.
+
+03:43.052 --> 03:49.252
+To define the rules, we open the Karaçam Road typical section.
+
+03:49.452 --> 03:59.052
+From the Slope tab we open an empty rule set. Rules decide which section the program uses at every station.
+
+03:59.252 --> 04:08.784
+First rule: if the fill height exceeds four metres…
+
+04:08.984 --> 04:16.634
+…use a wall instead of a slope. Wall height at most 7.5 metres.
+
+04:16.684 --> 04:32.484
+Second rule: if the fill is under two metres, apply a 1:3 flat safety slope.
+
+04:32.684 --> 04:38.251
+The third rule is for the cut side.
+
+04:38.551 --> 04:56.450
+In cut, a 0.5 by 0.5 m ditch is added at the toe of the slope.
+
+04:56.650 --> 05:06.516
+Now we move the ground with the test slider. As the height changes, the section decides for itself which rule applies.
+
+05:06.716 --> 05:20.448
+The preview shows the result: in deep fill, a wall replaces the slope. We wrote the rule once; the program decides the rest.
+
+05:20.648 --> 05:23.888
+Corridor and cut. Build the corridor, with a dedicated section for the cut.
+
+05:26.981 --> 05:32.415
+We run the Corridor command.
+
+05:32.715 --> 05:46.548
+We name the corridor and set the sampling interval to ten metres.
+
+05:46.848 --> 05:52.748
+The corridor is built.
+
+05:53.048 --> 06:10.315
+In the Corridor Section window we select station 1+120.
+
+06:10.515 --> 06:14.681
+Here there is a ten-metre cut; the slopes spread sixteen metres to each side.
+
+06:14.881 --> 06:23.482
+We define a separate typical section for the cut: Karaçam Cut.
+
+06:23.782 --> 06:38.182
+We add the lane, the shoulder and the cut wall.
+
+06:38.382 --> 06:42.282
+We mirror; the shoulder is again one metre.
+
+06:42.482 --> 06:45.415
+Pavement preset: rural.
+
+06:45.615 --> 06:52.948
+We enter the slope ratios.
+
+06:53.148 --> 07:00.948
+On the test ground a wall appears in the deep cut.
+
+07:01.148 --> 07:18.215
+In the Regions and Targets table we assign the cut section between 960 and 1320.
+
+07:18.415 --> 07:26.748
+At the same station there is now a walled cut; width 13.3 metres.
+
+07:26.948 --> 07:31.468
+Superelevation and urban segment. Superelevation by the highway standard, a bike lane in town.
+
+07:31.781 --> 07:38.581
+We open the Superelevation command for the alignment.
+
+07:38.781 --> 07:47.948
+Highway criteria: design speed 70, maximum superelevation 8 percent.
+
+07:48.148 --> 07:51.715
+We calculate by the standard; the curve table and the superelevation diagram appear.
+
+07:51.915 --> 08:02.648
+Curve info blocks are placed on the plan.
+
+08:02.848 --> 08:20.348
+The superelevation band is shown in the profile view.
+
+08:20.548 --> 08:30.114
+In Typical Section we add a ready-made section from the library.
+
+08:30.314 --> 08:40.831
+The T2-A package includes a bike lane and a sidewalk.
+
+08:40.881 --> 08:45.482
+T2-A is added as a new definition.
+
+08:45.682 --> 09:01.631
+We assign the first 200 metres of the corridor to this section as the urban segment.
+
+09:01.681 --> 09:02.664
+The corridor is rebuilt.
+
+09:02.926 --> 09:06.166
+Warnings. A radius outside the rule, an instant warning.
+
+09:07.448 --> 09:11.848
+From the Explorer we open the alignment's geometry table.
+
+09:12.048 --> 09:15.332
+We deliberately pull the radius below the minimum: 150 metres.
+
+09:15.382 --> 09:22.248
+The program warns: radius 150, minimum 170.
+
+09:22.448 --> 09:35.598
+A red warning badge appears above the curve on the plan.
+
+09:35.648 --> 09:42.915
+We apply the suggested fix; the radius becomes 170 and the warning clears.
+
+09:43.015 --> 09:45.481
+The radius now meets the standard.
+
+09:45.681 --> 09:49.081
+3D drive. Every surface with its own material.
+
+09:49.881 --> 09:56.497
+We select the corridor and open the Properties panel.
+
+09:56.547 --> 10:03.731
+Road marking class: rural.
+
+10:03.781 --> 10:08.664
+We send the corridor to the 3D Viewer.
+
+10:08.714 --> 10:17.982
+We choose the textured view and the daytime sky.
+
+10:18.182 --> 10:26.532
+We start driving; at the road start, the bike lane and the sidewalk.
+
+10:26.582 --> 10:32.182
+Superelevation in the curve: the road tilts inward.
+
+10:32.382 --> 10:43.682
+We switch the marking class to urban.
+
+10:43.882 --> 10:55.632
+The edge line is gone; the dashes are now three by three metres.
+
+10:55.682 --> 11:23.682
+In the cut: the wall, the weep holes and the guardrail.
+
+11:23.882 --> 11:26.882
+Walls. Detail, automatically.
+
+11:27.915 --> 11:37.848
+In Typical Section we open the Karaçam Cut definition.
+
+11:38.048 --> 11:46.947
+The detailed preview shows the filter, weep holes, gravel and drain.
+
+11:47.147 --> 11:54.647
+From closed forms we go to the wall dimensions.
+
+11:54.847 --> 12:03.514
+When the front slope is entered too steep, the program gives a safety warning.
+
+12:03.714 --> 12:06.097
+We cancel; the value is not saved.
+
+12:06.147 --> 12:18.964
+In Corridor Section, at metre 449, the rule wall appears.
+
+12:19.014 --> 12:25.381
+As the station changes, the wall height changes too.
+
+12:25.581 --> 12:28.821
+Cross-section sheet. Every station picks its own section.
+
+12:30.348 --> 12:35.914
+We run the cross-section sheet command.
+
+12:36.114 --> 12:44.080
+Sample lines every twenty metres, thirty metres to the left and right.
+
+12:44.280 --> 12:46.881
+We click the corner of the sheet.
+
+12:47.081 --> 12:55.615
+78 sections, a four-column sheet is created.
+
+12:55.815 --> 13:21.515
+The fill and cut cells show the cut and fill areas; every station has picked its own section.
+
+13:21.715 --> 13:24.715
+Quantities. What you draw is your quantities.
+
+13:26.615 --> 13:31.098
+We open the Earthwork window.
+
+13:31.148 --> 13:36.014
+We select the corridor section as the source and calculate.
+
+13:36.214 --> 13:40.981
+Cut, fill and net volume are out.
+
+13:41.181 --> 13:46.415
+In the closed-form quantities, guardrail, curb and filter items come from the same model.
+
+13:46.715 --> 13:50.915
+From terrain to quantities, on one platform.

@@ -1,190 +1,25 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="{{ site.Language.Lang }}">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-{{- $baslik := cond .IsHome .Site.Title (printf "%s — %s" .Title .Site.Params.marka) }}
-<title>{{ $baslik }}</title>
-<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
-<link rel="canonical" href="{{ .Permalink }}">
-<meta property="og:type" content="{{ cond .IsPage "article" "website" }}">
-<meta property="og:title" content="{{ $baslik }}">
-<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
-<meta property="og:url" content="{{ .Permalink }}">
-<meta property="og:locale" content="tr_TR">
-{{/* Sürüm parçası, simge değiştiğinde tarayıcının eskisini göstermesini
-     engeller — favicon'lar agresif önbelleklenir ve normal yenileme onları
-     tazelemez. */}}
-<link rel="icon" href="/favicon.svg?s=2" type="image/svg+xml">
-<meta name="theme-color" content="#1B55B4">
-<script>
-/* Boyamadan önce: tema tercihi + `js` sınıfı.
-   `js` olmadan açılış animasyonlarının gizleme kuralları geçersizdir —
-   betik çalışmazsa içerik gizlenmez.
-   `zemin-oynar`: zemin katmanı hareketli çalışacak (hareket kısıtı yok,
-   WebGL2 var; telefonda da). Sahne araları yalnız o zaman yer tutar; sınıf
-   burada konur ki sayfa sonradan uzayıp kaymasın. WebGL2 bağlamı yine de
-   alınamazsa zemin.js sınıfı geri alır. */
-(function(){var k=document.documentElement;k.className+=' js';var t=null;
-try{t=localStorage.getItem('tema');}catch(e){}
-k.setAttribute('data-tema',t||'koyu');
-try{if(window.WebGL2RenderingContext&&
-!matchMedia('(prefers-reduced-motion: reduce)').matches){k.className+=' zemin-oynar';}}catch(e){}})();
-</script>
-{{/* Sürüm eki dosya içeriğinin özetidir: CSS/JS değişince adres değişir ve
-     tarayıcı önbellekteki eski dosyayı kullanmaz; değişmeyince önbellek işler. */}}
-<link rel="stylesheet" href="/css/ata.css?s={{ readFile "static/css/ata.css" | md5 | truncate 8 "" }}">
+{{ partial "head.html" . }}
 </head>
 <body>
-<a class="atla" href="#govde">İçeriğe atla</a>
-
-{{/* ══════════ ÜST ŞERİT — iletişim kanalları, her sayfada görünür ══════════ */}}
-<div class="ust-serit">
-  <div class="sinir ust-serit-ic">
-    <a href="tel:{{ replace .Site.Params.telefonGorunen " " "" }}" class="us-oge">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .57 3.6 1 1 0 0 1-.25 1z"/></svg>
-      {{ .Site.Params.telefonGorunen }}
-    </a>
-    <a href="mailto:{{ .Site.Params.eposta }}" class="us-oge">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m3 6 9 6 9-6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-      {{ .Site.Params.eposta }}
-    </a>
-    <span class="us-bosluk"></span>
-    <a href="{{ .Site.Params.whatsapp }}" class="us-dugme" target="_blank" rel="noopener">WhatsApp</a>
-    <a href="/iletisim/" class="us-dugme birincil">Erken Erişim</a>
-  </div>
-</div>
-
-{{/* ══════════ BAŞLIK — logo + yatay menü ══════════ */}}
-<header class="baslik" id="baslik">
-  <div class="sinir baslik-ic">
-    <a class="marka" href="/">
-      <span class="marka-rozet">A</span>
-      <span class="marka-yazi">
-        <span class="marka-ad">ATA<i>CAD</i></span>
-        <span class="marka-alt">{{ .Site.Params.altbaslik }}</span>
-      </span>
-    </a>
-
-    <nav class="menu" id="menu" aria-label="Ana menü">
-      {{/* Menü girişleri hugo.toml'da `url =` ile tanımlı, yani Hugo onları bir
-           sayfaya bağlamıyor; IsMenuCurrent/HasMenuCurrent bu yüzden HİÇ true
-           dönmüyordu ve okuyucu hangi sayfada olduğunu menüden göremiyordu.
-           Karşılaştırma adres önekiyle yapılıyor: /eklentiler/altyapi-asistani/
-           sayfasında "Eklentiler" de yanar. Anasayfa önek olarak her adrese
-           uyacağı için yalnız tam eşitlikte yanar. */}}
-      {{- $adres := .RelPermalink }}
-      {{- range .Site.Menus.main }}
-        {{- if ne .Name "|" }}
-          {{- $bu := eq $adres .URL }}
-          {{- if and (not $bu) (ne .URL "/") }}{{ $bu = hasPrefix $adres .URL }}{{ end }}
-      <a href="{{ .URL }}"{{ if $bu }} aria-current="page"{{ end }}>{{ .Name }}</a>
-        {{- end }}
-      {{- end }}
-
-      {{/* Tema seçicinin dar ekran kopyası. Telefonda başlık çubuğunda üç
-           düğmeye + hamburgere + CTA'ya birden yer yok; seçici açılır menünün
-           içine iner. Hangisinin görüneceğini CSS söyler, ikisi asla birlikte
-           görünmez. Betiğe dokunmak gerekmedi: ata.js düğmeleri
-           querySelectorAll('[data-tema-sec]') ile topluyor, yani bu kopya da
-           kendiliğinden bağlanır ve iki grup aynı anda işaretlenir. */}}
-      <div class="tema-grup tema-grup-menu" role="group" aria-label="Tema">
-        <button class="tema-dugme" data-tema-sec="koyu" aria-pressed="false" title="Koyu tema">⬤</button>
-        <button class="tema-dugme" data-tema-sec="gri"  aria-pressed="false" title="Gri tema">◐</button>
-        <button class="tema-dugme" data-tema-sec="acik" aria-pressed="false" title="Açık tema">◯</button>
-      </div>
-    </nav>
-
-    <div class="baslik-sag">
-      <div class="tema-grup tema-grup-baslik" role="group" aria-label="Tema">
-        <button class="tema-dugme" data-tema-sec="koyu" aria-pressed="false" title="Koyu tema">⬤</button>
-        <button class="tema-dugme" data-tema-sec="gri"  aria-pressed="false" title="Gri tema">◐</button>
-        <button class="tema-dugme" data-tema-sec="acik" aria-pressed="false" title="Açık tema">◯</button>
-      </div>
-      {{/* Telefonda üst şeritteki "Erken Erişim" düğmesinin yerini alır: orada
-           üç öğe yan yana sığmıyor ve satır kırılıyordu. Buraya gelince hem
-           satır kurtulur hem düğme YAPIŞKAN başlıkta kalır, yani üst şeritte
-           olduğu gibi ilk kaydırmada gözden kaybolmaz. */}}
-      <a href="/iletisim/" class="baslik-cta">Erken Erişim</a>
-      <button class="menu-dugme" id="menu-ac" aria-label="Menüyü aç/kapat" aria-expanded="false" aria-controls="menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-</header>
-
+<a class="atla" href="#govde">{{ i18n "atla" }}</a>
+{{ partial "bas.html" . }}
 <main id="govde">
-  {{ block "main" . }}{{ end }}
+{{ block "main" . }}{{ end }}
 </main>
-
-{{/* ══════════ ÇAĞRI ŞERİDİ — rakipteki telefon bandının karşılığı ══════════ */}}
-<section class="cagri-serit">
-  <div class="sinir cagri-ic">
-    <svg class="cagri-ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .57 3.6 1 1 0 0 1-.25 1z"/></svg>
-    <p class="cagri-yazi">Ürünü kendi projenizde denemek veya fiyat sormak için arayın</p>
-    <a class="cagri-numara" href="tel:{{ replace .Site.Params.telefonGorunen " " "" }}">{{ .Site.Params.telefonGorunen }}</a>
-  </div>
-</section>
-
-{{/* ══════════ ALTBİLGİ — dört sütun ══════════ */}}
-<footer class="altbilgi">
-  <div class="sinir alt-izgara">
-
-    <div class="alt-sutun alt-marka">
-      <a class="marka" href="/">
-        <span class="marka-rozet">A</span>
-        <span class="marka-yazi"><span class="marka-ad">ATA<i>CAD</i></span></span>
-      </a>
-      <p>{{ .Site.Params.altbaslik }}. İller Bankası, İSKİ, DSİ ve KGM standartlarında
-         altyapı projesi ve metraj üreten bağımsız 3B CAD platformu.</p>
-      <p class="alt-asama">{{ .Site.Params.marka }} {{ .Site.Params.surum }} · {{ .Site.Params.asama }}</p>
-    </div>
-
-    <div class="alt-sutun">
-      <h4>İletişim</h4>
-      <ul class="alt-liste">
-        <li><a href="tel:{{ replace .Site.Params.telefonGorunen " " "" }}">{{ .Site.Params.telefonGorunen }}</a></li>
-        <li><a href="{{ .Site.Params.whatsapp }}" target="_blank" rel="noopener">WhatsApp grubuna katılın</a></li>
-        <li><a href="mailto:{{ .Site.Params.eposta }}">{{ .Site.Params.eposta }}</a></li>
-        <li><a href="/iletisim/">İletişim formu</a></li>
-      </ul>
-    </div>
-
-    <div class="alt-sutun">
-      <h4>Ürün</h4>
-      <ul class="alt-liste">
-        <li><a href="/urun/">ATA CAD nedir</a></li>
-        <li><a href="/moduller/">Modüller</a></li>
-        <li><a href="/karsilastirma/">Karşılaştırma</a></li>
-        <li><a href="/ekran-goruntuleri/">Ekran görüntüleri</a></li>
-      </ul>
-    </div>
-
-    <div class="alt-sutun">
-      <h4>AutoCAD Eklentileri</h4>
-      <ul class="alt-liste">
-        <li><a href="/eklentiler/altyapi-asistani/">Altyapı Asistanı</a></li>
-        <li><a href="/eklentiler/istinat-duvari/">İstinat Duvarı Asistanı</a></li>
-        <li><a href="/gunluk/">Geliştirme Günlüğü</a></li>
-        <li><a href="/hakkimda/">Hakkımda</a></li>
-      </ul>
-    </div>
-
-  </div>
-
-  <div class="telif">
-    <div class="sinir telif-ic">
-      <span>&copy; {{ now.Year }} {{ .Site.Params.sahis }}</span>
-      <span class="telif-sag">İller Bankası · İSKİ · DSİ · KGM standartlarında çıktı</span>
-    </div>
-  </div>
-</footer>
-
-<script src="/js/ata.js?s={{ readFile "static/js/ata.js" | md5 | truncate 8 "" }}" defer></script>
-{{/* Zemin katmanı: sayfa boyunca yapılan örnek proje (WebGL2). Tarayıcı
-     WebGL2 veremezse zemin.js kendisi eski tel kafes katmanını
-     (static/js/telkafes.js) yükler. Tel kafese kalıcı dönmek için bu satırı
-     /js/telkafes.js yapmak yeterli. */}}
-<script src="/js/zemin.js?s={{ readFile "static/js/zemin.js" | md5 | truncate 8 "" }}" defer></script>
+{{ partial "antet.html" . }}
+{{- with resources.Get "js/ata.js" | minify | fingerprint }}
+<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
+{{- end }}
+{{- with resources.Get "js/site.js" | minify | fingerprint }}
+<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
+{{- end }}
+{{- if .IsHome }}
+{{- with resources.Get "js/santiye.js" | minify | fingerprint }}
+<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
+{{- end }}
+{{- end }}
 </body>
 </html>

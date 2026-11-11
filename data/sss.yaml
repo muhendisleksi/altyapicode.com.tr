@@ -1,53 +1,95 @@
-# Anasayfadaki "Sık sorulan sorular" bölümü ve arama motorları için FAQPage
-# işaretlemesi bu tek listeden üretilir. Cevaplarda Markdown bağlantısı
-# kullanılabilir; işaretlemeye düz metin olarak geçer.
+# Sık sorulan sorular. Sıra sayfadaki sıradır. Cevapta {eposta} iletişim adresine, {kvkk} KVKK sayfasına açılır.
+# SSS sayfası FAQPage yapılandırılmış verisini de bu listeden üretir (düz metin). Başka dil için `en:` eklenir.
 
-- soru: "ATA CAD ne zaman satışa çıkacak?"
-  cevap: >-
-    Geliştirme sürüyor; takvim yerine öncelik sırası paylaşılıyor. Çekirdek,
-    arazi ve yüzey, güzergâh, profil ve en kesit, tip kesit ve koridor, kübaj
-    ve kazı tasarımı kullanıma hazır; altyapı, havza ve istinat modülleri
-    planlı. İlk sürümü erken erişim listesindekiler dener.
+- anahtar: deneme
+  tr:
+    soru: "Deneme nasıl başlar?"
+    cevap: "Deneme formunu doldurursunuz; kurulum bağlantısı e-postanıza gelir. Programı açıp adınızı ve telefonunuzu yazdığınızda 30 günlük deneme başlar."
+  en:
+    soru: "How does the trial start?"
+    cevap: "You fill in the trial form and the installer link arrives in your e-mail. The 30-day trial starts when you open the program and enter your name and phone number."
 
-- soru: "Erken erişim ücretli mi?"
-  cevap: >-
-    Hayır, ücretsizdir. Karşılığında beklenen, ürünü gerçek bir projenizde
-    deneyip karşılaştığınız sorunları paylaşmanızdır.
+- anahtar: damga
+  tr:
+    soru: "Denemede kısıt var mı?"
+    cevap: "Özellik kısıtı yoktur; bütün özellikler açıktır. Deneme süresince DXF, Excel, CSV ve LandXML çıktıları \"DEMO\" damgası taşır. Deneme bilgisayar başına bir kezdir."
+  en:
+    soru: "Are there restrictions in the trial?"
+    cevap: "There is no feature restriction; every feature is open. During the trial, DXF, Excel, CSV and LandXML outputs carry a \"DEMO\" stamp. The trial is available once per computer."
 
-- soru: "Fiyatı ne olacak?"
-  cevap: >-
-    Fiyat, ürün satışa çıktığında [karşılaştırma sayfasında](/karsilastirma/)
-    duyurulacak. ATA CAD ücretli hiçbir üçüncü parti yazılıma bağımlı
-    olmadığı için ürün bedelinin üstüne ek lisans maliyeti çıkmaz.
+- anahtar: fiyat
+  tr:
+    soru: "Fiyatı nedir?"
+    cevap: "Fiyat sitede yayınlanmaz. Deneme sırasında ya da sonunda {eposta} adresine yazın."
+  en:
+    soru: "What does it cost?"
+    cevap: "The price is not published on the site. During or after the trial, write to {eposta}."
 
-- soru: "Mevcut DWG projelerimi kullanabilir miyim?"
-  cevap: >-
-    Evet. DWG ve DXF dosyaları altlık ve referans olarak okunur; güzergâh ve
-    yüzeyler LandXML ile aktarılır. Çıktılar DXF, PDF ve Excel olarak alınır.
-    Tam DWG yazma desteği yoktur.
+- anahtar: sistem
+  tr:
+    soru: "Hangi bilgisayarda çalışır?"
+    cevap: "Windows 10 ve 11'de, 64 bit sürümde çalışır. Ayrıca kurulacak bir şey yoktur. 3B görünüm için DirectX 11 destekli bir ekran kartı gerekir."
+  en:
+    soru: "What computer does it run on?"
+    cevap: "It runs on 64-bit Windows 10 and 11. Nothing else needs to be installed. The 3D view needs a graphics card that supports DirectX 11."
 
-- soru: "Hangi kurum standartlarıyla çalışıyor?"
-  cevap: >-
-    Hazır KGM tip kesit kütüphanesiyle gelir. İller Bankası, İSKİ ve DSİ
-    profilleri altyapı modülüyle eklenecek; bu kurumların formatındaki
-    kesit ve metraj bugün [AutoCAD eklentileriyle](/eklentiler/) alınabilir.
+- anahtar: lisans-gerek
+  tr:
+    soru: "Başka bir CAD programı gerekir mi?"
+    cevap: "Hayır. ATA CAD kendi başına çalışır; başka bir CAD lisansı gerekmez."
+  en:
+    soru: "Do I need another CAD program?"
+    cevap: "No. ATA CAD runs on its own; no other CAD licence is required."
 
-- soru: "Hangi işletim sisteminde çalışır?"
-  cevap: >-
-    Windows üzerinde çalışır ve tek kurulumla kullanıma hazırdır.
+- anahtar: dwg
+  tr:
+    soru: "Mevcut DWG projelerimi açabilir miyim?"
+    cevap: "DWG ve DXF dosyaları okunur. DWG'ye yazılmaz; çizim DXF olarak verilir. Güzergâh ve yüzey LandXML ile aktarılır."
+  en:
+    soru: "Can I open my existing DWG projects?"
+    cevap: "DWG and DXF files are read. DWG is not written; drawings are delivered as DXF. Alignment and surface are exchanged through LandXML."
 
-- soru: "ATA CAD'i beklerken ne kullanabilirim?"
-  cevap: >-
-    AutoCAD veya Civil 3D kullanıyorsanız [Altyapı Asistanı](/eklentiler/altyapi-asistani/)
-    hendek kesiti ve metrajı, [İstinat Duvarı Asistanı](/eklentiler/istinat-duvari/)
-    stabilite hesabını ve kesit çizimini bugün otomatikleştirir. Her biri
-    tek seferlik 100 $'dır; lisans süresizdir.
+- anahtar: kurum
+  tr:
+    soru: "Hangi kurum kuralları var?"
+    cevap: "İller Bankası, İSKİ ve DSİ kuralları ile KGM El Kitabı tabloları programın içindedir. Her değer kaynağını taşır; kaynağı doğrulanmamış değer hesaba girmez."
+  en:
+    soru: "Which institutional rules are included?"
+    cevap: "The rules of İller Bankası (Turkey's municipal development bank), İSKİ (Istanbul Water and Sewerage Administration) and DSİ (State Hydraulic Works), and the tables of the KGM (General Directorate of Highways) handbook are built into the program. Every value carries its source; a value whose source is not verified does not enter the calculation."
 
-- soru: "Destek nasıl veriliyor?"
-  cevap: >-
-    Doğrudan geliştiriciye ulaşırsınız: telefon, WhatsApp veya e-posta.
-    Taleplere genellikle aynı iş günü içinde dönüş yapılır.
+- anahtar: yz
+  tr:
+    soru: "Yapay zekâ için ayrıca ödeme var mı?"
+    cevap: "Hayır. ATA CAD yapay zekâ için ek ücret almaz; kendi Claude üyeliğinizi kullanırsınız."
+  en:
+    soru: "Is there a separate charge for AI?"
+    cevap: "No. ATA CAD charges nothing extra for AI; you use your own Claude subscription."
 
-- soru: "Fatura kesiliyor mu?"
-  cevap: >-
-    Evet. Satışlar şahıs firması üzerinden faturalandırılır.
+- anahtar: veri
+  tr:
+    soru: "Projem nerede durur?"
+    cevap: "Proje dosyanız kendi bilgisayarınızda durur; sunucuya gönderilmez. Lisans doğrulaması için giden bilgiler programın ilk açılışta gösterdiği aydınlatma metninde yazılıdır. Deneme formuna yazdıklarınızın nasıl işlendiği için {kvkk} bakın."
+  en:
+    soru: "Where does my project stay?"
+    cevap: "Your project file stays on your own computer; it is not sent to a server. The data sent for licence verification is described in the privacy notice the program shows on first launch. For how what you type into the trial form is processed, see {kvkk}."
+
+- anahtar: destek
+  tr:
+    soru: "Destek nasıl alırım?"
+    cevap: "{eposta} adresine yazın. Yanıt genellikle aynı iş günü içinde gelir."
+  en:
+    soru: "How do I get support?"
+    cevap: "Write to {eposta}. A reply usually comes within the same working day."
+
+- anahtar: mac
+  tr:
+    soru: "Mac ya da Linux sürümü var mı?"
+    cevap: "Hayır. ATA CAD yalnız Windows için hazırlanmıştır."
+  en:
+    soru: "Is there a Mac or Linux version?"
+    cevap: "No. ATA CAD is built for Windows only."
+
+- anahtar: dil
+  en:
+    soru: "Is the program available in English?"
+    cevap: "No. The interface and commands are in Turkish. This site is in English so that you can see what the program does."
