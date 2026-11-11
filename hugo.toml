@@ -1,7 +1,10 @@
 baseURL = "https://altyapicode.com.tr/"          # alan adı taşınınca atacad.com.tr
 title = "ATA CAD"
 enableRobotsTXT = true
-disableKinds = ["taxonomy", "term", "RSS"]
+# BEKLEME KİPİ (2026-11-11): site yerine "çok yakında" sayfası. Geri açmak için bu satırı
+#   disableKinds = ["taxonomy", "term", "RSS"]
+# hâline getir ve [params] altındaki `yakinda = true` satırını sil (ikisi birlikte).
+disableKinds = ["taxonomy", "term", "RSS", "page", "section", "sitemap"]
 defaultContentLanguage = "tr"
 defaultContentLanguageInSubdir = false
 
@@ -82,6 +85,7 @@ defaultContentLanguageInSubdir = false
     weight = 60
 
 [params]
+  yakinda  = true                                   # bekleme kipi; yukarıdaki disableKinds notuyla birlikte kalkar
   marka    = "ATA CAD"
   surum    = "1.0.3"
   eposta   = "bilgi@altyapicode.com.tr"           # alan adı taşınınca bilgi@atacad.com.tr
