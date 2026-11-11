@@ -126,7 +126,7 @@ other = "30 gün ücretsiz"
 [deneme.baslik]
 other = "Kendi projenizde deneyin."
 [deneme.adim1]
-other = "Formu doldurun; kurulum dosyasının bağlantısı e-postanıza gelir."
+other = "Formu doldurun; isteğiniz onaylanınca kurulum dosyasının bağlantısı e-postanıza gelir."
 [deneme.adim2]
 other = "Programı açın, adınızı ve telefonunuzu yazın. 30 günlük deneme o an başlar."
 [deneme.adim3]
@@ -156,16 +156,16 @@ other = "Gönderiliyor…"
 [form.yakinda]
 other = "Deneme formu çok yakında açılıyor. Şimdilik:"
 [form.not]
-other = "Bilgileriniz kurulum bağlantısını göndermek ve isteğinize dönüş yapmak için kullanılır."
+other = "Bilgileriniz isteğinizi değerlendirmek, kurulum bağlantısını göndermek ve isteğinize dönüş yapmak için kullanılır."
 [form.aydinlatma]
 other = "Aydınlatma metni"
 [form.betiksiz]
 other = "Formu kullanmak için tarayıcıda betik açık olmalı. Deneme isteğinizi e-postayla da yazabilirsiniz:"
 [form.sonra1]
-other = "E-postadaki bağlantıdan kurulum dosyasını indirin ve kurun."
+other = "İsteğiniz onaylanınca gelen e-postadaki bağlantıdan kurulum dosyasını indirin ve kurun."
 # Form durum metinleri. {adres} ziyaretçinin yazdığı e-posta, {iletisim} sitenin iletişim adresidir (betik bağlantıya çevirir).
 [form.m.gitti]
-other = "Kurulum bağlantısı {adres} adresine gönderildi. Birkaç dakika içinde gelmezse gereksiz klasörüne bakın ya da {iletisim} adresine yazın."
+other = "İsteğiniz alındı. Onaylandığında kurulum bağlantısı {adres} adresine gönderilir. Sorunuz olursa {iletisim} adresine yazın."
 [form.m.alan]
 other = "Bu alanı denetleyin."
 [form.m.dogrulama]
@@ -173,7 +173,7 @@ other = "Doğrulama tamamlanamadı. Sayfayı yenileyip yeniden deneyin ya da {il
 [form.m.cok]
 other = "Bugün çok fazla istek geldi. Yarın yeniden deneyin ya da {iletisim} adresine yazın."
 [form.m.dustu]
-other = "İsteğiniz alındı ama e-posta gönderilemedi. {iletisim} adresine yazın, bağlantıyı elle gönderelim."
+other = "İsteğiniz iletilemedi. {iletisim} adresine yazın, kurulum bağlantısını oradan gönderelim."
 [form.m.ag]
 other = "Bağlantı kurulamadı. Biraz sonra yeniden deneyin ya da {iletisim} adresine yazın."
 

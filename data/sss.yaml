@@ -4,10 +4,10 @@
 - anahtar: deneme
   tr:
     soru: "Deneme nasıl başlar?"
-    cevap: "Deneme formunu doldurursunuz; kurulum bağlantısı e-postanıza gelir. Programı açıp adınızı ve telefonunuzu yazdığınızda 30 günlük deneme başlar."
+    cevap: "Deneme formunu doldurursunuz; isteğiniz onaylanınca kurulum bağlantısı e-postanıza gelir. Programı açıp adınızı ve telefonunuzu yazdığınızda 30 günlük deneme başlar."
   en:
     soru: "How does the trial start?"
-    cevap: "You fill in the trial form and the installer link arrives in your e-mail. The 30-day trial starts when you open the program and enter your name and phone number."
+    cevap: "You fill in the trial form; once your request is approved, the installer link arrives in your e-mail. The 30-day trial starts when you open the program and enter your name and phone number."
 
 - anahtar: damga
   tr:

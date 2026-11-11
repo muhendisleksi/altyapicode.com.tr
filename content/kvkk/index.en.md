@@ -34,7 +34,7 @@ Abdulbaki Atakan · {{< eposta duz >}}
 - Sending the installer link to your e-mail address and replying to your request: performance of your request (Law Art. 5/2-c).
 - Preventing misuse of the form (counting requests from the same place, separating bots): the legitimate interest of the data controller (Law Art. 5/2-f).
 
-No marketing messages are sent to your address. You are sent only the installer link requested when the form was filled in; it is not sent a second time to the same address within 24 hours.
+No marketing messages are sent to your address. You are sent only the installer link, once your request is approved; a second request from the same address is not accepted within 24 hours.
 
 ### Retention period
 

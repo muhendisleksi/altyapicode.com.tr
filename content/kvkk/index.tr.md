@@ -33,7 +33,7 @@ Abdulbaki Atakan · {{< eposta duz >}}
 - Kurulum bağlantısını e-posta adresinize göndermek ve isteğinize dönüş yapmak: talebinizin yerine getirilmesi (Kanun md. 5/2-c).
 - Formun kötüye kullanımını önlemek (aynı yerden gelen istekleri saymak, botları ayırmak): veri sorumlusunun meşru menfaati (Kanun md. 5/2-f).
 
-Adresinize pazarlama iletisi gönderilmez. Size yalnız, form doldurulduğunda istenen kurulum bağlantısı gönderilir; aynı adrese 24 saat içinde ikinci kez gönderilmez.
+Adresinize pazarlama iletisi gönderilmez. Size yalnız, isteğiniz onaylandığında kurulum bağlantısı gönderilir; aynı adresten 24 saat içinde ikinci istek alınmaz.
 
 ### Saklama süresi
 

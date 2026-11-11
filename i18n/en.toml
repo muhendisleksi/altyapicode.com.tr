@@ -126,7 +126,7 @@ other = "Free for 30 days"
 [deneme.baslik]
 other = "Try it on your own project."
 [deneme.adim1]
-other = "Fill in the form; the link to the installer arrives in your e-mail."
+other = "Fill in the form; once your request is approved, the link to the installer arrives in your e-mail."
 [deneme.adim2]
 other = "Open the program and enter your name and phone number. The 30-day trial starts at that moment."
 [deneme.adim3]
@@ -156,16 +156,16 @@ other = "Sending…"
 [form.yakinda]
 other = "The trial form opens very soon. For now:"
 [form.not]
-other = "Your details are used to send the installer link and to reply to your request."
+other = "Your details are used to review your request, to send the installer link and to reply to you."
 [form.aydinlatma]
 other = "Privacy notice (KVKK)"
 [form.betiksiz]
 other = "To use the form, scripts must be enabled in your browser. You can also write your trial request by e-mail:"
 [form.sonra1]
-other = "Download the installer from the link in the e-mail and install it."
+other = "Once your request is approved, download the installer from the link in the e-mail and install it."
 # Form status messages. {adres} is the e-mail the visitor typed, {iletisim} is the site's contact address (the script turns it into a link).
 [form.m.gitti]
-other = "The installer link was sent to {adres}. If it does not arrive within a few minutes, check your spam folder or write to {iletisim}."
+other = "Your request has been received. Once it is approved, the installer link will be sent to {adres}. If you have a question, write to {iletisim}."
 [form.m.alan]
 other = "Please check this field."
 [form.m.dogrulama]
@@ -173,7 +173,7 @@ other = "Verification could not be completed. Reload the page and try again, or 
 [form.m.cok]
 other = "Too many requests came in today. Try again tomorrow or write to {iletisim}."
 [form.m.dustu]
-other = "Your request was received but the e-mail could not be sent. Write to {iletisim} and we will send the link by hand."
+other = "Your request could not be delivered. Write to {iletisim} and we will send the installer link from there."
 [form.m.ag]
 other = "Could not connect. Try again shortly or write to {iletisim}."
 
