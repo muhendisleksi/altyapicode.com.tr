@@ -182,7 +182,9 @@
   // Pafta ve kesit ayrıntısı sütun genişliğinde okunmuyor: çerçeveli görsel tıklanınca tam ekran görüntüleyici açılır.
   // `src` kaynağın tam genişliğidir (gorsel.html); önce sayfadaki küçük kopya gösterilir, tam boy yüklenince yerine geçer.
   var gorseller=[].filter.call(document.querySelectorAll('.cerceve img'),function(g){return !g.closest('a')});
-  if(gorseller.length&&window.HTMLDialogElement){
+  // Kendi işlev kapsamında: buradaki `var` adları (birak · kutu) aynı kapsamdaki form kodunun adlarını eziyordu;
+  // form başarı/hata anında görüntüleyicinin `birak`ını çağırıp düşüyor, "Gönderiliyor…" kalıyordu (2026-11-11).
+  if(gorseller.length&&window.HTMLDialogElement)(function(){
     var ing=document.documentElement.lang==='en';
     var dokunmatik=window.matchMedia&&matchMedia('(pointer:coarse)').matches;
     var sakin=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -373,5 +375,5 @@
       g.addEventListener('click',function(){buyut(g)});
       g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();buyut(g)}});
     });
-  }
+  })();
 })();
