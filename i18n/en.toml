@@ -192,6 +192,8 @@ other = "Date"
 other = "Contact"
 [antet.baglar]
 other = "Site links"
+[antet.marka]
+other = "ATA CAD is an independent product. DWG is a trademark of Autodesk, Inc.; other product and company names mentioned on this site are trademarks of their respective owners. ATA CAD is not affiliated with or endorsed by these companies."
 
 # inner pages
 [sayfa.ciktilar]

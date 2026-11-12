@@ -192,6 +192,8 @@ other = "Tarih"
 other = "İletişim"
 [antet.baglar]
 other = "Site bağlantıları"
+[antet.marka]
+other = "ATA CAD bağımsız bir üründür. DWG, Autodesk, Inc. şirketinin markasıdır; bu sitede adı geçen öteki ürün ve şirket adları kendi sahiplerinin markalarıdır. ATA CAD bu şirketlerle bağlantılı değildir ve onlar tarafından onaylanmamıştır."
 
 # iç sayfalar
 [sayfa.ciktilar]

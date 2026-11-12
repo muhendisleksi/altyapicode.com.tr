@@ -259,6 +259,7 @@ section.deneme>.ic{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items
 .alt-baglar{display:flex;gap:8px 24px;flex-wrap:wrap;color:var(--yazi-2);font-size:.9rem;padding-top:18px}
 .alt-baglar a{text-decoration:none}
 .alt-baglar a:hover{color:var(--yazi)}
+.alt-marka{color:var(--yazi-3);font-size:.78rem;line-height:1.5;max-width:76ch;padding-top:16px;margin:0}
 
 /* ── iç sayfa ── */
 .sayfa>.ic{padding-block:clamp(48px,7vw,88px);display:grid;gap:36px}
